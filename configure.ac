@@ -164,6 +164,11 @@ src/AssemblyInfo.cs
 
 src/Core/Makefile
 src/Core/Tripod.Core/Makefile
+
+src/Clients/Makefile
+src/Clients/FlashUnit/Makefile
+
+extras/Makefile
 ])
 
 cat <<EOF

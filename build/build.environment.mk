@@ -17,6 +17,9 @@ REF_TRIPOD_CORE = $(LINK_MONO_POSIX) $(LINK_HYENA)
 LINK_TRIPOD_CORE = -r:$(DIR_BIN)/Tripod.Core.dll
 LINK_TRIPOD_CORE_DEPS = $(REF_TRIPOD_CORE) $(LINK_TRIPOD_CORE)
 
+# Clients
+REF_FLASHUNIT = 
+
 # Cute hack to replace a space with something
 colon:= :
 empty:=

@@ -3,8 +3,10 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Ruben Vermeersch <ruben@savanne.be>
 //
 // Copyright (C) 2005-2008 Novell, Inc.
+// Copyright (C) 2010 Ruben Vermeersch
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -32,7 +34,7 @@ using Mono.Unix;
 
 using Hyena;
 
-namespace Banshee.Base
+namespace Tripod.Base
 {
     public class Paths
     {
@@ -131,15 +133,8 @@ namespace Banshee.Base
                 : null;
         }
 
-        private static string legacy_application_data = Path.Combine (Environment.GetFolderPath (
-            Environment.SpecialFolder.ApplicationData), "banshee");
-
-        public static string LegacyApplicationData {
-            get { return legacy_application_data; }
-        }
-
         private static string application_data = Path.Combine (Environment.GetFolderPath (
-            Environment.SpecialFolder.ApplicationData), "banshee-1");
+            Environment.SpecialFolder.ApplicationData), "tripod");
 
         public static string ApplicationData {
             get {
@@ -152,7 +147,7 @@ namespace Banshee.Base
         }
 
         private static string application_cache = Path.Combine (XdgBaseDirectorySpec.GetUserDirectory (
-            "XDG_CACHE_HOME", ".cache"), "banshee-1");
+            "XDG_CACHE_HOME", ".cache"), "tripod");
 
         public static string ApplicationCache {
             get { return application_cache; }
@@ -186,7 +181,7 @@ namespace Banshee.Base
                     installed_application_prefix = Path.GetDirectoryName (
                         System.Reflection.Assembly.GetExecutingAssembly ().Location);
 
-                    if (Directory.Exists (Paths.Combine (installed_application_prefix, "share", "banshee-1"))) {
+                    if (Directory.Exists (Paths.Combine (installed_application_prefix, "share", "tripod"))) {
                         return installed_application_prefix;
                     }
 
@@ -206,7 +201,7 @@ namespace Banshee.Base
         }
 
         public static string InstalledApplicationData {
-            get { return Path.Combine (InstalledApplicationDataRoot, "banshee-1"); }
+            get { return Path.Combine (InstalledApplicationDataRoot, "tripod"); }
         }
 
         public static string GetInstalledDataDirectory (string path)

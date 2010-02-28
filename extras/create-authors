@@ -1,0 +1,32 @@
+#!/usr/bin/perl
+
+open (IN, '../src/Core/Tripod.Core/Resources/contributors.xml');
+
+sub print_section {
+    $n = shift;
+    print "$n:\n";
+}
+
+my $section = '';
+while (my $line = readline(IN)) {
+    if ($line =~ m/>([^<]+)</) {
+        $name = $1;
+
+        if ($line =~ /author/ && $section ne 'author') {
+            $section = 'author';
+            print_section ("Maintainers");
+        } elsif ($line =~ m/contributor/ && $section ne 'contributor') {
+            $section = 'contributor';
+            print "\n";
+            print_section ("Contributors");
+        } elsif ($line =~ m/artist/ && $section ne 'artist') {
+            $section = 'artist';
+            print "\n";
+            print_section ("Artists");
+        }
+
+        print "  $name\n";
+    }
+}
+
+close (IN);

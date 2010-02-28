@@ -1,6 +1,7 @@
 SUBDIRS = \
 	build \
 	src \
+    extras \
 	po
 
 # Important targets
