@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tripod", "Tripod", "{0D1C1F16-F7A7-456A-8C64-A9516B581863}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BFCD1029-D09E-4728-BAD5-B0A29BC09C0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tripod.Core", "src\Core\Tripod.Core\Tripod.Core.csproj", "{784596DC-6833-4A33-B1F5-1E0FCCB875CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{5F0FCE20-D1A8-4A77-9BDB-8AB550F2B1E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlashUnit", "src\Clients\FlashUnit\FlashUnit.csproj", "{89FC8A65-234C-44E2-8CED-8F00C488231F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{784596DC-6833-4A33-B1F5-1E0FCCB875CE}.Debug|x86.ActiveCfg = Debug|x86
+		{784596DC-6833-4A33-B1F5-1E0FCCB875CE}.Debug|x86.Build.0 = Debug|x86
+		{784596DC-6833-4A33-B1F5-1E0FCCB875CE}.Release|x86.ActiveCfg = Release|x86
+		{784596DC-6833-4A33-B1F5-1E0FCCB875CE}.Release|x86.Build.0 = Release|x86
+		{89FC8A65-234C-44E2-8CED-8F00C488231F}.Debug|x86.ActiveCfg = Debug|x86
+		{89FC8A65-234C-44E2-8CED-8F00C488231F}.Debug|x86.Build.0 = Debug|x86
+		{89FC8A65-234C-44E2-8CED-8F00C488231F}.Release|x86.ActiveCfg = Release|x86
+		{89FC8A65-234C-44E2-8CED-8F00C488231F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BFCD1029-D09E-4728-BAD5-B0A29BC09C0F} = {0D1C1F16-F7A7-456A-8C64-A9516B581863}
+		{5F0FCE20-D1A8-4A77-9BDB-8AB550F2B1E4} = {0D1C1F16-F7A7-456A-8C64-A9516B581863}
+		{784596DC-6833-4A33-B1F5-1E0FCCB875CE} = {BFCD1029-D09E-4728-BAD5-B0A29BC09C0F}
+		{89FC8A65-234C-44E2-8CED-8F00C488231F} = {5F0FCE20-D1A8-4A77-9BDB-8AB550F2B1E4}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = src\Clients\FlashUnit\FlashUnit.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.RemoveTrailingWhitespace = True
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$0.ChangeLogPolicy = $2
+		$2.UpdateMode = Nearest
+		$2.MessageStyle = $3
+		$3.LineAlign = 0
+		$2.inheritsSet = Mono
+		$0.DotNetNamingPolicy = $4
+		$4.DirectoryNamespaceAssociation = Flat
+		$4.ResourceNamePolicy = FileName
+		$0.TextStylePolicy = $5
+		$5.FileWidth = 120
+		$5.NoTabsAfterNonTabs = True
+		$5.RemoveTrailingWhitespace = True
+		$5.inheritsSet = VisualStudio
+		$5.inheritsScope = text/plain
+		$5.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $6
+		$6.EnumBraceStyle = EndOfLine
+		$6.IfElseBraceForcement = AddBraces
+		$6.ForBraceForcement = AddBraces
+		$6.ForEachBraceForcement = AddBraces
+		$6.WhileBraceForcement = AddBraces
+		$6.UsingBraceForcement = AddBraces
+		$6.FixedBraceForcement = AddBraces
+		$6.inheritsSet = Mono
+		$6.inheritsScope = text/x-csharp
+		$6.scope = text/x-csharp
+		$0.StandardHeader = $7
+		$7.Text = @\n${FileName}\n\nAuthor:\n  ${AuthorName} <${AuthorEmail}>\n\nCopyright (c) ${Year} ${CopyrightHolder}\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.
+		$7.inheritsSet = MITX11License
+		version = 0.0.1
+		outputpath = .
+		name = Tripod
+	EndGlobalSection
+EndGlobal
