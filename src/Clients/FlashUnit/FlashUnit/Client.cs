@@ -28,6 +28,8 @@
 
 using System;
 
+using Tripod.Base;
+
 namespace Nereid
 {
     public class Client
@@ -35,6 +37,7 @@ namespace Nereid
         public static void Main (string [] args)
         {
             Console.WriteLine ("Hello World! Flash!");
+            Console.WriteLine ("Will store cache in {0}", Paths.ApplicationCache);
         }
     }
 }

@@ -91,9 +91,6 @@ BANSHEE_CHECK_GTK_SHARP
 dnl OS X (optional through --enable-osx)
 BANSHEE_CHECK_OSX
 
-dnl Check for Banshee's Hyena. Needs to move into a separate project soon.
-TRIPOD_CHECK_BANSHEE_HYENA
-
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.4)
 
 dnl GNOME (optional)
@@ -156,6 +153,8 @@ build/Makefile
 build/m4/Makefile
 build/m4/shave/shave
 build/m4/shave/shave-libtool
+
+lib/Makefile
 
 po/Makefile.in
 

@@ -8,7 +8,7 @@ DEFAULT_INSTALL_DIR = $(pkglibdir)
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_MONO_POSIX = -r:Mono.Posix
-LINK_HYENA = $(BANSHEE_HYENA_LIBS)
+LINK_HYENA = -r:$(DIR_BIN)/Hyena.dll
 
 DIR_BIN = $(top_builddir)/bin
 
@@ -18,7 +18,7 @@ LINK_TRIPOD_CORE = -r:$(DIR_BIN)/Tripod.Core.dll
 LINK_TRIPOD_CORE_DEPS = $(REF_TRIPOD_CORE) $(LINK_TRIPOD_CORE)
 
 # Clients
-REF_FLASHUNIT = 
+REF_FLASHUNIT = $(LINK_TRIPOD_CORE_DEPS)
 
 # Cute hack to replace a space with something
 colon:= :
