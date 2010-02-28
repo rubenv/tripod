@@ -1,10 +1,6 @@
 SUBDIRS = \
 	build \
-	data \
 	src \
-	docs \
-	tests \
-	extras \
 	po
 
 # Important targets

@@ -155,6 +155,12 @@ build/m4/shave/shave
 build/m4/shave/shave-libtool
 
 po/Makefile.in
+
+src/Makefile
+src/AssemblyInfo.cs
+
+src/Core/Makefile
+src/Core/Tripod.Core/Makefile
 ])
 
 cat <<EOF
