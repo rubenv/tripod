@@ -1,27 +1,19 @@
-BINARIES = \
+# Embed Hyena binary. This sucks and it makes distcheck fail. Needs fixing.
+
+hyenadir = $(libdir)
+hyena_DATA = \
 	Hyena.dll \
 	Hyena.dll.mdb \
 	Hyena.Gui.dll \
 	Hyena.Gui.dll.config \
 	Hyena.Gui.dll.mdb
 
-EXTRA_DIST = $(BINARIES)
-CLEANFILES = $(addprefix $(top_builddir)/bin/, $(BINARIES))
+EXTRA_DIST = $(hyena_DATA)
+CLEANFILES = $(addprefix $(top_builddir)/bin/, $(hyena_DATA))
 
-install-data-local:
-	mkdir -p $(pkglibdir); \
-	for f in $(BINARIES); do \
-		$(INSTALL) -m 644 $$f $(pkglibdir); \
-	done
-
-uninstall-local:
-	for f in $(BINARIES); do \
-		rm -f $(pkglibdir)/$$f; \
-	done
-
-all: $(BINARIES)
+all: $(hyena_DATA)
 	mkdir -p $(top_builddir)/bin; \
-	for f in $(BINARIES); do \
+	for f in $(hyena_DATA); do \
 		cp $$f $(top_builddir)/bin/; \
 	done
 
