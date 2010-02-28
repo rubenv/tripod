@@ -30,7 +30,7 @@ using System;
 
 using Tripod.Base;
 
-namespace Nereid
+namespace FlashUnit
 {
     public class Client
     {
