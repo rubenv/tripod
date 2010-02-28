@@ -99,7 +99,7 @@ AC_ARG_ENABLE(gnome,
 		[Disable GNOME support]), 
 	, enable_gnome="yes")
 if test "x$enable_gnome" = "xyes"; then
-	tripod_CHECK_GNOME_SHARP
+	BANSHEE_CHECK_GNOME_SHARP
 	AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
 	AM_GCONF_SOURCE_2
 	AM_CONDITIONAL(ENABLE_GNOME, true)
