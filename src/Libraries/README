@@ -1,0 +1,3 @@
+Some of the libraries in this tree (currently Hyena, Mono.Data.Sqlite,
+taglib-sharp and unique-sharp) are copies from upstream projects. You
+should not modify them here.
