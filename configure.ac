@@ -82,9 +82,6 @@ BANSHEE_CHECK_GIO_SHARP
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
 
-dnl External TagLib# libraries (optional)
-BANSHEE_CHECK_TAGLIB_SHARP
-
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
 

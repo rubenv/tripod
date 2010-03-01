@@ -1,7 +1,6 @@
 *.swp
 *.gmo
 *.pc
-*.zip
 *.tree
 *.service
 *.o
