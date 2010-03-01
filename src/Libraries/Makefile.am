@@ -33,7 +33,15 @@ update:
 	for l in $(LIBRARIES_FROM_BANSHEE); do \
 		cp -r $(TMPDIR_BANSHEE)/src/Libraries/$$l .; \
 	done
+	
 	rm -rf TagLib/TagLib
 	cp -r $(TMPDIR_TAGLIB)/src/TagLib TagLib
+	
+	echo "ASSEMBLY = TagLib" > TagLib/Makefile.am
+	echo "TARGET = library" >> TagLib/Makefile.am
+	echo "LINK = " >> TagLib/Makefile.am
+	echo "SOURCES = \\" >> TagLib/Makefile.am
+	tail -n+2 TagLib/TagLib/TagLib.sources | sed s/\$$\(srcdir\)\\/// >> TagLib/Makefile.am
+	echo "include \$$(top_srcdir)/build/build.mk" >> TagLib/Makefile.am
 
 .PHONY: clone-banshee clone-taglib pull update
