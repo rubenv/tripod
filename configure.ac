@@ -168,6 +168,7 @@ src/Clients/FlashUnit/Makefile
 src/Libraries/Makefile
 src/Libraries/Hyena/Makefile
 src/Libraries/Mono.Data.Sqlite/Makefile
+src/Libraries/TagLib/Makefile
 
 extras/Makefile
 ])
