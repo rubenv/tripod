@@ -8,6 +8,7 @@ DEFAULT_INSTALL_DIR = $(pkglibdir)
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_MONO_POSIX = -r:Mono.Posix
+LINK_GTK = $(GTKSHARP_LIBS)
 
 DIR_BIN = $(top_builddir)/bin
 
@@ -21,7 +22,7 @@ LINK_HYENA = -r:$(DIR_BIN)/Hyena.dll
 LINK_HYENA_DEPS = $(REF_HYENA) $(LINK_HYENA)
 
 # Core
-REF_TRIPOD_CORE = $(LINK_MONO_POSIX) $(LINK_HYENA)
+REF_TRIPOD_CORE = $(LINK_MONO_POSIX) $(LINK_HYENA) $(LINK_GTK)
 LINK_TRIPOD_CORE = -r:$(DIR_BIN)/Tripod.Core.dll
 LINK_TRIPOD_CORE_DEPS = $(REF_TRIPOD_CORE) $(LINK_TRIPOD_CORE)
 

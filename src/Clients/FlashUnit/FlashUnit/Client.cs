@@ -27,19 +27,26 @@
 //
 
 using System;
-
+using Gtk;
 using Hyena;
-
 using Tripod.Base;
 
 namespace FlashUnit
 {
     public class Client
     {
-        public static void Main (string [] args)
+        public static void Main (string[] args)
         {
-            Console.WriteLine ("Hello World! Flash!");
-            Console.WriteLine ("Will store cache in {0}", Paths.ApplicationCache);
+            Core.Initialize ("FlashUnit", ref args);
+            
+            Log.Information ("Hello World! Flash!");
+            
+            var main_window = new MainWindow ();
+            main_window.Destroyed += delegate { Application.Quit (); };
+            main_window.Show ();
+            
+            Application.Run ();
+            
         }
     }
 }

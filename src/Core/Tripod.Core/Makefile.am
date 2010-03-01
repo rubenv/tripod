@@ -1,7 +1,7 @@
 ASSEMBLY = Tripod.Core
 TARGET = library
 LINK = $(REF_TRIPOD_CORE)
-SOURCES = Tripod.Base/Paths.cs
+SOURCES = Tripod.Base/Core.cs
 
 RESOURCES =  \
 	Resources/contributors.xml \

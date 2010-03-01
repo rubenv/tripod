@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="FlashUnit\Client.cs" />
+    <Compile Include="FlashUnit\MainWindow.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -50,15 +51,16 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <Reference Include="Hyena, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Hyena.dll</HintPath>
-      <Package>banshee-1-hyena</Package>
-    </Reference>
-    <Reference Include="Hyena.Gui, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\lib\Hyena.Gui.dll</HintPath>
-      <Package>banshee-1-hyena-gui</Package>
-    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Tripod.Core\Tripod.Core.csproj">
+      <Project>{784596DC-6833-4A33-B1F5-1E0FCCB875CE}</Project>
+      <Name>Tripod.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
