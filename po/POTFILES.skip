@@ -1,0 +1,11 @@
+#
+# FIXME: Ignore these files for now. We need to figure out how to handle
+# translations of embedded libraries.
+#
+src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/EnumQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs
+src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SR.Designer.cs

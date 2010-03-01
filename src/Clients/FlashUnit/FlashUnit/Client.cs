@@ -28,6 +28,8 @@
 
 using System;
 
+using Hyena;
+
 using Tripod.Base;
 
 namespace FlashUnit

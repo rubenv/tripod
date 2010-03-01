@@ -49,4 +49,16 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Reference Include="Hyena, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Hyena.dll</HintPath>
+      <Package>banshee-1-hyena</Package>
+    </Reference>
+    <Reference Include="Hyena.Gui, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Hyena.Gui.dll</HintPath>
+      <Package>banshee-1-hyena-gui</Package>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -8,9 +8,17 @@ DEFAULT_INSTALL_DIR = $(pkglibdir)
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_MONO_POSIX = -r:Mono.Posix
-LINK_HYENA = -r:$(DIR_BIN)/Hyena.dll
 
 DIR_BIN = $(top_builddir)/bin
+
+# Mono.Data
+REF_SQLITE = -r:System -r:System.Data -r:System.Transactions
+LINK_SQLITE = -r:System.Data -r:$(DIR_BIN)/Mono.Data.Sqlite.dll
+
+# Hyena
+REF_HYENA = $(LINK_SYSTEM) $(LINK_SQLITE) $(LINK_MONO_POSIX)
+LINK_HYENA = -r:$(DIR_BIN)/Hyena.dll
+LINK_HYENA_DEPS = $(REF_HYENA) $(LINK_HYENA)
 
 # Core
 REF_TRIPOD_CORE = $(LINK_MONO_POSIX) $(LINK_HYENA)

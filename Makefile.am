@@ -1,6 +1,5 @@
 SUBDIRS = \
 	build \
-    lib \
 	src \
     extras \
 	po

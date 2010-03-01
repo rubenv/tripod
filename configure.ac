@@ -154,8 +154,6 @@ build/m4/Makefile
 build/m4/shave/shave
 build/m4/shave/shave-libtool
 
-lib/Makefile
-
 po/Makefile.in
 
 src/Makefile
@@ -166,6 +164,10 @@ src/Core/Tripod.Core/Makefile
 
 src/Clients/Makefile
 src/Clients/FlashUnit/Makefile
+
+src/Libraries/Makefile
+src/Libraries/Hyena/Makefile
+src/Libraries/Mono.Data.Sqlite/Makefile
 
 extras/Makefile
 ])
