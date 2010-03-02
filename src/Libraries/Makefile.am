@@ -1,7 +1,8 @@
 SUBDIRS = \
     Mono.Data.Sqlite \
     Hyena \
-    TagLib
+    TagLib \
+    UniqueSharp
 
 ### The stuff below takes care of embedding libraries. Build system hacks! ###
 
@@ -11,6 +12,7 @@ LIBRARIES_FROM_BANSHEE = \
 
 TMPDIR_BANSHEE = /tmp/fetch_banshee
 TMPDIR_TAGLIB = /tmp/fetch_taglib
+TMPDIR_UNIQUE = /tmp/fetch_unique
 
 clone-banshee:
 	mkdir $(TMPDIR_BANSHEE)
@@ -21,19 +23,26 @@ clone-taglib:
 	git clone --depth 1 git://gitorious.org/taglib-sharp/mainline.git $(TMPDIR_TAGLIB)
 	pushd $(TMPDIR_TAGLIB); git checkout -b photo-support origin/photo-support; popd
 
+clone-uniquesharp:
+	mkdir $(TMPDIR_UNIQUE)
+	git clone --depth 1 git://gitorious.org/unique-sharp/unique-sharp.git $(TMPDIR_UNIQUE)
+
 pull:
-	for d in $(TMPDIR_BANSHEE) $(TMPDIR_TAGLIB); do \
-		pushd $$d; \
-		git pull; \
-		popd; \
+	for d in $(TMPDIR_BANSHEE) $(TMPDIR_TAGLIB) $(TMPDIR_UNIQUE); do \
+		if [ -d $$d ]; then \
+			pushd $$d; \
+			git pull; \
+			popd; \
+		fi \
 	done
 
-update:
+update-banshee:
 	rm -rf $(LIBRARIES_FROM_BANSHEE)
 	for l in $(LIBRARIES_FROM_BANSHEE); do \
 		cp -r $(TMPDIR_BANSHEE)/src/Libraries/$$l .; \
 	done
 	
+update-taglib:
 	rm -rf TagLib/TagLib
 	cp -r $(TMPDIR_TAGLIB)/src/TagLib TagLib
 	
@@ -44,4 +53,10 @@ update:
 	tail -n+2 TagLib/TagLib/TagLib.sources | sed s/\$$\(srcdir\)\\/// >> TagLib/Makefile.am
 	echo "include \$$(top_srcdir)/build/build.mk" >> TagLib/Makefile.am
 
-.PHONY: clone-banshee clone-taglib pull update
+update-uniquesharp:
+	rm -rf UniqueSharp/generator/*.cs UniqueSharp/unique/{*.{custom,cs},unique-api.raw,Unique.metadata}
+	cp $(TMPDIR_UNIQUE)/generator/*.cs UniqueSharp/generator/
+	cp $(TMPDIR_UNIQUE)/unique/{*.{custom,cs},unique-api.raw,Unique.metadata} UniqueSharp/unique/
+
+.PHONY: clone-banshee clone-taglib clone-uniquesharp \
+        pull update-banshee update-taglib update-uniquesharp
