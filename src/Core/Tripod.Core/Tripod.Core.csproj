@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Tripod.Base\Core.cs" />
+    <Compile Include="Tripod.Jobs\ThreadPoolJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">
@@ -59,6 +60,7 @@
   </ProjectExtensions>
   <ItemGroup>
     <Folder Include="Tripod.Base\" />
+    <Folder Include="Tripod.Jobs\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">

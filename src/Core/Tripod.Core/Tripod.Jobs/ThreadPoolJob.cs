@@ -1,5 +1,5 @@
 //
-// Core.cs
+// ThreadPoolJob.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -24,27 +24,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Gtk;
 using System;
+using Hyena;
 using Hyena.Jobs;
+using System.Threading;
 
-namespace Tripod.Base
+namespace Tripod.Jobs
 {
-    public class Core
+    public abstract class ThreadPoolJob : Job
     {
-        static readonly Scheduler scheduler = new Scheduler ();
-        public static Scheduler Scheduler {
-            get { return scheduler; }
+        public ThreadPoolJob ()
+        {
         }
 
-        public static void Initialize (string name, ref string[] args)
+        public ThreadPoolJob (string name, PriorityHints hints, params Resource [] resources)
+            : base (name, hints, resources)
         {
-            Hyena.Log.Debugging = true;
-            GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
-            
-            Hyena.Log.Debug ("Initializing Core");
-            
-            Application.Init (name, ref args);
         }
+
+        protected override void RunJob ()
+        {
+            ThreadPool.QueueUserWorkItem (InnerStart);
+        }
+
+        void InnerStart (object state) {
+            try {
+                Run ();
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
+        }
+
+        protected abstract void Run ();
     }
 }
+

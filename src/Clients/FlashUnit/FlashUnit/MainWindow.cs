@@ -27,6 +27,9 @@
 using System;
 using Gtk;
 using Hyena;
+using Hyena.Jobs;
+using Tripod.Base;
+using Tripod.Jobs;
 
 namespace FlashUnit
 {
@@ -65,16 +68,41 @@ namespace FlashUnit
         void BuildLayout ()
         {
             primary_vbox = new VBox ();
-
+            
             var label = new Label ("Super duper test UI!");
             label.Show ();
-
             primary_vbox.Add (label);
+            
+            var button_box = new HButtonBox ();
+            button_box.Show ();
+            primary_vbox.Add (button_box);
+            
+            var folder_button = new FileChooserButton ("Select import folder", FileChooserAction.SelectFolder);
+            folder_button.FileSet += delegate {
+                folder = folder_button.Uri;
+                Log.Information ("Selected " + folder);
+            };
+            folder_button.Show ();
+            button_box.Add (folder_button);
+            
+            var import_button = new Button { Label = "Start Import" };
+            import_button.Activated += StartImport;
+            import_button.Clicked += StartImport;
+            import_button.Show ();
+            button_box.Add (import_button);
+
             primary_vbox.Show ();
             Add (primary_vbox);
         }
-        
+
         #endregion
+
+        string folder;
+
+        void StartImport (object sender, EventArgs args)
+        {
+            
+        }
     }
 }
 

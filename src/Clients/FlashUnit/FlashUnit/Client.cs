@@ -42,7 +42,7 @@ namespace FlashUnit
             Log.Information ("Hello World! Flash!");
             
             var main_window = new MainWindow ();
-            main_window.Destroyed += delegate { Application.Quit (); };
+            main_window.Destroyed += (o, e) => Application.Quit ();
             main_window.Show ();
             
             Application.Run ();
