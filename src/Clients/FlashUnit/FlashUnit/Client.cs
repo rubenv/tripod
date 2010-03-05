@@ -46,8 +46,6 @@ namespace FlashUnit
             main_window.Show ();
             
             Application.Run ();
-            
         }
     }
 }
-

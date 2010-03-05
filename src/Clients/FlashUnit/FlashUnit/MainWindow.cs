@@ -1,4 +1,4 @@
-// 
+//
 // MainWindow.cs
 // 
 // Author:
@@ -26,14 +26,55 @@
 
 using System;
 using Gtk;
+using Hyena;
 
 namespace FlashUnit
 {
     public class MainWindow : Window
     {
-        public MainWindow () : base ("Flash Unit")
+
+        #region Layout components
+
+        VBox primary_vbox;
+
+        #endregion
+
+        public MainWindow () : base("Flash Unit")
         {
+            HeightRequest = 480;
+            WidthRequest = 640;
         }
+
+        private bool interface_constructed;
+
+        protected override void OnShown ()
+        {
+            if (interface_constructed) {
+                base.OnShown ();
+                return;
+            }
+            
+            interface_constructed = true;
+            
+            BuildLayout ();
+            base.OnShown ();
+        }
+
+        #region Interface Construction
+
+        void BuildLayout ()
+        {
+            primary_vbox = new VBox ();
+
+            var label = new Label ("Super duper test UI!");
+            label.Show ();
+
+            primary_vbox.Add (label);
+            primary_vbox.Show ();
+            Add (primary_vbox);
+        }
+        
+        #endregion
     }
 }
 

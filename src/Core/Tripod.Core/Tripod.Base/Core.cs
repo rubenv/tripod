@@ -34,6 +34,7 @@ namespace Tripod.Base
         public static void Initialize (string name, ref string [] args)
         {
             Hyena.Log.Debugging = true;
+            GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
 
             Hyena.Log.Debug ("Initializing Core");
 
