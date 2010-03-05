@@ -1,6 +1,7 @@
 SUBDIRS = \
     Mono.Data.Sqlite \
     Hyena \
+    SQLite \
     TagLib \
     UniqueSharp
 
@@ -13,6 +14,7 @@ LIBRARIES_FROM_BANSHEE = \
 TMPDIR_BANSHEE = /tmp/fetch_banshee
 TMPDIR_TAGLIB = /tmp/fetch_taglib
 TMPDIR_UNIQUE = /tmp/fetch_unique
+TMPDIR_SQLITE = /tmp/fetch_sqlite
 
 clone-banshee:
 	mkdir $(TMPDIR_BANSHEE)
@@ -27,14 +29,9 @@ clone-uniquesharp:
 	mkdir $(TMPDIR_UNIQUE)
 	git clone --depth 1 git://gitorious.org/unique-sharp/unique-sharp.git $(TMPDIR_UNIQUE)
 
-pull:
-	for d in $(TMPDIR_BANSHEE) $(TMPDIR_TAGLIB) $(TMPDIR_UNIQUE); do \
-		if [ -d $$d ]; then \
-			pushd $$d; \
-			git pull; \
-			popd; \
-		fi \
-	done
+clone-sqlite:
+	mkdir $(TMPDIR_SQLITE)
+	pushd $(TMPDIR_SQLITE); svn checkout http://sqlite-net.googlecode.com/svn/trunk/src/ $(TMPDIR_SQLITE); popd
 
 update-banshee:
 	rm -rf $(LIBRARIES_FROM_BANSHEE)
@@ -58,5 +55,9 @@ update-uniquesharp:
 	cp $(TMPDIR_UNIQUE)/generator/*.cs UniqueSharp/generator/
 	cp $(TMPDIR_UNIQUE)/unique/{*.{custom,cs},unique-api.raw,Unique.metadata} UniqueSharp/unique/
 
-.PHONY: clone-banshee clone-taglib clone-uniquesharp \
-        pull update-banshee update-taglib update-uniquesharp
+update-sqlite:
+	rm -f SQLite/SQLite/SQLite.cs
+	cp $(TMPDIR_SQLITE)/SQLite.cs SQLite/SQLite/
+
+.PHONY: clone-banshee clone-taglib clone-uniquesharp clone-sqlite \
+        update-banshee update-taglib update-uniquesharp update-sqlite

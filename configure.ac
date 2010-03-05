@@ -162,12 +162,13 @@ src/Core/Tripod.Core/Makefile
 src/Clients/Makefile
 src/Clients/FlashUnit/Makefile
 
-src/Libraries/Makefile
 src/Libraries/Hyena/Makefile
+src/Libraries/Makefile
 src/Libraries/Mono.Data.Sqlite/Makefile
+src/Libraries/SQLite/Makefile
 src/Libraries/TagLib/Makefile
-src/Libraries/UniqueSharp/Makefile
 src/Libraries/UniqueSharp/generator/Makefile
+src/Libraries/UniqueSharp/Makefile
 src/Libraries/UniqueSharp/unique/Makefile
 
 extras/Makefile

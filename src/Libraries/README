@@ -1,3 +1,11 @@
-Some of the libraries in this tree (currently Hyena, Mono.Data.Sqlite,
-taglib-sharp and unique-sharp) are copies from upstream projects. You
-should not modify them here.
+This directory contains both home-built and imported libraries used by tripod.
+
+No direct modifications on imported libraries is allowed, we apply a strict
+upstream-first policy for these.
+
+Imported libraries:
+ * Hyena (Currently from Banshee)
+ * Mono.Data.Sqlite (Also from Banshee, as a Hyena dep)
+ * SQLite (http://code.google.com/p/sqlite-net/)
+ * TagLib (with photo support, http://gitorious.org/taglib-sharp)
+ * UniqueSharp (http://gitorious.org/unique-sharp)
