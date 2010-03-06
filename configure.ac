@@ -76,8 +76,8 @@ AC_SUBST(TRIPOD_DESKTOP_NAME)
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 
-dnl gtk#-beans and gio#
-BANSHEE_CHECK_GIO_SHARP
+dnl gio#
+TRIPOD_CHECK_GIO_SHARP
 
 dnl NUnit (optional)
 SHAMROCK_CHECK_NUNIT
@@ -190,9 +190,6 @@ ${PACKAGE}-${VERSION}
   Operating System/Desktop Environment:
     GNOME Support:     ${enable_gnome}
     OSX Support:       ${enable_osx}
-
-  Extra Features:
-    GIO Backend:       ${enable_gio} (requires glib >= 2.22, gtk-sharp-beans, and gio-sharp)
 
   Build/Development:
     Unit Tests:        ${do_tests} (requires nunit >= ${NUNIT_REQUIRED})
