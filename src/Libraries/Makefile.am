@@ -3,6 +3,7 @@ SUBDIRS = \
     Hyena \
     SQLite \
     TagLib \
+    GioSharp \
     UniqueSharp
 
 ### The stuff below takes care of embedding libraries. Build system hacks! ###
@@ -15,6 +16,7 @@ TMPDIR_BANSHEE = /tmp/fetch_banshee
 TMPDIR_TAGLIB = /tmp/fetch_taglib
 TMPDIR_UNIQUE = /tmp/fetch_unique
 TMPDIR_SQLITE = /tmp/fetch_sqlite
+TMPDIR_GIOSHARP = /tmp/fetch_giosharp
 
 clone-banshee:
 	mkdir $(TMPDIR_BANSHEE)
@@ -32,6 +34,10 @@ clone-uniquesharp:
 clone-sqlite:
 	mkdir $(TMPDIR_SQLITE)
 	pushd $(TMPDIR_SQLITE); svn checkout http://sqlite-net.googlecode.com/svn/trunk/src/ $(TMPDIR_SQLITE); popd
+
+clone-giosharp:
+	mkdir $(TMPDIR_GIOSHARP)
+	git clone --depth 1 git://gitorious.org/gio-sharp/mainline.git $(TMPDIR_GIOSHARP)
 
 update-banshee:
 	rm -rf $(LIBRARIES_FROM_BANSHEE)
@@ -59,5 +65,10 @@ update-sqlite:
 	rm -f SQLite/SQLite/SQLite.cs
 	cp $(TMPDIR_SQLITE)/SQLite.cs SQLite/SQLite/
 
-.PHONY: clone-banshee clone-taglib clone-uniquesharp clone-sqlite \
-        update-banshee update-taglib update-uniquesharp update-sqlite
+update-giosharp:
+	rm -rf GioSharp/generator/*.cs GioSharp/gio/{*.{custom,cs},gio-api-2.18.raw,Gio.metadata}
+	cp $(TMPDIR_GIOSHARP)/generator/*.cs GioSharp/generator/
+	cp $(TMPDIR_GIOSHARP)/gio/{*.{custom,cs},gio-api-2.18.raw,Gio.metadata} GioSharp/gio/
+
+.PHONY: clone-banshee clone-taglib clone-uniquesharp clone-sqlite clone-giosharp \
+        update-banshee update-taglib update-uniquesharp update-sqlite clone-giosharp

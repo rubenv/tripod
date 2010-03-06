@@ -163,6 +163,9 @@ src/Clients/Makefile
 src/Clients/FlashUnit/Makefile
 
 src/Libraries/Hyena/Makefile
+src/Libraries/GioSharp/generator/Makefile
+src/Libraries/GioSharp/Makefile
+src/Libraries/GioSharp/gio/Makefile
 src/Libraries/Makefile
 src/Libraries/Mono.Data.Sqlite/Makefile
 src/Libraries/SQLite/Makefile
