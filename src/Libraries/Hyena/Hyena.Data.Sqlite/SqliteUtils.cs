@@ -156,7 +156,11 @@ namespace Hyena.Data.Sqlite
 
         public override object Invoke (object[] args)
         {
-            return funcs[args[0] as string] (args[1], args[2]);
+            Func<object, object, object> func;
+            if (!funcs.TryGetValue (args[0] as string, out func))
+                throw new ArgumentException (args[0] as string, "HYENA_BINARY_FUNCTION name (arg 0)");
+
+            return func (args[1], args[2]);
         }
     }
 

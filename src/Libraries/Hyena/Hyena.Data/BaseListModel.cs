@@ -73,6 +73,11 @@ namespace Hyena.Data
 
         public abstract int Count { get; }
 
+        public virtual object GetItem (int index)
+        {
+            return this[index];
+        }
+
         public virtual Selection Selection {
             get { return selection; }
         }

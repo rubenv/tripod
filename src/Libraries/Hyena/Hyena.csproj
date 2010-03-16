@@ -17,9 +17,8 @@
     <Optimize>true</Optimize>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DefineConstants>NET_2_0</DefineConstants>
-    <ReleaseVersion>0.0.1</ReleaseVersion>
+    <ReleaseVersion>1.3</ReleaseVersion>
     <RootNamespace>Hyena</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -175,11 +174,9 @@
     <Compile Include="Hyena.Json\Tests\SerializerTests.cs" />
     <Compile Include="Hyena.Json\Serializer.cs" />
     <Compile Include="Hyena\Tests\DateTimeUtilTests.cs" />
+    <Compile Include="Hyena.Query\ExactUriStringQueryValue.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\..\bin\Mono.Posix.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -187,6 +184,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\..\bin\Mono.Posix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mono.Data.Sqlite\Mono.Data.Sqlite.csproj">

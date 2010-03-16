@@ -42,6 +42,8 @@ namespace Hyena.Data
 
         int Count { get; }
         bool CanReorder { get; }
+
+        object GetItem (int index);
     }
 
     public interface IListModel<T> : IListModel
