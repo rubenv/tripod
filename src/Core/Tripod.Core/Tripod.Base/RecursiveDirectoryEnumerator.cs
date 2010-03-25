@@ -1,5 +1,5 @@
 //
-// Core.cs
+// RecursiveDirectoryEnumerator.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -24,33 +24,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-using Gtk;
 using System;
-using Hyena.Jobs;
-using Hyena.Data.Sqlite;
+using System.Collections;
+using System.Collections.Generic;
+using GLib;
 
 namespace Tripod.Base
 {
-    public class Core
+    public class RecursiveFileEnumerator : IEnumerable<File>
     {
-        static readonly Scheduler scheduler = new Scheduler ();
-        public static Scheduler Scheduler {
-            get { return scheduler; }
-        }
+        Uri root;
 
-        static readonly HyenaSqliteConnection db_connection = new TripodSqliteConnection("test.db");
-        public static HyenaSqliteConnection DbConnection {
-            get { return db_connection; }
-        }
-
-        public static void Initialize (string name, ref string[] args)
+        public RecursiveFileEnumerator (Uri root)
         {
-            Hyena.Log.Debugging = true;
-            GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
-            
-            Hyena.Log.Debug ("Initializing Core");
-            
-            Application.Init (name, ref args);
+            this.root = root;
+        }
+
+        IEnumerable<File> ScanForFiles (File root)
+        {
+            var enumerator = root.EnumerateChildren ("standard::name,standard::type", FileQueryInfoFlags.None, null);
+            foreach (FileInfo info in enumerator) {
+                File file = root.GetChild (info.Name);
+                
+                if (info.FileType == FileType.Regular) {
+                    yield return file;
+                } else if (info.FileType == FileType.Directory) {
+                    foreach (var child in ScanForFiles (file)) {
+                        yield return child;
+                    }
+                }
+            }
+        }
+
+        public IEnumerator<File> GetEnumerator ()
+        {
+            var file = FileFactory.NewForUri (root);
+            return ScanForFiles (file).GetEnumerator ();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator ()
+        {
+            return GetEnumerator ();
         }
     }
 }

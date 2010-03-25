@@ -1,5 +1,5 @@
-//
-// Core.cs
+// 
+// ImportDialog.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -23,34 +23,54 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-using Gtk;
 using System;
-using Hyena.Jobs;
-using Hyena.Data.Sqlite;
+using Gtk;
 
-namespace Tripod.Base
+namespace FlashUnit.Gui
 {
-    public class Core
+    public class ImportDialog : Window
     {
-        static readonly Scheduler scheduler = new Scheduler ();
-        public static Scheduler Scheduler {
-            get { return scheduler; }
-        }
+        bool interface_constructed = false;
 
-        static readonly HyenaSqliteConnection db_connection = new TripodSqliteConnection("test.db");
-        public static HyenaSqliteConnection DbConnection {
-            get { return db_connection; }
-        }
-
-        public static void Initialize (string name, ref string[] args)
+        public ImportDialog () : base ("Import")
         {
-            Hyena.Log.Debugging = true;
-            GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
-            
-            Hyena.Log.Debug ("Initializing Core");
-            
-            Application.Init (name, ref args);
+
         }
+
+        protected override void OnShown ()
+        {
+            if (interface_constructed) {
+                base.OnShown ();
+                return;
+            }
+            interface_constructed = true;
+
+            BuildUI ();
+            base.OnShown ();
+        }
+
+        #region UI construction
+
+        void BuildUI () {
+            var dialog_vbox = new VBox () {
+                BorderWidth = 6,
+                Spacing = 6
+            };
+            var dialog_table = new Table (2, 2, false) {
+                RowSpacing = 12,
+                ColumnSpacing = 6
+            };
+
+            dialog_table.Attach (new Label() {
+                Text = "Import Source:"
+            }, 0, 1, 0, 1);
+
+            dialog_vbox.Add(dialog_table);
+            Add (dialog_vbox);
+            ShowAll ();
+        }
+
+        #endregion
     }
 }
+

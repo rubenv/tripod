@@ -29,7 +29,11 @@
 using System;
 using Gtk;
 using Hyena;
+using Hyena.Data.Sqlite;
 using Tripod.Base;
+using Tripod.Model;
+using System.Linq;
+using FlashUnit.Gui;
 
 namespace FlashUnit
 {
@@ -41,11 +45,42 @@ namespace FlashUnit
             
             Log.Information ("Hello World! Flash!");
             
-            var main_window = new MainWindow ();
-            main_window.Destroyed += (o, e) => Application.Quit ();
-            main_window.Show ();
+            //var main_window = new MainWindow ();
+            //main_window.Destroyed += (o, e) => Application.Quit ();
+            //main_window.Show ();
             
-            Application.Run ();
+            //Application.Run ();
+
+            //var connection = new HyenaSqliteConnection("test.db");
+            //var provider = new SqliteModelProvider<Person>(connection, "People");
+
+            //var joe = new Person () {
+            //    Name = "Joe McTest"
+            //};
+
+            //provider.Save(joe);
+            //Log.Debug(joe.Id.ToString ());
+
+            //foreach (var person in provider.FetchAll()) {
+            //    Log.DebugFormat("{0} => {1}", person.Id, person.Name);
+            //}
+
+            var cache = new MainCachePhotoSource ();
+
+            var t = Log.DebugTimerStart();
+            Log.DebugTimerPrint(t, "starting");
+            var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
+            Log.Information(source.DisplayName);
+            Log.Information(source.Available ? "Available" : "Not Available");
+            Log.DebugTimerPrint(t, "made source");
+            var e = source.Photos;
+            Log.DebugTimerPrint(t, "made enumerator");
+            foreach (var p in e) {
+                cache.RegisterPhoto (p);
+            }
+            Log.DebugTimerPrint(t, "listed photos");
+
+            Log.DebugFormat ("Cache has {0} items", cache.Photos.LongCount());
         }
     }
 }

@@ -33,6 +33,18 @@
   <ItemGroup>
     <Compile Include="Tripod.Base\Core.cs" />
     <Compile Include="Tripod.Jobs\ThreadPoolJob.cs" />
+    <Compile Include="Tripod.Base\RecursiveDirectoryEnumerator.cs" />
+    <Compile Include="Tripod.Model\IPhotoSource.cs" />
+    <Compile Include="Tripod.Model\IPhoto.cs" />
+    <Compile Include="Tripod.Model\INamingPolicy.cs" />
+    <Compile Include="Tripod.Model\LocalFolderPhotoSource.cs" />
+    <Compile Include="Tripod.Model\LocalFilePhoto.cs" />
+    <Compile Include="Tripod.Model\CachePhotoSource.cs" />
+    <Compile Include="Tripod.Model\CachePhoto.cs" />
+    <Compile Include="Tripod.Model\MainCachePhotoSource.cs" />
+    <Compile Include="Tripod.Model\ICacheablePhotoSource.cs" />
+    <Compile Include="Tripod.Model\CachePhotoSourceFactory.cs" />
+    <Compile Include="Tripod.Base\TripodSqliteConnection.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">
@@ -61,6 +73,7 @@
   <ItemGroup>
     <Folder Include="Tripod.Base\" />
     <Folder Include="Tripod.Jobs\" />
+    <Folder Include="Tripod.Model\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
@@ -71,5 +84,9 @@
   <ItemGroup>
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gio-sharp, Version=2.14.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Core" />
   </ItemGroup>
 </Project>

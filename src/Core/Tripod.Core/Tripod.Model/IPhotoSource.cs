@@ -1,5 +1,5 @@
-//
-// Core.cs
+// 
+// IPhotoSource.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -23,34 +23,24 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-using Gtk;
 using System;
-using Hyena.Jobs;
-using Hyena.Data.Sqlite;
+using System.Collections.Generic;
 
-namespace Tripod.Base
+namespace Tripod.Model
 {
-    public class Core
+    public interface IPhotoSource
     {
-        static readonly Scheduler scheduler = new Scheduler ();
-        public static Scheduler Scheduler {
-            get { return scheduler; }
-        }
+        string DisplayName { get; }
+        bool Available { get; }
+        IEnumerable<IPhoto> Photos { get; }
 
-        static readonly HyenaSqliteConnection db_connection = new TripodSqliteConnection("test.db");
-        public static HyenaSqliteConnection DbConnection {
-            get { return db_connection; }
-        }
-
-        public static void Initialize (string name, ref string[] args)
-        {
-            Hyena.Log.Debugging = true;
-            GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
-            
-            Hyena.Log.Debug ("Initializing Core");
-            
-            Application.Init (name, ref args);
-        }
+        /// <summary>
+        /// Copy the given photo into this storage source, if possible.
+        /// </summary>
+        /// <param name="photo">
+        /// A <see cref="IPhoto"/> that should be copied into the source.
+        /// </param>
+        //void CopyIntoSource (IPhoto photo);
     }
 }
+

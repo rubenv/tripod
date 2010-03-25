@@ -1,5 +1,5 @@
-//
-// Core.cs
+// 
+// IPhoto.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -23,34 +23,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-using Gtk;
 using System;
-using Hyena.Jobs;
-using Hyena.Data.Sqlite;
-
-namespace Tripod.Base
+namespace Tripod.Model
 {
-    public class Core
+    public interface IPhoto
     {
-        static readonly Scheduler scheduler = new Scheduler ();
-        public static Scheduler Scheduler {
-            get { return scheduler; }
-        }
-
-        static readonly HyenaSqliteConnection db_connection = new TripodSqliteConnection("test.db");
-        public static HyenaSqliteConnection DbConnection {
-            get { return db_connection; }
-        }
-
-        public static void Initialize (string name, ref string[] args)
-        {
-            Hyena.Log.Debugging = true;
-            GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
-            
-            Hyena.Log.Debug ("Initializing Core");
-            
-            Application.Init (name, ref args);
-        }
+        IPhotoSource Source { get; }
+        Uri Uri { get; }
     }
 }
+
