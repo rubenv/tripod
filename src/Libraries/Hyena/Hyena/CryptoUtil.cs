@@ -55,7 +55,10 @@ namespace Hyena
                 return String.Empty;
             }
 
-            byte [] hash = md5.ComputeHash (encoding.GetBytes (text));
+            byte [] hash;
+            lock (md5) {
+                hash = md5.ComputeHash (encoding.GetBytes (text));
+            }
 
             StringBuilder shash = new StringBuilder ();
             for (int i = 0; i < hash.Length; i++) {

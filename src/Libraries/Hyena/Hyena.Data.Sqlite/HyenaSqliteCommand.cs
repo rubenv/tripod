@@ -189,7 +189,7 @@ namespace Hyena.Data.Sqlite
 
             if (param_values.Length != parameter_count) {
                 throw new ArgumentException (String.Format (
-                    "Command has {0} parameters, but {1} values given.", parameter_count, param_values.Length
+                    "Command {2} has {0} parameters, but {1} values given.", parameter_count, param_values.Length, command
                 ));
             }
 

@@ -5,6 +5,7 @@ upstream-first policy for these.
 
 Imported libraries:
  * Hyena (Currently from Banshee)
+ * Hyena.Gui (Currently from Banshee)
  * Mono.Data.Sqlite (Also from Banshee, as a Hyena dep)
  * SQLite (http://code.google.com/p/sqlite-net/)
  * TagLib (with photo support, http://gitorious.org/taglib-sharp)

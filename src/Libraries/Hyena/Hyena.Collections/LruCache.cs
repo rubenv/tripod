@@ -91,7 +91,7 @@ namespace Hyena.Collections
                 misses++;
                 EnsureMinimumHitRatio ();
 
-                if (Count >= max_count) {
+                if (Count > max_count) {
                     TKey expire = FindOldestEntry ();
                     ExpireItem (cache[expire].Value);
                     cache.Remove (expire);
@@ -137,8 +137,8 @@ namespace Hyena.Collections
 
         private void EnsureMinimumHitRatio ()
         {
-            if (minimum_hit_ratio != null && Count >= MaxCount && HitRatio < minimum_hit_ratio) {
-                MaxCount = Count + 1;
+            if (minimum_hit_ratio != null && Count > MaxCount && HitRatio < minimum_hit_ratio) {
+                MaxCount = Count;
             }
         }
 

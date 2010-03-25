@@ -1,6 +1,7 @@
 SUBDIRS = \
     Mono.Data.Sqlite \
     Hyena \
+    Hyena.Gui \
     SQLite \
     TagLib \
     UniqueSharp
@@ -9,6 +10,7 @@ SUBDIRS = \
 
 LIBRARIES_FROM_BANSHEE = \
     Hyena \
+    Hyena.Gui \
     Mono.Data.Sqlite
 
 TMPDIR_BANSHEE = /tmp/fetch_banshee

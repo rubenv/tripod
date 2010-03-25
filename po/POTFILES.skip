@@ -9,3 +9,15 @@ src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs
 src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SR.Designer.cs
+
+src/Libraries/Hyena.Gui/Hyena.Data.Gui/Accessibility/ColumnHeaderCellTextAccessible.cs
+src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
+src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
+src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs
+src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs
+src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs
+

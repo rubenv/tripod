@@ -41,32 +41,32 @@ namespace Hyena.Query.Tests
     {
         private static QueryField ArtistField = new QueryField (
             "artist", "ArtistName", "Artist", "CoreArtists.NameLowered", true,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "by", "artist", "artists"
         );
 
         private static QueryField AlbumField = new QueryField (
             "album", "AlbumTitle", "Album", "CoreAlbums.TitleLowered", true,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "on", "album", "from", "albumtitle"
         );
 
         private static QueryField PlayCountField = new QueryField (
             "playcount", "PlayCount", "Play Count", "CoreTracks.PlayCount", typeof(IntegerQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "plays", "playcount", "numberofplays", "listens"
         );
 
         private static QueryField DurationField = new QueryField (
             "duration", "Duration", "Duration", "CoreTracks.Duration", typeof(TimeSpanQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "duration", "length", "time"
         );
 
         private static QueryField MimeTypeField = new QueryField (
             "mimetype", "MimeType", "Mime Type", "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}", typeof(ExactStringQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "type", "mimetype", "format", "ext", "mime"
+        );
+
+        private static QueryField UriField = new QueryField (
+            "uri", "Uri", "File Location", "CoreTracks.Uri", typeof(ExactUriStringQueryValue),
+            "uri", "path", "file", "location"
         );
 
         private static QueryFieldSet FieldSet = new QueryFieldSet (
@@ -219,7 +219,19 @@ namespace Hyena.Query.Tests
                 MimeTypeField.ToSql (StringQueryValue.Contains, val)
             );
         }
-		
+
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=612152
+        public void EscapeUri ()
+        {
+            QueryValue val = new ExactUriStringQueryValue ();
+            val.ParseUserQuery ("space 3quotes`'\"underscore_percentage%slash/backslash\\");
+
+            Assert.AreEqual (
+                @"(CoreTracks.Uri LIKE '%space\%203quotes\%60''\%22underscore\_percentage\%25slash/backslash\%5C%' ESCAPE '\' AND CoreTracks.Uri IS NOT NULL)",
+                UriField.ToSql (StringQueryValue.Contains, val)
+            );
+        }
+
         [Test]
         // Test behavior issues described in
         // http://bugzilla.gnome.org/show_bug.cgi?id=547078

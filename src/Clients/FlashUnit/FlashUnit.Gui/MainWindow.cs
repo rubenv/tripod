@@ -26,12 +26,13 @@
 
 using System;
 using Gtk;
+using GLib;
 using Hyena;
 using Hyena.Jobs;
 using Tripod.Base;
 using Tripod.Jobs;
 
-namespace FlashUnit
+namespace FlashUnit.Gui
 {
     public class MainWindow : Window
     {
@@ -80,7 +81,7 @@ namespace FlashUnit
             var folder_button = new FileChooserButton ("Select import folder", FileChooserAction.SelectFolder);
             folder_button.FileSet += delegate {
                 folder = folder_button.Uri;
-                Log.Information ("Selected " + folder);
+                Hyena.Log.Information ("Selected " + folder);
             };
             folder_button.Show ();
             button_box.Add (folder_button);
@@ -97,11 +98,24 @@ namespace FlashUnit
 
         #endregion
 
+        /*
+            var t = Hyena.Log.DebugTimerStart ("Creating enumerator");
+            var enumerator = new RecursiveFileEnumerator (new Uri (folder));
+            Hyena.Log.DebugTimerPrint (t);
+
+            var t2 = Hyena.Log.DebugTimerStart ("Running enumerator");
+            foreach (var file in enumerator) {
+                Hyena.Log.Information (file.Uri.ToString());
+            }
+            Hyena.Log.DebugTimerPrint (t2);
+         */
+
         string folder;
 
         void StartImport (object sender, EventArgs args)
         {
-            
+            var import_dialog = new ImportDialog ();
+            import_dialog.Show ();
         }
     }
 }

@@ -27,6 +27,7 @@
 using Gtk;
 using System;
 using Hyena.Jobs;
+using Hyena.Data.Sqlite;
 
 namespace Tripod.Base
 {
@@ -35,6 +36,11 @@ namespace Tripod.Base
         static readonly Scheduler scheduler = new Scheduler ();
         public static Scheduler Scheduler {
             get { return scheduler; }
+        }
+
+        static readonly HyenaSqliteConnection db_connection = new TripodSqliteConnection("test.db");
+        public static HyenaSqliteConnection DbConnection {
+            get { return db_connection; }
         }
 
         public static void Initialize (string name, ref string[] args)

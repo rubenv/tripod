@@ -80,6 +80,7 @@ SOURCES =  \
 	Hyena.Query/DateQueryValue.cs \
 	Hyena.Query/EnumQueryValue.cs \
 	Hyena.Query/ExactStringQueryValue.cs \
+	Hyena.Query/ExactUriStringQueryValue.cs \
 	Hyena.Query/FileSizeQueryValue.cs \
 	Hyena.Query/IntegerKeyedObjectQueryValue.cs \
 	Hyena.Query/IntegerQueryValue.cs \
