@@ -1,5 +1,5 @@
 // 
-// IRegisterablePhotoSource.cs
+// ICacheablePhotoSource.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
