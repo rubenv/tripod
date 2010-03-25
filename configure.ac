@@ -85,6 +85,9 @@ SHAMROCK_CHECK_NUNIT
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
 
+dnl Mono.Addins libraries
+BANSHEE_CHECK_MONO_ADDINS
+
 dnl OS X (optional through --enable-osx)
 BANSHEE_CHECK_OSX
 
