@@ -28,7 +28,6 @@ namespace Tripod.Model
 {
     public interface IPhoto
     {
-        IPhotoSource Source { get; }
         Uri Uri { get; }
     }
 }

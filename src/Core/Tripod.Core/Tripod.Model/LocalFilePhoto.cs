@@ -28,14 +28,9 @@ namespace Tripod.Model
 {
     public class LocalFilePhoto : IPhoto
     {
-        public LocalFilePhoto (LocalFolderPhotoSource source, Uri uri)
+        public LocalFilePhoto (Uri uri)
         {
-            this.Source = source;
             this.Uri = uri;
-        }
-
-        public IPhotoSource Source {
-            get; private set;
         }
 
         public Uri Uri {

@@ -73,7 +73,7 @@ namespace Tripod.Model
 
                 return from f in new RecursiveFileEnumerator (root)
                     where IsPhoto (f)
-                    select new LocalFilePhoto (this, f.Uri) as IPhoto;
+                    select new LocalFilePhoto (f.Uri) as IPhoto;
             }
         }
 
@@ -100,6 +100,7 @@ namespace Tripod.Model
         public void Start (ICachingPhotoSource cache)
         {
             Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
+
             // TODO: Find files that need to be added (the ones that aren't in there already)
         }
 
