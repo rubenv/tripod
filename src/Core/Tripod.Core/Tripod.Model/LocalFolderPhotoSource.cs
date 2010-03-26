@@ -79,6 +79,7 @@ namespace Tripod.Model
 
         bool IsPhoto (File f)
         {
+            // TODO: Generalize and possibly expand to mime-type detection.
             return f.Basename.EndsWith (".jpg", StringComparison.InvariantCultureIgnoreCase);
         }
 
