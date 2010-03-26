@@ -40,6 +40,7 @@ namespace Tripod.Model
 
         public CachePhotoSource (ICacheablePhotoSource source) {
             instance = source;
+            instance.AvailabilityChanged += (s, a) => UpdateAvailability ();
             SourceType = instance.GetType().FullName;
         }
 
@@ -56,12 +57,21 @@ namespace Tripod.Model
             }
         }
 
+        // This is tracked in the database for fast joining with IPhoto, to
+        // make sure we can quickly filter on available photos.
+        [DatabaseColumn]
         public bool Available {
             get {
                 EnsureInstance ();
                 return instance.Available;
             }
+            set {
+                // Nothing to do
+            }
         }
+
+
+        public event EventHandler AvailabilityChanged;
 
         public IEnumerable<IPhoto> Photos {
             get {
@@ -76,13 +86,27 @@ namespace Tripod.Model
             lock (this) {
                 if (instance == null) {
                     var type = Type.GetType (SourceType);
-                    var source = Activator.CreateInstance (type) as ICacheablePhotoSource;
-                    source.CacheId = CacheId;
-                    source.WakeUp ();
+                    instance = Activator.CreateInstance (type) as ICacheablePhotoSource;
+                    instance.CacheId = CacheId;
+                    instance.WakeUp ();
 
-                    instance = source;
+                    instance.AvailabilityChanged += (s, a) => UpdateAvailability ();
                 }
             }
+        }
+
+        bool available = false;
+        void UpdateAvailability ()
+        {
+            bool new_available = instance.Available;
+
+            if (new_available == available)
+                return;
+
+            var h = AvailabilityChanged;
+            if (h != null)
+                h (this, null);
+
         }
 
         public void Start (ICachingPhotoSource cache)
@@ -103,10 +127,14 @@ namespace Tripod.Model
                 Log.DebugFormat ("Starting cached source: {0}/{1}", Source.SourceType, Source.CacheId);
                 Source.EnsureInstance ();
                 Source.instance.Start (Cache);
+
+                // Make sure we send out the event on start if different from
+                // the database value. The value in the database can be stale.
+                Source.UpdateAvailability ();
+
                 OnFinished ();
             }
         }
     }
-
 }
 

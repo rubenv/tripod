@@ -31,8 +31,10 @@ namespace Tripod.Model
     public interface IPhotoSource
     {
         string DisplayName { get; }
-        bool Available { get; }
         IEnumerable<IPhoto> Photos { get; }
+
+        bool Available { get; }
+        event EventHandler AvailabilityChanged;
 
         /// <summary>
         /// Copy the given photo into this storage source, if possible.

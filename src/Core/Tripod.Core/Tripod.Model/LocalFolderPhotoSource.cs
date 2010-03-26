@@ -66,6 +66,8 @@ namespace Tripod.Model
             get { return FileFactory.NewForUri (root).Exists; }
         }
 
+        public event EventHandler AvailabilityChanged;
+
         public IEnumerable<IPhoto> Photos {
             get {
                 if (!Available)

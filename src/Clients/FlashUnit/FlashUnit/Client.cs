@@ -73,6 +73,9 @@ namespace FlashUnit
             var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
             cache.RegisterPhotoSource (source);
 
+            source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures2/"));
+            cache.RegisterPhotoSource (source);
+
 /*            var t = Log.DebugTimerStart();
             Log.DebugTimerPrint(t, "starting");
             var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));

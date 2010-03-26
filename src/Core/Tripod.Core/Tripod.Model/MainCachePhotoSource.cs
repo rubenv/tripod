@@ -45,6 +45,8 @@ namespace Tripod.Model
             get { return true; }
         }
 
+        public event EventHandler AvailabilityChanged;
+
         public IEnumerable<IPhoto> Photos {
             get { return from p in provider.FetchAll () select p as IPhoto; }
         }
@@ -60,6 +62,7 @@ namespace Tripod.Model
             }
             
             var cache = new CachePhotoSource (source);
+            cache.AvailabilityChanged += OnCachedSourceAvailabilityChanged;
             source_provider.Save (cache);
             
             source.CacheId = cache.CacheId;
@@ -68,9 +71,15 @@ namespace Tripod.Model
         }
 
         public void Start () {
-            foreach (var source in CachedSources)
+            foreach (var source in CachedSources) {
+                source.AvailabilityChanged += OnCachedSourceAvailabilityChanged;
                 source.Start (this);
+            }
+        }
+
+        void OnCachedSourceAvailabilityChanged (object sender, EventArgs args)
+        {
+            source_provider.Save (sender as CachePhotoSource);
         }
     }
 }
-
