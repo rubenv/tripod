@@ -8,8 +8,7 @@ SOURCES =  \
 	Tripod.Jobs/ThreadPoolJob.cs \
 	Tripod.Model/CachePhoto.cs \
 	Tripod.Model/CachePhotoSource.cs \
-	Tripod.Model/CachePhotoSourceFactory.cs \
-	Tripod.Model/ICacheablePhotoSource.cs \
+	Tripod.Model/ICachePhotoSource.cs \
 	Tripod.Model/INamingPolicy.cs \
 	Tripod.Model/IPhoto.cs \
 	Tripod.Model/IPhotoSource.cs \

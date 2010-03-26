@@ -1,5 +1,5 @@
 // 
-// ICacheablePhotoSource.cs
+// ICachePhotoSource.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -26,10 +26,10 @@
 using System;
 namespace Tripod.Model
 {
-    public interface ICacheablePhotoSource : IPhotoSource
+    public interface ICachePhotoSource : IPhotoSource
     {
-        void Initialize (string data);
-        string InitializationData { get; }
+        void RegisterPhotoSource (IPhotoSource source);
+        void Start ();
     }
 }
 

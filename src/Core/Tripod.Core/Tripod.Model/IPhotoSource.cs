@@ -30,6 +30,18 @@ namespace Tripod.Model
 {
     public interface IPhotoSource
     {
+        // The id by which this source is stored in the cache.
+        int CacheId { get; set; }
+
+        // Called when the source is woken up by the main cache.
+        void WakeUp ();
+
+        // Called when the source is added to the main cache.
+        void Save ();
+
+        // Start this source (which means that it should sync with the main cache).
+        void Start (ICachePhotoSource cache);
+
         string DisplayName { get; }
         bool Available { get; }
         IEnumerable<IPhoto> Photos { get; }

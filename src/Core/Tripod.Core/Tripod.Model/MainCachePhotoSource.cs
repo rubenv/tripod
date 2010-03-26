@@ -1,4 +1,4 @@
-// 
+//
 // MainCachePhotoSource.cs
 // 
 // Author:
@@ -23,6 +23,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -31,47 +32,75 @@ using Tripod.Base;
 
 namespace Tripod.Model
 {
-    public class MainCachePhotoSource : IPhotoSource
+    public class MainCachePhotoSource : ICachePhotoSource
     {
-        SqliteModelProvider<CachePhoto> provider = new SqliteModelProvider<CachePhoto>(Core.DbConnection, "CachedPhotos");
+        SqliteModelProvider<CachePhoto> provider = new SqliteModelProvider<CachePhoto> (Core.DbConnection, "CachedPhotos");
+        SqliteModelProvider<CachePhotoSource> source_provider = new SqliteModelProvider<CachePhotoSource> (Core.DbConnection, "CachedPhotoSources");
 
         public string DisplayName {
-            get {
-                return "Main Cache";
-            }
+            get { return "Main Cache"; }
         }
 
         public bool Available {
-            get {
-                return true;
-            }
+            get { return true; }
         }
 
         public IEnumerable<IPhoto> Photos {
+            get { return from p in provider.FetchAll () select p as IPhoto; }
+        }
+
+        IEnumerable<CachePhotoSource> CachedSources {
+            get { return source_provider.FetchAll (); }
+        }
+
+        public void RegisterPhotoSource (IPhotoSource source)
+        {
+            if (source.CacheId != 0) {
+                throw new Exception ("Can't register an already registered source!");
+            }
+            
+            var cache = new CachePhotoSource (source);
+            source_provider.Save (cache);
+            
+            source.CacheId = cache.CacheId;
+            source.Save ();
+            cache.Start (this);
+        }
+
+        public void Start () {
+            foreach (var source in CachedSources)
+                source.Start (this);
+        }
+
+        #region Not implemented
+
+        // Stuff below doesn't apply to the main cache.\
+
+        public int CacheId {
             get {
-                return from p in RegisteredPhotos select p as IPhoto;
+                throw new System.NotImplementedException ();
+            }
+            set {
+                throw new System.NotImplementedException ();
             }
         }
 
-        public List<CachePhoto> RegisteredPhotos {
-            get; private set;
+        public void WakeUp ()
+        {
+            throw new System.NotImplementedException ();
         }
 
-        public void RegisterPhoto (IPhoto photo) {
-            if (RegisteredPhotos == null)
-                RegisteredPhotos = new List<CachePhoto>();
-
-            var source = CachePhotoSourceFactory.GetForPhotoSource(photo.Source);
-            var cached_photo = new CachePhoto () {
-                Uri = photo.Uri,
-                Source = source,
-                SourceId = source.Id
-            };
-
-            provider.Save(cached_photo);
-
-            RegisteredPhotos.Add (cached_photo);
+        public void Save ()
+        {
+            throw new System.NotImplementedException ();
         }
+
+        public void Start (ICachePhotoSource cache)
+        {
+            throw new System.NotImplementedException ();
+        }
+        
+        #endregion
     }
 }
 

@@ -288,10 +288,10 @@ namespace Hyena.Data.Sqlite
             ));
         }
 
-        public virtual void Save (T target)
+        public virtual void Save (T target, bool force_insert)
         {
             try {
-                if (Convert.ToInt32 (key.GetRawValue (target)) > 0) {
+                if (Convert.ToInt32 (key.GetRawValue (target)) > 0 && !force_insert) {
                     Update (target);
                 } else {
                     key.SetValue (target, Insert (target));
@@ -301,6 +301,12 @@ namespace Hyena.Data.Sqlite
                 Hyena.Log.DebugFormat ("type of key value: {0}", key.GetRawValue (target).GetType ());
                 throw;
             }
+
+        }
+
+        public virtual void Save (T target)
+        {
+            Save (target, false);
         }
 
         protected virtual object [] GetInsertParams (T target)

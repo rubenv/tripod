@@ -27,7 +27,10 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Hyena;
+using Hyena.Jobs;
 using Hyena.Data.Sqlite;
+using Tripod.Base;
 
 namespace Tripod.Model
 {
@@ -35,20 +38,16 @@ namespace Tripod.Model
     {
         public CachePhotoSource () {}
 
-        public CachePhotoSource (ICacheablePhotoSource source) {
+        public CachePhotoSource (IPhotoSource source) {
             instance = source;
             SourceType = instance.GetType().FullName;
-            InitializationData = instance.InitializationData;
         }
 
         [DatabaseColumn(Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        public int Id { get; set; }
+        public int CacheId { get; set; }
 
         [DatabaseColumn]
         public string SourceType { get; set; }
-
-        [DatabaseColumn]
-        public string InitializationData { get; set; }
 
         public string DisplayName {
             get {
@@ -71,19 +70,53 @@ namespace Tripod.Model
             }
         }
 
-        ICacheablePhotoSource instance;
+        IPhotoSource instance;
         void EnsureInstance ()
         {
             lock (this) {
                 if (instance == null) {
                     var type = Type.GetType (SourceType);
-                    var source = Activator.CreateInstance (type) as ICacheablePhotoSource;
-                    source.Initialize (InitializationData);
+                    var source = Activator.CreateInstance (type) as IPhotoSource;
+                    source.CacheId = CacheId;
+                    source.WakeUp ();
 
                     instance = source;
                 }
             }
         }
+
+        public void WakeUp ()
+        {
+            throw new System.NotImplementedException ();
+        }
+
+        public void Save ()
+        {
+            throw new System.NotImplementedException ();
+        }
+
+        public void Start (ICachePhotoSource cache)
+        {
+            Core.Scheduler.Add (new StartPhotoSourceJob () {
+                Source = this,
+                Cache = cache
+            });
+        }
+
+
+        private sealed class StartPhotoSourceJob : SimpleAsyncJob {
+            internal CachePhotoSource Source { get; set; }
+            internal ICachePhotoSource Cache { get; set; }
+
+            protected override void Run ()
+            {
+                Log.DebugFormat ("Starting cached source: {0}/{1}", Source.SourceType, Source.CacheId);
+                Source.EnsureInstance ();
+                Source.instance.Start (Cache);
+                OnFinished ();
+            }
+        }
     }
+
 }
 

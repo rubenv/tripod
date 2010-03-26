@@ -31,7 +31,7 @@ namespace Tripod.Model
     public class CachePhoto : IPhoto
     {
         [DatabaseColumn(Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        public int Id { get; set; }
+        public int CacheId { get; set; }
 
         [DatabaseColumn]
         public int SourceId { get; internal set; }

@@ -1,4 +1,4 @@
-// 
+//
 // LocalFolderPhotoSource.cs
 // 
 // Author:
@@ -28,17 +28,26 @@ using GLib;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Hyena.Data.Sqlite;
 using Tripod.Base;
 
 namespace Tripod.Model
 {
-    public class LocalFolderPhotoSource : ICacheablePhotoSource
+    public class LocalFolderPhotoSource : IPhotoSource
     {
+        public int CacheId {
+            get; set;
+        }
+
+
         Uri root;
 
-        public LocalFolderPhotoSource () {}
+        public LocalFolderPhotoSource ()
+        {
+        }
 
-        public LocalFolderPhotoSource (Uri root) {
+        public LocalFolderPhotoSource (Uri root)
+        {
             this.root = root;
         }
 
@@ -47,43 +56,61 @@ namespace Tripod.Model
             get {
                 if (display_name == String.Empty) {
                     var segments = root.Segments;
-                    display_name = segments[segments.Length - 1].Trim(new char [] {'/'});
+                    display_name = segments[segments.Length - 1].Trim (new char[] { '/' });
                 }
                 return display_name;
             }
         }
 
         public bool Available {
-            get {
-                return FileFactory.NewForUri (root).Exists;
-            }
+            get { return FileFactory.NewForUri (root).Exists; }
         }
 
         public IEnumerable<IPhoto> Photos {
             get {
                 if (!Available)
-                    throw new Exception("Not available!");
+                    throw new Exception ("Not available!");
 
                 return from f in new RecursiveFileEnumerator (root)
-                    where IsPhoto (f) select new LocalFilePhoto (this, f.Uri) as IPhoto;
+                    where IsPhoto (f)
+                    select new LocalFilePhoto (this, f.Uri) as IPhoto;
             }
         }
 
-        bool IsPhoto (File f) {
+        bool IsPhoto (File f)
+        {
             return f.Basename.EndsWith (".jpg", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public void Initialize (string data)
+        SqliteModelProvider<LocalFolderPhotoSourceParameters> parameter_provider = new SqliteModelProvider<LocalFolderPhotoSourceParameters> (Core.DbConnection, "LocalFolderSourceParameters");
+
+        public void WakeUp ()
         {
-            root = new Uri (data);
+            var parameters = parameter_provider.FetchFirstMatching ("CacheId = ?", CacheId);
+            root = new Uri (parameters.RootUri);
         }
 
-        public string InitializationData {
-            get {
-                return root.ToString ();
-            }
+        public void Save ()
+        {
+            Hyena.Log.Debug ("Storing folder source");
+            var parameters = new LocalFolderPhotoSourceParameters { CacheId = CacheId, RootUri = root.ToString () };
+            parameter_provider.Save (parameters, true);
         }
 
+        public void Start (ICachePhotoSource cache)
+        {
+            Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
+            // TODO: Find files that need to be added (the ones that aren't in there already)
+        }
+
+        private class LocalFolderPhotoSourceParameters
+        {
+            [DatabaseColumn(Constraints = DatabaseColumnConstraints.PrimaryKey)]
+            public int CacheId { get; set; }
+
+            [DatabaseColumn]
+            public string RootUri { get; set; }
+        }
     }
 }
 

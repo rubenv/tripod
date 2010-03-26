@@ -65,9 +65,15 @@ namespace FlashUnit
             //    Log.DebugFormat("{0} => {1}", person.Id, person.Name);
             //}
 
-            var cache = new MainCachePhotoSource ();
+            ICachePhotoSource cache = new MainCachePhotoSource ();
+            cache.Start ();
 
-            var t = Log.DebugTimerStart();
+            Log.Debug ("Main cache started");
+
+            var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
+            cache.RegisterPhotoSource (source);
+
+/*            var t = Log.DebugTimerStart();
             Log.DebugTimerPrint(t, "starting");
             var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
             Log.Information(source.DisplayName);
@@ -80,7 +86,7 @@ namespace FlashUnit
             }
             Log.DebugTimerPrint(t, "listed photos");
 
-            Log.DebugFormat ("Cache has {0} items", cache.Photos.LongCount());
+            Log.DebugFormat ("Cache has {0} items", cache.Photos.LongCount());*/
         }
     }
 }
