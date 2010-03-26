@@ -417,7 +417,7 @@ namespace Hyena.Data.Gui
             resizing_column.Column.Width += resize_delta;
 
             RegenerateColumnCache ();
-            QueueDirtyRegion ();
+            QueueDraw ();
         }
 
         private Column GetColumnForResizeHandle (int x)

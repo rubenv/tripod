@@ -37,7 +37,7 @@ namespace Hyena
         public static readonly bool IsWindows;
         public static readonly bool IsLinux;
         public static readonly bool IsUnix;
-        public static readonly bool IsMoblin;
+        public static readonly bool IsMeeGo;
 
         public static readonly string PosixSystemName;
         public static readonly string SystemName;
@@ -90,7 +90,7 @@ namespace Hyena
 
             SystemName = PosixSystemName;
 
-            // FIXME: probe the root X11 window for Moblin properties
+            IsMeeGo = System.IO.File.Exists ("/etc/meego-release");
         }
     }
 }

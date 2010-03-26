@@ -789,7 +789,7 @@ namespace Hyena.Data.Gui
 
             pressed_column_x_drag = x - pressed_column_x_offset - (pressed_column_x_start_hadjustment - HadjustmentValue);
 
-            QueueDirtyRegion ();
+            QueueDraw ();
             return true;
         }
 

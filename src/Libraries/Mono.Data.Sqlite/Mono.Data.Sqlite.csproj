@@ -17,9 +17,8 @@
     <Optimize>true</Optimize>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <DefineConstants>NET_2_0 MONO_BACKWARD_COMPAT</DefineConstants>
-    <ReleaseVersion>0.0.1</ReleaseVersion>
+    <ReleaseVersion>1.3</ReleaseVersion>
     <RootNamespace>Mono.Data.Sqlite</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

@@ -4,7 +4,7 @@
 // Author:
 //   Alexander Kojevnikov <alexander@kojevnikov.com>
 //
-// Copyright (C) 2009 Alexander Kojevnikov
+// Copyright (C) 2009-2010 Alexander Kojevnikov
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -26,6 +26,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Hyena
 {
     public class EventArgs<T> : System.EventArgs
@@ -39,6 +41,23 @@ namespace Hyena
 
         public T Value {
             get { return value; }
+        }
+    }
+
+    public static class EventExtensions
+    {
+        public static void SafeInvoke<T> (this T @event, params object[] args) where T : class
+        {
+            var multicast = @event as MulticastDelegate;
+            if (multicast != null) {
+                foreach (var handler in multicast.GetInvocationList ()) {
+                    try {
+                        handler.DynamicInvoke (args);
+                    } catch (Exception e) {
+                        Log.Exception (e);
+                    }
+                }
+            }
         }
     }
 }

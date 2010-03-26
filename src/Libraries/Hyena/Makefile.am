@@ -140,9 +140,3 @@ SOURCES =  \
 	System.Web/HttpUtility.cs
 
 include $(top_srcdir)/build/build.mk
-
-test: all
-	pushd $(top_srcdir)/tests; \
-	make hyena; \
-	popd
-

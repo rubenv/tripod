@@ -394,7 +394,7 @@ namespace Hyena
 
             while (exception_chain.Count > 0) {
                 e = exception_chain.Pop ();
-                builder.AppendFormat ("{0} (in `{1}')", e.Message, e.Source).AppendLine ();
+                builder.AppendFormat ("{0}: {1} (in `{2}')", e.GetType (), e.Message, e.Source).AppendLine ();
                 builder.Append (e.StackTrace);
                 if (exception_chain.Count > 0) {
                     builder.AppendLine ();
