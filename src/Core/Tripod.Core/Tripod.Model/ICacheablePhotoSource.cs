@@ -1,5 +1,5 @@
 // 
-// ICachePhotoSource.cs
+// ICacheablePhotoSource..cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -26,10 +26,19 @@
 using System;
 namespace Tripod.Model
 {
-    public interface ICachePhotoSource : IPhotoSource
+    public interface ICacheablePhotoSource : IPhotoSource
     {
-        void RegisterPhotoSource (IPhotoSource source);
-        void Start ();
+        // The id by which this source is stored in the cache.
+        int CacheId { get; set; }
+
+        // Called when the source is woken up by the main cache.
+        void WakeUp ();
+
+        // Called when the source is added to the main cache.
+        void Persist ();
+
+        // Start this source (which means that it should sync with the main cache).
+        void Start (ICachingPhotoSource cache);
     }
 }
 

@@ -65,7 +65,7 @@ namespace FlashUnit
             //    Log.DebugFormat("{0} => {1}", person.Id, person.Name);
             //}
 
-            ICachePhotoSource cache = new MainCachePhotoSource ();
+            var cache = new MainCachePhotoSource ();
             cache.Start ();
 
             Log.Debug ("Main cache started");

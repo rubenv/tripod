@@ -43,7 +43,8 @@
     <Compile Include="Tripod.Model\CachePhoto.cs" />
     <Compile Include="Tripod.Model\MainCachePhotoSource.cs" />
     <Compile Include="Tripod.Base\TripodSqliteConnection.cs" />
-    <Compile Include="Tripod.Model\ICachePhotoSource.cs" />
+    <Compile Include="Tripod.Model\ICachingPhotoSource.cs" />
+    <Compile Include="Tripod.Model\ICacheablePhotoSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">

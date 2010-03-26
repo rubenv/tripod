@@ -38,7 +38,7 @@ namespace Tripod.Model
     {
         public CachePhotoSource () {}
 
-        public CachePhotoSource (IPhotoSource source) {
+        public CachePhotoSource (ICacheablePhotoSource source) {
             instance = source;
             SourceType = instance.GetType().FullName;
         }
@@ -70,13 +70,13 @@ namespace Tripod.Model
             }
         }
 
-        IPhotoSource instance;
+        ICacheablePhotoSource instance;
         void EnsureInstance ()
         {
             lock (this) {
                 if (instance == null) {
                     var type = Type.GetType (SourceType);
-                    var source = Activator.CreateInstance (type) as IPhotoSource;
+                    var source = Activator.CreateInstance (type) as ICacheablePhotoSource;
                     source.CacheId = CacheId;
                     source.WakeUp ();
 
@@ -85,17 +85,7 @@ namespace Tripod.Model
             }
         }
 
-        public void WakeUp ()
-        {
-            throw new System.NotImplementedException ();
-        }
-
-        public void Save ()
-        {
-            throw new System.NotImplementedException ();
-        }
-
-        public void Start (ICachePhotoSource cache)
+        public void Start (ICachingPhotoSource cache)
         {
             Core.Scheduler.Add (new StartPhotoSourceJob () {
                 Source = this,
@@ -106,7 +96,7 @@ namespace Tripod.Model
 
         private sealed class StartPhotoSourceJob : SimpleAsyncJob {
             internal CachePhotoSource Source { get; set; }
-            internal ICachePhotoSource Cache { get; set; }
+            internal ICachingPhotoSource Cache { get; set; }
 
             protected override void Run ()
             {

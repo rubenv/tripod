@@ -32,7 +32,7 @@ using Tripod.Base;
 
 namespace Tripod.Model
 {
-    public class MainCachePhotoSource : ICachePhotoSource
+    public class MainCachePhotoSource : ICachingPhotoSource
     {
         SqliteModelProvider<CachePhoto> provider = new SqliteModelProvider<CachePhoto> (Core.DbConnection, "CachedPhotos");
         SqliteModelProvider<CachePhotoSource> source_provider = new SqliteModelProvider<CachePhotoSource> (Core.DbConnection, "CachedPhotoSources");
@@ -53,7 +53,7 @@ namespace Tripod.Model
             get { return source_provider.FetchAll (); }
         }
 
-        public void RegisterPhotoSource (IPhotoSource source)
+        public void RegisterPhotoSource (ICacheablePhotoSource source)
         {
             if (source.CacheId != 0) {
                 throw new Exception ("Can't register an already registered source!");
@@ -63,7 +63,7 @@ namespace Tripod.Model
             source_provider.Save (cache);
             
             source.CacheId = cache.CacheId;
-            source.Save ();
+            source.Persist ();
             cache.Start (this);
         }
 
@@ -71,36 +71,6 @@ namespace Tripod.Model
             foreach (var source in CachedSources)
                 source.Start (this);
         }
-
-        #region Not implemented
-
-        // Stuff below doesn't apply to the main cache.\
-
-        public int CacheId {
-            get {
-                throw new System.NotImplementedException ();
-            }
-            set {
-                throw new System.NotImplementedException ();
-            }
-        }
-
-        public void WakeUp ()
-        {
-            throw new System.NotImplementedException ();
-        }
-
-        public void Save ()
-        {
-            throw new System.NotImplementedException ();
-        }
-
-        public void Start (ICachePhotoSource cache)
-        {
-            throw new System.NotImplementedException ();
-        }
-        
-        #endregion
     }
 }
 

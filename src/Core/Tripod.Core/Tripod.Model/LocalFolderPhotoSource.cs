@@ -33,7 +33,7 @@ using Tripod.Base;
 
 namespace Tripod.Model
 {
-    public class LocalFolderPhotoSource : IPhotoSource
+    public class LocalFolderPhotoSource : ICacheablePhotoSource
     {
         public int CacheId {
             get; set;
@@ -90,14 +90,14 @@ namespace Tripod.Model
             root = new Uri (parameters.RootUri);
         }
 
-        public void Save ()
+        public void Persist ()
         {
             Hyena.Log.Debug ("Storing folder source");
             var parameters = new LocalFolderPhotoSourceParameters { CacheId = CacheId, RootUri = root.ToString () };
             parameter_provider.Save (parameters, true);
         }
 
-        public void Start (ICachePhotoSource cache)
+        public void Start (ICachingPhotoSource cache)
         {
             Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
             // TODO: Find files that need to be added (the ones that aren't in there already)

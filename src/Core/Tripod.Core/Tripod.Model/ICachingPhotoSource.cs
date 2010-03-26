@@ -1,5 +1,5 @@
 // 
-// IPhotoSource.cs
+// ICachingPhotoSource.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -24,23 +24,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Collections.Generic;
-
 namespace Tripod.Model
 {
-    public interface IPhotoSource
+    public interface ICachingPhotoSource : IPhotoSource
     {
-        string DisplayName { get; }
-        bool Available { get; }
-        IEnumerable<IPhoto> Photos { get; }
-
-        /// <summary>
-        /// Copy the given photo into this storage source, if possible.
-        /// </summary>
-        /// <param name="photo">
-        /// A <see cref="IPhoto"/> that should be copied into the source.
-        /// </param>
-        //void CopyIntoSource (IPhoto photo);
+        void RegisterPhotoSource (ICacheablePhotoSource source);
+        void Start ();
     }
 }
 
