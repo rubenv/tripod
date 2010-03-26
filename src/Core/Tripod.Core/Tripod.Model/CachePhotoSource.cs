@@ -36,12 +36,15 @@ namespace Tripod.Model
 {
     public class CachePhotoSource : IPhotoSource
     {
-        public CachePhotoSource () {}
+        public CachePhotoSource ()
+        {
+        }
 
-        public CachePhotoSource (ICacheablePhotoSource source) {
+        public CachePhotoSource (ICacheablePhotoSource source)
+        {
             instance = source;
             instance.AvailabilityChanged += (s, a) => UpdateAvailability ();
-            SourceType = instance.GetType().FullName;
+            SourceType = instance.GetType ().FullName;
         }
 
         [DatabaseColumn(Constraints = DatabaseColumnConstraints.PrimaryKey)]
@@ -65,9 +68,7 @@ namespace Tripod.Model
                 EnsureInstance ();
                 return instance.Available;
             }
-            set {
-                // Nothing to do
-            }
+            set { /* Nothing to do */ }
         }
 
 
@@ -89,7 +90,7 @@ namespace Tripod.Model
                     instance = Activator.CreateInstance (type) as ICacheablePhotoSource;
                     instance.CacheId = CacheId;
                     instance.WakeUp ();
-
+                    
                     instance.AvailabilityChanged += (s, a) => UpdateAvailability ();
                 }
             }
@@ -99,26 +100,24 @@ namespace Tripod.Model
         void UpdateAvailability ()
         {
             bool new_available = instance.Available;
-
+            
             if (new_available == available)
                 return;
-
+            
             var h = AvailabilityChanged;
             if (h != null)
                 h (this, null);
-
+            
         }
 
         public void Start (ICachingPhotoSource cache)
         {
-            Core.Scheduler.Add (new StartPhotoSourceJob () {
-                Source = this,
-                Cache = cache
-            });
+            Core.Scheduler.Add (new StartPhotoSourceJob { Source = this, Cache = cache });
         }
 
 
-        private sealed class StartPhotoSourceJob : SimpleAsyncJob {
+        private sealed class StartPhotoSourceJob : SimpleAsyncJob
+        {
             internal CachePhotoSource Source { get; set; }
             internal ICachingPhotoSource Cache { get; set; }
 
@@ -127,11 +126,11 @@ namespace Tripod.Model
                 Log.DebugFormat ("Starting cached source: {0}/{1}", Source.SourceType, Source.CacheId);
                 Source.EnsureInstance ();
                 Source.instance.Start (Cache);
-
+                
                 // Make sure we send out the event on start if different from
                 // the database value. The value in the database can be stale.
                 Source.UpdateAvailability ();
-
+                
                 OnFinished ();
             }
         }

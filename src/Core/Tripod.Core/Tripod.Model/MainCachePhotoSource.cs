@@ -70,7 +70,8 @@ namespace Tripod.Model
             cache.Start (this);
         }
 
-        public void Start () {
+        public void Start ()
+        {
             foreach (var source in CachedSources) {
                 source.AvailabilityChanged += OnCachedSourceAvailabilityChanged;
                 source.Start (this);

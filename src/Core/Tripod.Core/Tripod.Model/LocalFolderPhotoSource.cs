@@ -35,9 +35,7 @@ namespace Tripod.Model
 {
     public class LocalFolderPhotoSource : ICacheablePhotoSource
     {
-        public int CacheId {
-            get; set;
-        }
+        public int CacheId { get; set; }
 
 
         Uri root;
@@ -72,7 +70,7 @@ namespace Tripod.Model
             get {
                 if (!Available)
                     throw new Exception ("Not available!");
-
+                
                 return from f in new RecursiveFileEnumerator (root)
                     where IsPhoto (f)
                     select new LocalFilePhoto (f.Uri) as IPhoto;
@@ -103,7 +101,7 @@ namespace Tripod.Model
         public void Start (ICachingPhotoSource cache)
         {
             Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
-
+            
             // TODO: Find files that need to be added (the ones that aren't in there already)
         }
 
