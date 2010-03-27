@@ -2,6 +2,10 @@ ASSEMBLY = Tripod.Core
 TARGET = library
 LINK = $(REF_TRIPOD_CORE)
 SOURCES =  \
+	Tripod.Actions/ChangeCommentBatchPhotoAction.cs \
+	Tripod.Actions/ChangeCommentPhotoAction.cs \
+	Tripod.Actions/IBatchPhotoAction.cs \
+	Tripod.Actions/IPhotoAction.cs \
 	Tripod.Base/Core.cs \
 	Tripod.Base/GIOTagLibFileAbstraction.cs \
 	Tripod.Base/RecursiveDirectoryEnumerator.cs \
