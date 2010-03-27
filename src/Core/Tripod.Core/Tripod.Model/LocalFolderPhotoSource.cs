@@ -30,11 +30,15 @@ using System.Linq;
 using System.Collections.Generic;
 using Hyena.Data.Sqlite;
 using Tripod.Base;
+using Hyena.Jobs;
 
 namespace Tripod.Model
 {
     public class LocalFolderPhotoSource : ICacheablePhotoSource
     {
+        static SqliteModelProvider<LocalFolderPhotoSourceParameters> parameter_provider = new SqliteModelProvider<LocalFolderPhotoSourceParameters> (Core.DbConnection, "LocalFolderSourceParameters");
+        static SqliteModelProvider<LocalFolderPhotoSourceUris> uri_provider = new SqliteModelProvider<LocalFolderPhotoSourceUris> (Core.DbConnection, "LocalFolderSourceUris");
+
         public int CacheId { get; set; }
 
 
@@ -83,7 +87,6 @@ namespace Tripod.Model
             return f.Basename.EndsWith (".jpg", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        SqliteModelProvider<LocalFolderPhotoSourceParameters> parameter_provider = new SqliteModelProvider<LocalFolderPhotoSourceParameters> (Core.DbConnection, "LocalFolderSourceParameters");
 
         public void WakeUp ()
         {
@@ -101,9 +104,30 @@ namespace Tripod.Model
         public void Start (ICachingPhotoSource cache)
         {
             Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
-            
+
+            Core.Scheduler.Add (new RescanLocalFolderJob () { Source = this, Cache = cache });
             // TODO: Find files that need to be added (the ones that aren't in there already)
+            // TODO: Do active monitoring
         }
+
+        public void RegisterCachedPhoto (IPhoto photo, int cache_id)
+        {
+            // Make sure we can find back the original file if the main cache requests it. Here this is easy: just take
+            // the Uri. In sources such as Flickr, this would be the photo id.
+            var uri = new LocalFolderPhotoSourceUris { CacheId = cache_id, PhotoUri = photo.Uri.ToString () };
+            uri_provider.Save (uri, true);
+        }
+
+        public IPhoto LookupCachedPhoto (int cache_id)
+        {
+            var uri = uri_provider.FetchFirstMatching ("CacheId = ?", cache_id);
+            if (uri == null) {
+                throw new Exception ("Possibly invalid cache id given, serious bug!");
+            }
+
+            return new LocalFilePhoto (new Uri(uri.PhotoUri));
+        }
+
 
         private class LocalFolderPhotoSourceParameters
         {
@@ -112,6 +136,36 @@ namespace Tripod.Model
 
             [DatabaseColumn]
             public string RootUri { get; set; }
+        }
+
+        private class LocalFolderPhotoSourceUris
+        {
+            [DatabaseColumn(Constraints = DatabaseColumnConstraints.PrimaryKey)]
+            public int CacheId { get; set; }
+
+            [DatabaseColumn(Constraints = DatabaseColumnConstraints.Unique)]
+            public string PhotoUri { get; set; }
+        }
+
+        private class RescanLocalFolderJob : SimpleAsyncJob {
+            public LocalFolderPhotoSource Source { get; set; }
+            public ICachingPhotoSource Cache { get; set; }
+
+            protected override void Run ()
+            {
+                // TODO: This can be a ton smarter
+                Hyena.Log.Information ("Rescanning database.");
+                foreach (var photo in Source.Photos) {
+                    if (uri_provider.FetchFirstMatching ("PhotoUri = ?", photo.Uri.ToString ()) == null) {
+                        Hyena.Log.DebugFormat ("Registering {0}", photo.Uri.ToString ());
+                        Cache.RegisterPhoto (Source, photo);
+                    }
+
+                    System.Threading.Thread.Sleep (1); // Sleep for a short while.
+                }
+
+                OnFinished ();
+            }
         }
     }
 }

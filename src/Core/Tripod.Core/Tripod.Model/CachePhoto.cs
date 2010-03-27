@@ -36,8 +36,6 @@ namespace Tripod.Model
         [DatabaseColumn]
         public int SourceId { get; internal set; }
 
-        public IPhotoSource Source { get; internal set; }
-
         [DatabaseColumn]
         public string PhotoUri {
             get { return Uri.ToString (); }
@@ -45,7 +43,6 @@ namespace Tripod.Model
         }
 
         public Uri Uri { get; set; }
-        
     }
 }
 

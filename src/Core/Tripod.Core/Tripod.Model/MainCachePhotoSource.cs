@@ -70,6 +70,22 @@ namespace Tripod.Model
             cache.Start (this);
         }
 
+        public void RegisterPhoto (ICacheablePhotoSource source, IPhoto photo)
+        {
+            if (source.CacheId == 0) {
+                throw new Exception ("The source needs to be registered first using RegisterPhotoSource ()");
+            }
+
+            // FIXME: We need a full deep clone method to import it into the cache.
+            var cache = new CachePhoto () {
+                SourceId = source.CacheId,
+                Uri = photo.Uri
+            };
+            provider.Save (cache);
+
+            source.RegisterCachedPhoto (photo, cache.CacheId);
+        }
+
         public void Start ()
         {
             foreach (var source in CachedSources) {

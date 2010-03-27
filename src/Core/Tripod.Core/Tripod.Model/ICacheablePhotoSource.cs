@@ -39,6 +39,12 @@ namespace Tripod.Model
 
         // Start this source (which means that it should sync with the main cache).
         void Start (ICachingPhotoSource cache);
+
+        // Callback from the main cache, to indicate that the given photo is cached with the given id.
+        void RegisterCachedPhoto (IPhoto photo, int cache_id);
+
+        // Request the real instance of a previously cached photo. Used for writing back changes.
+        IPhoto LookupCachedPhoto (int cache_id);
     }
 }
 

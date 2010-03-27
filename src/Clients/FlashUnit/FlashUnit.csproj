@@ -34,7 +34,6 @@
     <Compile Include="FlashUnit\Client.cs" />
     <Compile Include="FlashUnit.Gui\MainWindow.cs" />
     <Compile Include="FlashUnit.Gui\ImportDialog.cs" />
-    <Compile Include="FlashUnit\Person.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

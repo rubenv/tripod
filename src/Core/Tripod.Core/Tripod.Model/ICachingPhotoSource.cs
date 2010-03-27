@@ -29,6 +29,7 @@ namespace Tripod.Model
     public interface ICachingPhotoSource : IPhotoSource
     {
         void RegisterPhotoSource (ICacheablePhotoSource source);
+        void RegisterPhoto (ICacheablePhotoSource source, IPhoto photo);
         void Start ();
     }
 }

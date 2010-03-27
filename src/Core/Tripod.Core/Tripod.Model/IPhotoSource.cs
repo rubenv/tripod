@@ -35,14 +35,6 @@ namespace Tripod.Model
 
         bool Available { get; }
         event EventHandler AvailabilityChanged;
-
-        /// <summary>
-        /// Copy the given photo into this storage source, if possible.
-        /// </summary>
-        /// <param name="photo">
-        /// A <see cref="IPhoto"/> that should be copied into the source.
-        /// </param>
-        //void CopyIntoSource (IPhoto photo);
     }
 }
 

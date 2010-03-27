@@ -51,30 +51,13 @@ namespace FlashUnit
             
             //Application.Run ();
 
-            //var connection = new HyenaSqliteConnection("test.db");
-            //var provider = new SqliteModelProvider<Person>(connection, "People");
-
-            //var joe = new Person () {
-            //    Name = "Joe McTest"
-            //};
-
-            //provider.Save(joe);
-            //Log.Debug(joe.Id.ToString ());
-
-            //foreach (var person in provider.FetchAll()) {
-            //    Log.DebugFormat("{0} => {1}", person.Id, person.Name);
-            //}
-
             var cache = new MainCachePhotoSource ();
             cache.Start ();
 
             Log.Debug ("Main cache started");
 
-            var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
-            cache.RegisterPhotoSource (source);
-
-            source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures2/"));
-            cache.RegisterPhotoSource (source);
+            //var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
+            //cache.RegisterPhotoSource (source);
 
 /*            var t = Log.DebugTimerStart();
             Log.DebugTimerPrint(t, "starting");
