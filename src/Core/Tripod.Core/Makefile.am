@@ -3,6 +3,7 @@ TARGET = library
 LINK = $(REF_TRIPOD_CORE)
 SOURCES =  \
 	Tripod.Base/Core.cs \
+	Tripod.Base/GIOTagLibFileAbstraction.cs \
 	Tripod.Base/RecursiveDirectoryEnumerator.cs \
 	Tripod.Base/TripodSqliteConnection.cs \
 	Tripod.Jobs/ThreadPoolJob.cs \

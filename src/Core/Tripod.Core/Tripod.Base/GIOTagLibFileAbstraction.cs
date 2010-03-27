@@ -1,5 +1,5 @@
 //
-// LocalFilePhoto.cs
+// GIOTagLibFileAbstraction.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -25,45 +25,35 @@
 // THE SOFTWARE.
 
 using System;
-using TagLib;
-using Tripod.Base;
+using System.IO;
+using GLib;
 
-namespace Tripod.Model
+namespace Tripod.Base
 {
-    public class LocalFilePhoto : IPhoto
+    public sealed class GIOTagLibFileAbstraction : TagLib.File.IFileAbstraction
     {
-        bool metadata_parsed = false;
-
-        public LocalFilePhoto (Uri uri)
-        {
-            this.Uri = uri;
-        }
-
-        public Uri Uri { get; private set; }
-
-        string comment;
-        public string Comment {
+        public string Name {
             get {
-                EnsureMetadataParsed ();
-                return comment;
+                return Uri.ToString ();
             }
-            set { comment = value; }
+            set {
+                Uri = new Uri (value);
+            }
         }
 
-        void EnsureMetadataParsed ()
+        public Uri Uri { get; set; }
+
+        public Stream ReadStream {
+            get { return new GioStream (FileFactory.NewForUri(Uri).Read (null)); }
+        }
+
+        public Stream WriteStream {
+            get { throw new NotImplementedException (); }
+        }
+
+        public void CloseStream (Stream stream)
         {
-            if (metadata_parsed)
-                return;
-
-            // The lack of thread checking is intentional. Races will probably rarely occur and if the do, they are
-            // harmless (just a bit of double computation). Saves us the locking overhead.
-
-            var file = TagLib.File.Create (new GIOTagLibFileAbstraction() { Uri = Uri }) as TagLib.Image.File;
-
-            Comment = file.ImageTag.Comment;
-
-            metadata_parsed = true;
+            stream.Close ();
         }
     }
 }
-

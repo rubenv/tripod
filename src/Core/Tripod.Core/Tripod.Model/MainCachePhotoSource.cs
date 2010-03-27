@@ -79,7 +79,8 @@ namespace Tripod.Model
             // FIXME: We need a full deep clone method to import it into the cache.
             var cache = new CachePhoto () {
                 SourceId = source.CacheId,
-                Uri = photo.Uri
+                Uri = photo.Uri,
+                Comment = photo.Comment
             };
             provider.Save (cache);
 

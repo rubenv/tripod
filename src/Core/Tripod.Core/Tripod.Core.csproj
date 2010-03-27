@@ -45,6 +45,7 @@
     <Compile Include="Tripod.Base\TripodSqliteConnection.cs" />
     <Compile Include="Tripod.Model\ICachingPhotoSource.cs" />
     <Compile Include="Tripod.Model\ICacheablePhotoSource.cs" />
+    <Compile Include="Tripod.Base\GIOTagLibFileAbstraction.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">
@@ -79,6 +80,10 @@
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
       <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
       <Name>Hyena</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\TagLib\TagLib.csproj">
+      <Project>{0507DCB3-938D-435C-8704-A6F767A82E12}</Project>
+      <Name>TagLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

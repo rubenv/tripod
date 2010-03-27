@@ -29,6 +29,11 @@ namespace Tripod.Model
     public interface IPhoto
     {
         Uri Uri { get; }
+
+        // Metadata
+        string Comment { get; set; }
+
+        // TODO: Add flag to check whether certain operations can be performed (e.g. read-only photos from a cd)
     }
 }
 

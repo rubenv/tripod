@@ -43,6 +43,9 @@ namespace Tripod.Model
         }
 
         public Uri Uri { get; set; }
+
+        [DatabaseColumn]
+        public string Comment { get; set; }
     }
 }
 
