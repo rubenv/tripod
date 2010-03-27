@@ -29,6 +29,7 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Hyena
 {
@@ -115,8 +116,14 @@ namespace Hyena
                     case LogEntryType.Debug: ConsoleCrayon.ForegroundColor = ConsoleColor.Blue; break;
                 }
 
-                Console.Write ("[{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
-                    DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond);
+                var thread_name = String.Empty;
+                if (Debugging) {
+                    var thread = Thread.CurrentThread;
+                    thread_name = String.Format ("{0} ", thread.ManagedThreadId);
+                }
+
+                Console.Write ("[{5}{0} {1:00}:{2:00}:{3:00}.{4:000}]", TypeString (type), DateTime.Now.Hour,
+                    DateTime.Now.Minute, DateTime.Now.Second, DateTime.Now.Millisecond, thread_name);
 
                 ConsoleCrayon.ResetColor ();
 
