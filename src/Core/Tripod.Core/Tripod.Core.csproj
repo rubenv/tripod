@@ -51,6 +51,9 @@
     <Compile Include="Tripod.Base\GIOTagLibFileAbstraction.cs" />
     <Compile Include="Tripod.Actions\IBatchPhotoAction.cs" />
     <Compile Include="Tripod.Actions\ChangeCommentBatchPhotoAction.cs" />
+    <Compile Include="Tripod.Graphics\MipMapGenerator.cs" />
+    <Compile Include="Tripod.Graphics\MipMapFile.cs" />
+    <Compile Include="Tripod.Graphics\PixbufExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">
@@ -81,6 +84,7 @@
     <Folder Include="Tripod.Jobs\" />
     <Folder Include="Tripod.Model\" />
     <Folder Include="Tripod.Actions\" />
+    <Folder Include="Tripod.Graphics\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
@@ -99,5 +103,6 @@
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Core" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
 </Project>
