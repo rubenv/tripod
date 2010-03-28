@@ -28,7 +28,7 @@ namespace Tripod.Model
 {
     public interface INamingPolicy
     {
-        Uri PhotoUri (IPhoto photo);
+        Uri PhotoUri (Uri root, IPhoto photo);
     }
 }
 

@@ -45,6 +45,7 @@
     <Compile Include="Tripod.Base\TripodSqliteConnection.cs" />
     <Compile Include="Tripod.Model\ICachingPhotoSource.cs" />
     <Compile Include="Tripod.Model\ICacheablePhotoSource.cs" />
+    <Compile Include="Tripod.Model\IAcceptImportPhotoSource.cs" />
     <Compile Include="Tripod.Actions\IPhotoAction.cs" />
     <Compile Include="Tripod.Actions\ChangeCommentPhotoAction.cs" />
     <Compile Include="Tripod.Base\GIOTagLibFileAbstraction.cs" />

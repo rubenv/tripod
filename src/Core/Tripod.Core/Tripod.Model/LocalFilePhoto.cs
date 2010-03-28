@@ -27,6 +27,7 @@
 using System;
 using TagLib;
 using Tripod.Base;
+using GLib;
 
 namespace Tripod.Model
 {
@@ -50,6 +51,27 @@ namespace Tripod.Model
             set { comment = value; }
         }
 
+        DateTime datetaken;
+        public DateTime DateTaken {
+            get {
+                EnsureMetadataParsed ();
+                return datetaken;
+            }
+            set {
+                datetaken = value;
+            }
+        }
+
+        public DateTime ImageDataStamp {
+            get {
+                // TODO: This should probably be taken from somewhere else, e.g. the metadata sidecar. Or the local database.
+                return UriStamp (Uri, "time::modified");
+            }
+            set {
+                throw new System.NotImplementedException ();
+            }
+        }
+
         void EnsureMetadataParsed ()
         {
             if (metadata_parsed)
@@ -61,8 +83,17 @@ namespace Tripod.Model
             var file = TagLib.File.Create (new GIOTagLibFileAbstraction() { Uri = Uri }) as TagLib.Image.File;
 
             Comment = file.ImageTag.Comment;
+            DateTaken = file.ImageTag.DateTime ?? UriStamp (Uri, "time::changed");
 
             metadata_parsed = true;
+        }
+
+        static DateTime UriStamp (Uri uri, string kind)
+        {
+            var file = FileFactory.NewForUri (uri);
+            var info = file.QueryInfo (kind, FileQueryInfoFlags.None, null);
+            var stamp = info.GetAttributeULong (kind);
+            return Hyena.DateTimeUtil.FromTimeT ((long) stamp);
         }
     }
 }

@@ -112,18 +112,24 @@ namespace Tripod.Model
 
         public void Start (ICachingPhotoSource cache)
         {
-            Core.Scheduler.Add (new StartPhotoSourceJob { Source = this, Cache = cache });
+            Core.Scheduler.Add (new StartPhotoSourceJob (this, cache));
         }
 
 
         private sealed class StartPhotoSourceJob : SimpleAsyncJob
         {
-            internal CachePhotoSource Source { get; set; }
-            internal ICachingPhotoSource Cache { get; set; }
+            internal StartPhotoSourceJob (CachePhotoSource source, ICachingPhotoSource cache)
+            {
+                Source = source;
+                Cache = cache;
+                Title = String.Format ("Starting cached source: {0}/{1}", Source.SourceType, Source.CacheId);
+            }
+
+            CachePhotoSource Source { get; set; }
+            ICachingPhotoSource Cache { get; set; }
 
             protected override void Run ()
             {
-                Log.DebugFormat ("Starting cached source: {0}/{1}", Source.SourceType, Source.CacheId);
                 Source.EnsureInstance ();
                 Source.instance.Start (Cache);
                 

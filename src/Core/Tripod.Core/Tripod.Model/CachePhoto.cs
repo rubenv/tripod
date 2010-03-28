@@ -45,7 +45,13 @@ namespace Tripod.Model
         public Uri Uri { get; set; }
 
         [DatabaseColumn]
+        public DateTime ImageDataStamp { get; set; }
+
+        [DatabaseColumn]
         public string Comment { get; set; }
+
+        [DatabaseColumn]
+        public DateTime DateTaken { get; set; }
     }
 }
 

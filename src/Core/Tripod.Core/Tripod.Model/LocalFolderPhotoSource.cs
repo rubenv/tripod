@@ -34,16 +34,12 @@ using Hyena.Jobs;
 
 namespace Tripod.Model
 {
-    public class LocalFolderPhotoSource : ICacheablePhotoSource
+    public class LocalFolderPhotoSource : ICacheablePhotoSource, IAcceptImportPhotoSource
     {
         static SqliteModelProvider<LocalFolderPhotoSourceParameters> parameter_provider = new SqliteModelProvider<LocalFolderPhotoSourceParameters> (Core.DbConnection, "LocalFolderSourceParameters");
         static SqliteModelProvider<LocalFolderPhotoSourceUris> uri_provider = new SqliteModelProvider<LocalFolderPhotoSourceUris> (Core.DbConnection, "LocalFolderSourceUris");
 
-        public int CacheId { get; set; }
-
-
-        Uri root;
-
+        // Needed for instantiation by the cache.
         public LocalFolderPhotoSource ()
         {
         }
@@ -52,6 +48,10 @@ namespace Tripod.Model
         {
             this.root = root;
         }
+
+        public int CacheId { get; set; }
+
+        Uri root;
 
         string display_name = String.Empty;
         public string DisplayName {
@@ -87,7 +87,6 @@ namespace Tripod.Model
             return f.Basename.EndsWith (".jpg", StringComparison.InvariantCultureIgnoreCase);
         }
 
-
         public void WakeUp ()
         {
             var parameters = parameter_provider.FetchFirstMatching ("CacheId = ?", CacheId);
@@ -105,7 +104,7 @@ namespace Tripod.Model
         {
             Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
 
-            Core.Scheduler.Add (new RescanLocalFolderJob () { Source = this, Cache = cache });
+            Core.Scheduler.Add (new RescanLocalFolderJob (this, cache));
             // TODO: Find files that need to be added (the ones that aren't in there already)
             // TODO: Do active monitoring
         }
@@ -128,6 +127,21 @@ namespace Tripod.Model
             return new LocalFilePhoto (new Uri(uri.PhotoUri));
         }
 
+        public void Import (IPhoto photo)
+        {
+            CopyPhotoIntoLibrary (photo);
+        }
+
+        void CopyPhotoIntoLibrary (IPhoto photo)
+        {
+            var policy = new LocalFolderNamingPolicy ();
+            // FIXME: Make the naming policy configurable.
+            var new_name = policy.PhotoUri (root, photo);
+            var file = FileFactory.NewForUri (photo.Uri);
+            var new_file = FileFactory.NewForUri (new_name);
+
+            file.Copy (new_file, FileCopyFlags.AllMetadata, null, null);
+        }
 
         private class LocalFolderPhotoSourceParameters
         {
@@ -148,13 +162,18 @@ namespace Tripod.Model
         }
 
         private class RescanLocalFolderJob : SimpleAsyncJob {
+            public RescanLocalFolderJob (LocalFolderPhotoSource source, ICachingPhotoSource cache) {
+                Source = source;
+                Cache =  cache;
+                Title = String.Format ("Library rescan for {0}", Source.root.ToString ());
+            }
+
             public LocalFolderPhotoSource Source { get; set; }
             public ICachingPhotoSource Cache { get; set; }
 
             protected override void Run ()
             {
                 // TODO: This can be a ton smarter
-                Hyena.Log.Information ("Rescanning database.");
                 foreach (var photo in Source.Photos) {
                     if (uri_provider.FetchFirstMatching ("PhotoUri = ?", photo.Uri.ToString ()) == null) {
                         Hyena.Log.DebugFormat ("Registering {0}", photo.Uri.ToString ());

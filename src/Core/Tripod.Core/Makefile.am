@@ -13,12 +13,14 @@ SOURCES =  \
 	Tripod.Jobs/ThreadPoolJob.cs \
 	Tripod.Model/CachePhoto.cs \
 	Tripod.Model/CachePhotoSource.cs \
+	Tripod.Model/IAcceptImportPhotoSource.cs \
 	Tripod.Model/ICacheablePhotoSource.cs \
 	Tripod.Model/ICachingPhotoSource.cs \
 	Tripod.Model/INamingPolicy.cs \
 	Tripod.Model/IPhoto.cs \
 	Tripod.Model/IPhotoSource.cs \
 	Tripod.Model/LocalFilePhoto.cs \
+	Tripod.Model/LocalFolderNamingPolicy.cs \
 	Tripod.Model/LocalFolderPhotoSource.cs \
 	Tripod.Model/MainCachePhotoSource.cs
 

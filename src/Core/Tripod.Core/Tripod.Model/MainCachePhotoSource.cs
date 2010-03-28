@@ -80,7 +80,9 @@ namespace Tripod.Model
             var cache = new CachePhoto () {
                 SourceId = source.CacheId,
                 Uri = photo.Uri,
-                Comment = photo.Comment
+                Comment = photo.Comment,
+                DateTaken = photo.DateTaken,
+                ImageDataStamp = photo.ImageDataStamp
             };
             provider.Save (cache);
 

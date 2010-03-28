@@ -1,5 +1,5 @@
 // 
-// IPhoto.cs
+// LocalFolderNamingPolicy.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -24,20 +24,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Linq;
+
+// FIXME: This whole class is a big hack.
 namespace Tripod.Model
 {
-    public interface IPhoto
+    public class LocalFolderNamingPolicy : INamingPolicy
     {
-        Uri Uri { get; }
-
-        // The last modification to the actual graphics
-        DateTime ImageDataStamp { get; set; }
-
-        // Metadata
-        string Comment { get; set; }
-        DateTime DateTaken { get; set; }
-
-        // TODO: Add flag to check whether certain operations can be performed (e.g. read-only photos from a cd)
+        public System.Uri PhotoUri (Uri root, IPhoto photo)
+        {
+            var filename = photo.Uri.Segments.Last().Trim(new char [] { '/'} );
+            var datetime = (DateTime)photo.DateTaken;
+            return new Uri (root, String.Format("{0}/{1}/{2}", datetime.Year, datetime.Month, datetime.Day, uri. filename));
+        }
     }
 }
 
