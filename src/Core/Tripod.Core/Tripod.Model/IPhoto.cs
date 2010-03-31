@@ -23,20 +23,41 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
+
+using TagLib.Image;
+
 namespace Tripod.Model
 {
     public interface IPhoto
     {
+
+#region Photo File
+
         Uri Uri { get; }
 
         // The last modification to the actual graphics
         DateTime ImageDataStamp { get; set; }
 
-        // Metadata
+#endregion
+
+
+#region Photo Metadata
 
         string Comment { get; set; }
         DateTime DateTaken { get; set; }
+        ImageOrientation Orientation { get; set; }
+        uint? Rating { get; set; }
+        double? ExposureTime { get; }
+        double? FNumber { get; }
+        double? FocalLength { get; }
+        double? FocalLengthIn35mmFilm { get; }
+        string CameraMake { get; }
+        string CameraModel { get; }
+
+#endregion
+
 
         // TODO: Add flag to check whether certain operations can be performed (e.g. read-only photos from a cd)
     }

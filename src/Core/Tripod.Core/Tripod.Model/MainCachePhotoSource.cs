@@ -76,17 +76,12 @@ namespace Tripod.Model
                 throw new Exception ("The source needs to be registered first using RegisterPhotoSource ()");
             }
 
-            // FIXME: We need a full deep clone method to import it into the cache.
-            var cache = new CachePhoto () {
-                SourceId = source.CacheId,
-                Uri = photo.Uri,
-                Comment = photo.Comment,
-                DateTaken = photo.DateTaken,
-                ImageDataStamp = photo.ImageDataStamp
-            };
-            provider.Save (cache);
+            var cache_photo = CachePhoto.CreateFrom (photo);
+            cache_photo.SourceId = source.CacheId;
 
-            source.RegisterCachedPhoto (photo, cache.CacheId);
+            provider.Save (cache_photo);
+
+            source.RegisterCachedPhoto (photo, cache_photo.CacheId);
         }
 
         public void Start ()

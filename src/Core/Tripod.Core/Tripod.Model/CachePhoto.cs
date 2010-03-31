@@ -23,8 +23,13 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
+
 using Hyena.Data.Sqlite;
+
+using TagLib.Image;
+
 
 namespace Tripod.Model
 {
@@ -52,6 +57,50 @@ namespace Tripod.Model
 
         [DatabaseColumn]
         public DateTime DateTaken { get; set; }
+
+        [DatabaseColumn]
+        public ImageOrientation Orientation { get; set; }
+
+        [DatabaseColumn]
+        public uint? Rating { get; set; }
+
+        [DatabaseColumn]
+        public double? ExposureTime { get; private set; }
+
+        [DatabaseColumn]
+        public double? FNumber { get; private set; }
+
+        [DatabaseColumn]
+        public double? FocalLength { get; private set; }
+
+        [DatabaseColumn]
+        public double? FocalLengthIn35mmFilm { get; private set; }
+
+        [DatabaseColumn]
+        public string CameraMake { get; private set; }
+
+        [DatabaseColumn]
+        public string CameraModel { get; private set; }
+
+
+        public static CachePhoto CreateFrom (IPhoto source_photo)
+        {
+            return new CachePhoto () {
+                Uri = source_photo.Uri,
+                ImageDataStamp = source_photo.ImageDataStamp,
+                Comment = source_photo.Comment,
+                DateTaken = source_photo.DateTaken,
+                Orientation = source_photo.Orientation,
+                Rating = source_photo.Rating,
+                ExposureTime = source_photo.ExposureTime,
+                FNumber = source_photo.FNumber,
+                FocalLength = source_photo.FocalLength,
+                FocalLengthIn35mmFilm = source_photo.FocalLengthIn35mmFilm,
+                CameraMake = source_photo.CameraMake,
+                CameraModel = source_photo.CameraModel
+
+            };
+        }
     }
 }
 

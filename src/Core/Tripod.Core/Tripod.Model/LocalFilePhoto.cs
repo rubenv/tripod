@@ -26,6 +26,7 @@
 
 using System;
 using TagLib;
+using TagLib.Image;
 using Tripod.Base;
 using GLib;
 
@@ -33,14 +34,36 @@ namespace Tripod.Model
 {
     public class LocalFilePhoto : IPhoto
     {
-        bool metadata_parsed = false;
+
+#region Constructors
 
         public LocalFilePhoto (Uri uri)
         {
             this.Uri = uri;
         }
 
+#endregion
+
+
+#region IPhoto File Properties
+
         public Uri Uri { get; private set; }
+
+
+        public DateTime ImageDataStamp {
+            get {
+                // TODO: This should probably be taken from somewhere else, e.g. the metadata sidecar. Or the local database.
+                return UriStamp (Uri, "time::modified");
+            }
+            set {
+                throw new System.NotImplementedException ();
+            }
+        }
+
+#endregion
+
+
+#region IPhoto Metadata Properties
 
         string comment;
         public string Comment {
@@ -62,15 +85,83 @@ namespace Tripod.Model
             }
         }
 
-        public DateTime ImageDataStamp {
+        ImageOrientation orientation;
+        public ImageOrientation Orientation {
             get {
-                // TODO: This should probably be taken from somewhere else, e.g. the metadata sidecar. Or the local database.
-                return UriStamp (Uri, "time::modified");
+                EnsureMetadataParsed ();
+                return orientation;
             }
             set {
-                throw new System.NotImplementedException ();
+                orientation = value;
             }
         }
+
+        uint? rating;
+        public uint? Rating {
+            get {
+                EnsureMetadataParsed ();
+                return rating;
+            }
+            set {
+                rating = value;
+            }
+        }
+
+        double? exposure_time;
+        public double? ExposureTime {
+            get {
+                EnsureMetadataParsed ();
+                return exposure_time;
+            }
+        }
+
+        double? f_number;
+        public double? FNumber {
+            get {
+                EnsureMetadataParsed ();
+                return f_number;
+            }
+        }
+
+        double? focal_length;
+        public double? FocalLength {
+            get {
+                EnsureMetadataParsed ();
+                return focal_length;
+            }
+        }
+
+        double? focal_length_35mm;
+        public double? FocalLengthIn35mmFilm {
+            get {
+                EnsureMetadataParsed ();
+                return focal_length_35mm;
+            }
+        }
+
+        string camera_make;
+        public string CameraMake {
+            get {
+                EnsureMetadataParsed ();
+                return camera_make;
+            }
+        }
+
+        string camera_model;
+        public string CameraModel {
+            get {
+                EnsureMetadataParsed ();
+                return camera_model;
+            }
+        }
+
+
+#endregion
+
+
+#region Private Methods
+
+        bool metadata_parsed = false;
 
         void EnsureMetadataParsed ()
         {
@@ -82,11 +173,24 @@ namespace Tripod.Model
 
             var file = TagLib.File.Create (new GIOTagLibFileAbstraction() { Uri = Uri }) as TagLib.Image.File;
 
-            Comment = file.ImageTag.Comment;
-            DateTaken = file.ImageTag.DateTime ?? UriStamp (Uri, "time::changed");
+            var image_tag = file.ImageTag;
+
+            Comment = image_tag.Comment;
+            DateTaken = image_tag.DateTime ?? UriStamp (Uri, "time::changed");
+            Orientation = image_tag.Orientation;
+            Rating = image_tag.Rating;
+            exposure_time = image_tag.ExposureTime;
+            f_number = image_tag.FNumber;
+            focal_length = image_tag.FocalLength;
+            focal_length_35mm = image_tag.FocalLengthIn35mmFilm;
+            camera_make = image_tag.Make;
+            camera_model = image_tag.Model;
 
             metadata_parsed = true;
         }
+
+#endregion
+
 
         static DateTime UriStamp (Uri uri, string kind)
         {
