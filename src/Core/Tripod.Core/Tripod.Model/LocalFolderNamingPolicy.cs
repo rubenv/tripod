@@ -35,7 +35,7 @@ namespace Tripod.Model
         {
             var filename = photo.Uri.Segments.Last().Trim(new char [] { '/'} );
             var datetime = (DateTime)photo.DateTaken;
-            return new Uri (root, String.Format("{0}/{1}/{2}", datetime.Year, datetime.Month, datetime.Day, uri. filename));
+            return new Uri (root, String.Format("{0}/{1}/{2}", datetime.Year, datetime.Month, datetime.Day, filename));
         }
     }
 }
