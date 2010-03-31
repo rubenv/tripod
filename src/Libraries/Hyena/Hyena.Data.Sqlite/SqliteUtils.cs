@@ -43,8 +43,15 @@ namespace Hyena.Data.Sqlite
             } else if (type == typeof (int) || type == typeof (long) || type == typeof (bool)
                 || type == typeof (DateTime) || type == typeof (TimeSpan) || type.IsEnum) {
                 return "INTEGER";
+            } else if (type == typeof (int?) || type == typeof (long?) || type == typeof (bool?)
+                || type == typeof (uint?)) {
+                return "INTEGER NULL";
             } else if (type == typeof (byte[])) {
                 return "BLOB";
+            } else if (type == typeof (double)) {
+                return "REAL";
+             } else if (type == typeof (double?)) {
+                return "REAL NULL";
             } else {
                 throw new Exception (String.Format (
                     "The type {0} cannot be bound to a database column.", type.Name));
