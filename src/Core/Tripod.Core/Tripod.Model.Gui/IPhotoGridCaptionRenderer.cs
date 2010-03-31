@@ -1,10 +1,10 @@
 // 
-// IPhoto.cs
+// PhotoGridCaptionRenderer.cs
 // 
 // Author:
-//   Ruben Vermeersch <ruben@savanne.be>
+//   Mike Gemuende <mike@gemuende.de>
 // 
-// Copyright (c) 2010 Ruben Vermeersch <ruben@savanne.be>
+// Copyright (c) 2010 Mike Gemuende
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,21 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-namespace Tripod.Model
+
+using Gtk;
+
+using Hyena.Data.Gui;
+using Hyena.Gui.Canvas;
+
+
+namespace Tripod.Model.Gui
 {
-    public interface IPhoto
+
+    public interface IPhotoGridCaptionRenderer
     {
-        Uri Uri { get; }
-
-        // The last modification to the actual graphics
-        DateTime ImageDataStamp { get; set; }
-
-        // Metadata
-
-        string Comment { get; set; }
-        DateTime DateTaken { get; set; }
-
-        // TODO: Add flag to check whether certain operations can be performed (e.g. read-only photos from a cd)
+        double MeasureHeight (Widget widget);
+        void Render (CellContext context, Rect allocation, IPhoto photo);
     }
 }
-

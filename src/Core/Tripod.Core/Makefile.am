@@ -14,6 +14,13 @@ SOURCES =  \
 	Tripod.Graphics/MipMapGenerator.cs \
 	Tripod.Graphics/PixbufExtensions.cs \
 	Tripod.Jobs/ThreadPoolJob.cs \
+	Tripod.Model.Gui/IPhotoGridCaptionRenderer.cs \
+	Tripod.Model.Gui/PhotoGridDateCaptionRender.cs \
+	Tripod.Model.Gui/PhotoGridTextCaptionRenderer.cs \
+	Tripod.Model.Gui/PhotoGridThumbnailCache.cs \
+	Tripod.Model.Gui/PhotoGridView.cs \
+	Tripod.Model.Gui/PhotoGridViewChild.cs \
+	Tripod.Model.Gui/PhotoGridViewLayout.cs \
 	Tripod.Model/CachePhoto.cs \
 	Tripod.Model/CachePhotoSource.cs \
 	Tripod.Model/IAcceptImportPhotoSource.cs \

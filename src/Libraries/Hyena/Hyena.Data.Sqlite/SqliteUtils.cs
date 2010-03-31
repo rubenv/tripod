@@ -98,6 +98,12 @@ namespace Hyena.Data.Sqlite
                 return Enum.ToObject (type, value);
             } else if (type == typeof (bool)) {
                 return ((long)value == 1);
+            } else if (type == typeof (double?)) {
+                if (value == null)
+                    return null;
+
+                double double_value = ((Single?) value).Value;
+                return (double?) double_value;
             } else {
                 return Convert.ChangeType (value, type);
             }

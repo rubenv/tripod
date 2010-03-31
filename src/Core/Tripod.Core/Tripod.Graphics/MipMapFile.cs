@@ -114,7 +114,7 @@ namespace Tripod.Graphics
             while (i < Items.Count) {
                 current = Items[i++];
                 
-                if (current.Width > width || current.Height > height)
+                if (current.Width > width && current.Height > height)
                     break;
                 // Image is larger than requested dimensions.
             }

@@ -51,13 +51,19 @@ namespace FlashUnit
             
             //Application.Run ();
 
-            var cache = new MainCachePhotoSource ();
-            cache.Start ();
+            //var cache = new MainCachePhotoSource ();
+            //cache.Start ();
 
             Log.Debug ("Main cache started");
 
-            //var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
-            //cache.RegisterPhotoSource (source);
+            var main_window = new MainWindow ();
+            main_window.Destroyed += (o, e) => Application.Quit ();
+            main_window.Show ();
+
+            Application.Run ();
+
+            //var source = new LocalFolderPhotoSource (new Uri("file:///home/mike/Pictures/"));
+            //Core.MainCachePhotoSource.RegisterPhotoSource (source);
 
 /*            var t = Log.DebugTimerStart();
             Log.DebugTimerPrint(t, "starting");

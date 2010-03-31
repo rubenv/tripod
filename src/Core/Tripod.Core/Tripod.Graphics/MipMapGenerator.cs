@@ -40,11 +40,31 @@ namespace Tripod.Graphics
 
     public static class MipMapGenerator
     {
-        public static void GenerateMipMap (IPhoto photo)
+        public static Uri MipMapUri (IPhoto photo)
         {
             var hash = CryptoUtil.Md5Encode (photo.Uri.ToString ());
+
+            return new Uri (String.Format ("file:///tmp/mipmap/{0}.trimips", hash));
+        }
+
+        public static MipMapFile LoadMipMap (IPhoto photo)
+        {
+            var mipmap_uri = MipMapUri (photo);
+
+            try {
+                return new MipMapFile (mipmap_uri);
+            } catch {}
+
+            GenerateMipMap (photo);
+
+            return new MipMapFile (mipmap_uri);
+        }
+
+        public static void GenerateMipMap (IPhoto photo)
+        {
+            var mipmap_uri = MipMapUri (photo);
             
-            Log.DebugFormat ("Generating mipmap for {0} - {1}", photo.Uri.ToString (), hash);
+            Log.DebugFormat ("Generating mipmap for {0} - {1}", photo.Uri.ToString (), mipmap_uri.AbsoluteUri);
             
             var file = GLib.FileFactory.NewForUri (photo.Uri);
             var pixbuf = new Gdk.Pixbuf (new GLib.GioStream (file.Read (null)));
@@ -84,7 +104,7 @@ namespace Tripod.Graphics
                 map.Add (buf);
             }
 
-            map.WriteToUri (new Uri (String.Format ("file:///tmp/mipmap/{0}.trimips", hash)));
+            map.WriteToUri (mipmap_uri);
         }
     }
 }

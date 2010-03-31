@@ -86,6 +86,47 @@ namespace Tripod.Graphics
             }
             return pixbuf;
         }
+
+        /// <summary>
+        /// Returns a new <see cref="Pixbuf"/> which is scaled down to fit the given size.
+        /// The original aspect ratio is preserved.
+        /// </summary>
+        /// <param name="pixbuf">
+        /// A <see cref="Pixbuf"/> to scale down.
+        /// </param>
+        /// <param name="max_target_width">
+        /// A <see cref="System.Int32"/> (greater than 0) with the width to fit in.
+        /// </param>
+        /// <param name="max_target_height">
+        /// A <see cref="System.Int32"/> (greater than 0) with the height to fit in.
+        /// </param>
+        /// <param name="interp_type">
+        /// A <see cref="InterpType"/> with the interpolation type).
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pixbuf"/> which is scaled down to fit into given size.
+        /// </returns>
+        public static Pixbuf ShrinkToFit (this Pixbuf pixbuf, int max_target_width, int max_target_height, InterpType interp_type)
+        {
+            int pixbuf_width = pixbuf.Width;
+            int pixbuf_height = pixbuf.Height;
+
+            if (max_target_width <= 0)
+                throw new ArgumentOutOfRangeException ("max_target_width > 0 must hold");
+
+            if (max_target_height <= 0)
+                throw new ArgumentOutOfRangeException ("max_target_height > 0 must hold");
+
+            if (pixbuf_width <= max_target_width && pixbuf_height <= max_target_height)
+                return pixbuf.Copy ();
+
+            double width_scale = (double) max_target_width / (double) pixbuf_width;
+            double height_scale = (double) max_target_height / (double) pixbuf_height;
+
+            double scale = Math.Min (width_scale, height_scale);
+
+            return pixbuf.ScaleSimple ((int) (pixbuf_width * scale), (int) (pixbuf_height * scale), interp_type);
+        }
     }
 }
 

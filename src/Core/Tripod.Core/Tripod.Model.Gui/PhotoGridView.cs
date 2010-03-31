@@ -1,10 +1,10 @@
 // 
-// IPhoto.cs
+// PhotoGridView.cs
 // 
 // Author:
-//   Ruben Vermeersch <ruben@savanne.be>
+//   Mike Gemuende <mike@gemuende.de>
 // 
-// Copyright (c) 2010 Ruben Vermeersch <ruben@savanne.be>
+// Copyright (c) 2010 Mike Gemuende
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-namespace Tripod.Model
+
+using Tripod.Model;
+
+using Hyena.Data.Gui;
+
+
+namespace Tripod.Model.Gui
 {
-    public interface IPhoto
+
+
+    public class PhotoGridView : ListView<IPhoto>
     {
-        Uri Uri { get; }
 
-        // The last modification to the actual graphics
-        DateTime ImageDataStamp { get; set; }
+        public PhotoGridView ()
+        {
+            ViewLayout = new PhotoGridViewLayout () {
+                View = this
+            };
+        }
 
-        // Metadata
+        public void InvalidateThumbnail (IPhoto photo)
+        {
+            PhotoGridViewLayout grid_layout = (ViewLayout as PhotoGridViewLayout);
 
-        string Comment { get; set; }
-        DateTime DateTaken { get; set; }
-
-        // TODO: Add flag to check whether certain operations can be performed (e.g. read-only photos from a cd)
+            if (grid_layout != null)
+                grid_layout.InvalidateThumbnail (photo);
+        }
     }
 }
-

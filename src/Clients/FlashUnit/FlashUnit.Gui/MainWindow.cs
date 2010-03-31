@@ -31,6 +31,8 @@ using Hyena;
 using Hyena.Jobs;
 using Tripod.Base;
 using Tripod.Jobs;
+using Tripod.Model;
+using Tripod.Model.Gui;
 
 namespace FlashUnit.Gui
 {
@@ -70,13 +72,27 @@ namespace FlashUnit.Gui
         {
             primary_vbox = new VBox ();
             
-            var label = new Label ("Super duper test UI!");
-            label.Show ();
-            primary_vbox.Add (label);
+            //var label = new Label ("Super duper test UI!");
+            //label.Show ();
+            //primary_vbox.Add (label);
+
+            var photo_view = new PhotoGridView ();
+            photo_view.Show ();
+
+            var photo_view_scrolled = new ScrolledWindow ();
+            photo_view_scrolled.Add (photo_view);
+            photo_view_scrolled.Show ();
+            primary_vbox.PackStart (photo_view_scrolled, true, true, 8);
+
+            var photo_model = new Hyena.Data.MemoryListModel<IPhoto> ();
+            foreach (IPhoto photo in Core.MainCachePhotoSource.Photos)
+                photo_model.Add (photo);
+
+            photo_view.SetModel (photo_model);
             
             var button_box = new HButtonBox ();
             button_box.Show ();
-            primary_vbox.Add (button_box);
+            primary_vbox.PackStart (button_box, false, true, 8);
             
             var folder_button = new FileChooserButton ("Select import folder", FileChooserAction.SelectFolder);
             folder_button.FileSet += delegate {

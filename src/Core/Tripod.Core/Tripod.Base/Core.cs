@@ -29,6 +29,8 @@ using System;
 using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
+using Tripod.Model;
+
 namespace Tripod.Base
 {
     public class Core
@@ -43,14 +45,22 @@ namespace Tripod.Base
             get { return db_connection; }
         }
 
+        static ICachingPhotoSource main_cache_photo_source;
+        public static ICachingPhotoSource MainCachePhotoSource {
+            get { return main_cache_photo_source; }
+        }
+
         public static void Initialize (string name, ref string[] args)
         {
             Hyena.Log.Debugging = true;
             GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
             
             Hyena.Log.Debug ("Initializing Core");
-            
+
             Application.Init (name, ref args);
+
+            main_cache_photo_source = new MainCachePhotoSource ();
+            main_cache_photo_source.Start ();
         }
     }
 }
