@@ -54,6 +54,7 @@ namespace Tripod.Base
                     }
                 }
             }
+            enumerator.Close (null);
         }
 
         public IEnumerator<File> GetEnumerator ()
