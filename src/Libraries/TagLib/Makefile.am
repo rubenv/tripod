@@ -1,124 +1,100 @@
 ASSEMBLY = TagLib
 TARGET = library
 LINK = 
-SOURCES = \
+SOURCES =  \
 	TagLib/Aac/AudioHeader.cs \
 	TagLib/Aac/BitStream.cs \
 	TagLib/Aac/File.cs \
 	TagLib/Aiff/File.cs \
 	TagLib/Aiff/StreamHeader.cs \
-	TagLib/Ape/Tag.cs \
-	TagLib/Ape/Item.cs \
-	TagLib/Ape/Footer.cs \
 	TagLib/Ape/File.cs \
+	TagLib/Ape/Footer.cs \
+	TagLib/Ape/Item.cs \
 	TagLib/Ape/StreamHeader.cs \
-	TagLib/Asf/Guid.cs \
-	TagLib/Asf/StreamPropertiesObject.cs \
-	TagLib/Asf/UnknownObject.cs \
-	TagLib/Asf/Tag.cs \
-	TagLib/Asf/Object.cs \
-	TagLib/Asf/ExtendedContentDescriptionObject.cs \
+	TagLib/Ape/Tag.cs \
 	TagLib/Asf/ContentDescriptionObject.cs \
-	TagLib/Asf/MetadataLibraryObject.cs \
-	TagLib/Asf/HeaderObject.cs \
-	TagLib/Asf/HeaderExtensionObject.cs \
-	TagLib/Asf/File.cs \
-	TagLib/Asf/FilePropertiesObject.cs \
-	TagLib/Asf/PaddingObject.cs \
 	TagLib/Asf/ContentDescriptor.cs \
 	TagLib/Asf/DescriptionRecord.cs \
-	TagLib/Mpc/StreamHeader.cs \
-	TagLib/Mpc/File.cs \
-	TagLib/Ogg/GroupedComment.cs \
-	TagLib/Ogg/Bitstream.cs \
-	TagLib/Ogg/Paginator.cs \
-	TagLib/Ogg/Codec.cs \
-	TagLib/Ogg/Codecs/Vorbis.cs \
-	TagLib/Ogg/Codecs/Theora.cs \
-	TagLib/Ogg/Page.cs \
-	TagLib/Ogg/XiphComment.cs \
-	TagLib/Ogg/PageHeader.cs \
-	TagLib/Ogg/File.cs \
+	TagLib/Asf/ExtendedContentDescriptionObject.cs \
+	TagLib/Asf/File.cs \
+	TagLib/Asf/FilePropertiesObject.cs \
+	TagLib/Asf/Guid.cs \
+	TagLib/Asf/HeaderExtensionObject.cs \
+	TagLib/Asf/HeaderObject.cs \
+	TagLib/Asf/MetadataLibraryObject.cs \
+	TagLib/Asf/Object.cs \
+	TagLib/Asf/PaddingObject.cs \
+	TagLib/Asf/StreamPropertiesObject.cs \
+	TagLib/Asf/Tag.cs \
+	TagLib/Asf/UnknownObject.cs \
+	TagLib/ByteVector.cs \
+	TagLib/ByteVectorList.cs \
+	TagLib/CombinedTag.cs \
+	TagLib/CorruptFileException.cs \
+	TagLib/File.cs \
+	TagLib/FileTypes.cs \
 	TagLib/Flac/Block.cs \
 	TagLib/Flac/BlockHeader.cs \
-	TagLib/Flac/StreamHeader.cs \
-	TagLib/Flac/Picture.cs \
 	TagLib/Flac/File.cs \
-	TagLib/Image/Codec.cs \
-	TagLib/Image/CombinedImageTag.cs \
-	TagLib/Image/File.cs \
-	TagLib/Image/ImageTag.cs \
-	TagLib/Image/ImageOrientation.cs \
-	TagLib/Jpeg/Codec.cs \
-	TagLib/Jpeg/File.cs \
-	TagLib/Jpeg/JpegCommentTag.cs \
-	TagLib/Jpeg/Marker.cs \
-	TagLib/Jpeg/Table.cs \
-	TagLib/Mpeg/XingHeader.cs \
-	TagLib/Mpeg/VBRIHeader.cs \
-	TagLib/Mpeg/File.cs \
-	TagLib/Mpeg/AudioFile.cs \
-	TagLib/Mpeg/AudioHeader.cs \
-	TagLib/Mpeg/VideoHeader.cs \
-	TagLib/NonContainer/EndTag.cs \
-	TagLib/NonContainer/File.cs \
-	TagLib/NonContainer/StartTag.cs \
-	TagLib/NonContainer/Tag.cs \
-	TagLib/Id3v1/Tag.cs \
+	TagLib/Flac/Picture.cs \
+	TagLib/Flac/StreamHeader.cs \
+	TagLib/Genres.cs \
+	TagLib/ICodec.cs \
 	TagLib/Id3v1/StringHandler.cs \
-	TagLib/Id3v2/Frames/PopularimeterFrame.cs \
+	TagLib/Id3v1/Tag.cs \
+	TagLib/Id3v2/ExtendedHeader.cs \
+	TagLib/Id3v2/Footer.cs \
+	TagLib/Id3v2/Frame.cs \
+	TagLib/Id3v2/FrameFactory.cs \
+	TagLib/Id3v2/FrameHeader.cs \
+	TagLib/Id3v2/Frames/AttachedPictureFrame.cs \
+	TagLib/Id3v2/Frames/CommentsFrame.cs \
+	TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs \
+	TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs \
 	TagLib/Id3v2/Frames/PlayCountFrame.cs \
+	TagLib/Id3v2/Frames/PopularimeterFrame.cs \
 	TagLib/Id3v2/Frames/PrivateFrame.cs \
 	TagLib/Id3v2/Frames/RelativeVolumeFrame.cs \
+	TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs \
+	TagLib/Id3v2/Frames/TermsOfUseFrame.cs \
+	TagLib/Id3v2/Frames/TextIdentificationFrame.cs \
 	TagLib/Id3v2/Frames/UniqueFileIdentifierFrame.cs \
 	TagLib/Id3v2/Frames/UnknownFrame.cs \
-	TagLib/Id3v2/Frames/CommentsFrame.cs \
-	TagLib/Id3v2/Frames/TextIdentificationFrame.cs \
-	TagLib/Id3v2/Frames/AttachedPictureFrame.cs \
-	TagLib/Id3v2/Frames/GeneralEncapsulatedObjectFrame.cs \
 	TagLib/Id3v2/Frames/UnsynchronisedLyricsFrame.cs \
-	TagLib/Id3v2/Frames/SynchronizedLyricsFrame.cs \
-	TagLib/Id3v2/Frames/MusicCdIdentifierFrame.cs \
-	TagLib/Id3v2/Frames/TermsOfUseFrame.cs \
-	TagLib/Id3v2/FrameFactory.cs \
-	TagLib/Id3v2/Frame.cs \
 	TagLib/Id3v2/FrameTypes.cs \
-	TagLib/Id3v2/Tag.cs \
-	TagLib/Id3v2/FrameHeader.cs \
-	TagLib/Id3v2/ExtendedHeader.cs \
-	TagLib/Id3v2/SynchData.cs \
 	TagLib/Id3v2/Header.cs \
-	TagLib/Id3v2/Footer.cs \
+	TagLib/Id3v2/SynchData.cs \
+	TagLib/Id3v2/Tag.cs \
 	TagLib/IFD/Entries/ByteIFDEntry.cs \
 	TagLib/IFD/Entries/ByteVectorIFDEntry.cs \
 	TagLib/IFD/Entries/LongArrayIFDEntry.cs \
 	TagLib/IFD/Entries/LongIFDEntry.cs \
 	TagLib/IFD/Entries/MakernoteIFDEntry.cs \
+	TagLib/IFD/Entries/Rational.cs \
 	TagLib/IFD/Entries/RationalArrayIFDEntry.cs \
 	TagLib/IFD/Entries/RationalIFDEntry.cs \
-	TagLib/IFD/Entries/Rational.cs \
 	TagLib/IFD/Entries/SByteIFDEntry.cs \
 	TagLib/IFD/Entries/ShortArrayIFDEntry.cs \
 	TagLib/IFD/Entries/ShortIFDEntry.cs \
 	TagLib/IFD/Entries/SLongArrayIFDEntry.cs \
 	TagLib/IFD/Entries/SLongIFDEntry.cs \
+	TagLib/IFD/Entries/SRational.cs \
 	TagLib/IFD/Entries/SRationalIFDEntry.cs \
 	TagLib/IFD/Entries/SShortArrayIFDEntry.cs \
 	TagLib/IFD/Entries/SShortIFDEntry.cs \
-	TagLib/IFD/Entries/SRational.cs \
 	TagLib/IFD/Entries/StringIFDEntry.cs \
 	TagLib/IFD/Entries/StripOffsetsIFDEntry.cs \
 	TagLib/IFD/Entries/SubIFDEntry.cs \
 	TagLib/IFD/Entries/ThumbnailDataIFDEntry.cs \
-	TagLib/IFD/Entries/UserCommentIFDEntry.cs \
 	TagLib/IFD/Entries/UndefinedIFDEntry.cs \
+	TagLib/IFD/Entries/UserCommentIFDEntry.cs \
+	TagLib/IFD/IFDDirectory.cs \
 	TagLib/IFD/IFDEntry.cs \
 	TagLib/IFD/IFDEntryType.cs \
-	TagLib/IFD/IFDTag.cs \
-	TagLib/IFD/IFDDirectory.cs \
-	TagLib/IFD/IFDStructure.cs \
 	TagLib/IFD/IFDReader.cs \
 	TagLib/IFD/IFDRenderer.cs \
+	TagLib/IFD/IFDStructure.cs \
+	TagLib/IFD/IFDTag.cs \
 	TagLib/IFD/Makernotes/Nikon3MakernoteReader.cs \
 	TagLib/IFD/Tags/CanonMakerNoteEntryTag.cs \
 	TagLib/IFD/Tags/ExifEntryTag.cs \
@@ -128,35 +104,70 @@ SOURCES = \
 	TagLib/IFD/Tags/Nikon3MakerNoteEntryTag.cs \
 	TagLib/IFD/Tags/NikonPreviewMakerNoteEntryTag.cs \
 	TagLib/IFD/Tags/PanasonicMakerNoteEntryTag.cs \
+	TagLib/Image/Codec.cs \
+	TagLib/Image/CombinedImageTag.cs \
+	TagLib/Image/File.cs \
+	TagLib/Image/ImageOrientation.cs \
+	TagLib/Image/ImageTag.cs \
+	TagLib/Jpeg/Codec.cs \
+	TagLib/Jpeg/File.cs \
+	TagLib/Jpeg/JpegCommentTag.cs \
+	TagLib/Jpeg/Marker.cs \
+	TagLib/Jpeg/Table.cs \
+	TagLib/ListBase.cs \
+	TagLib/Mpc/File.cs \
+	TagLib/Mpc/StreamHeader.cs \
+	TagLib/Mpeg/AudioFile.cs \
+	TagLib/Mpeg/AudioHeader.cs \
+	TagLib/Mpeg/File.cs \
+	TagLib/Mpeg/VBRIHeader.cs \
+	TagLib/Mpeg/VideoHeader.cs \
+	TagLib/Mpeg/XingHeader.cs \
 	TagLib/Mpeg4/AppleTag.cs \
 	TagLib/Mpeg4/Box.cs \
+	TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs \
+	TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs \
+	TagLib/Mpeg4/Boxes/AppleDataBox.cs \
+	TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs \
+	TagLib/Mpeg4/Boxes/AppleItemListBox.cs \
+	TagLib/Mpeg4/Boxes/FullBox.cs \
+	TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs \
+	TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs \
+	TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs \
+	TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs \
+	TagLib/Mpeg4/Boxes/IsoHandlerBox.cs \
+	TagLib/Mpeg4/Boxes/IsoMetaBox.cs \
+	TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs \
+	TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs \
+	TagLib/Mpeg4/Boxes/IsoSampleEntry.cs \
+	TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs \
+	TagLib/Mpeg4/Boxes/IsoUserDataBox.cs \
+	TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs \
+	TagLib/Mpeg4/Boxes/UnknownBox.cs \
 	TagLib/Mpeg4/BoxFactory.cs \
 	TagLib/Mpeg4/BoxHeader.cs \
 	TagLib/Mpeg4/BoxTypes.cs \
 	TagLib/Mpeg4/File.cs \
 	TagLib/Mpeg4/FileParser.cs \
-	TagLib/Mpeg4/Boxes/IsoFreeSpaceBox.cs \
-	TagLib/Mpeg4/Boxes/UnknownBox.cs \
-	TagLib/Mpeg4/Boxes/IsoUserDataBox.cs \
-	TagLib/Mpeg4/Boxes/IsoChunkOffsetBox.cs \
-	TagLib/Mpeg4/Boxes/IsoChunkLargeOffsetBox.cs \
-	TagLib/Mpeg4/Boxes/AppleItemListBox.cs \
-	TagLib/Mpeg4/Boxes/AppleAnnotationBox.cs \
-	TagLib/Mpeg4/Boxes/IsoSampleTableBox.cs \
-	TagLib/Mpeg4/Boxes/IsoSampleEntry.cs \
-	TagLib/Mpeg4/Boxes/IsoAudioSampleEntry.cs \
-	TagLib/Mpeg4/Boxes/IsoVisualSampleEntry.cs \
-	TagLib/Mpeg4/Boxes/IsoMetaBox.cs \
-	TagLib/Mpeg4/Boxes/IsoSampleDescriptionBox.cs \
-	TagLib/Mpeg4/Boxes/AppleAdditionalInfoBox.cs \
-	TagLib/Mpeg4/Boxes/IsoHandlerBox.cs \
-	TagLib/Mpeg4/Boxes/IsoMovieHeaderBox.cs \
-	TagLib/Mpeg4/Boxes/FullBox.cs \
-	TagLib/Mpeg4/Boxes/AppleElementaryStreamDescriptor.cs \
-	TagLib/Mpeg4/Boxes/AppleDataBox.cs \
+	TagLib/NonContainer/EndTag.cs \
+	TagLib/NonContainer/File.cs \
+	TagLib/NonContainer/StartTag.cs \
+	TagLib/NonContainer/Tag.cs \
+	TagLib/Ogg/Bitstream.cs \
+	TagLib/Ogg/Codec.cs \
+	TagLib/Ogg/Codecs/Theora.cs \
+	TagLib/Ogg/Codecs/Vorbis.cs \
+	TagLib/Ogg/File.cs \
+	TagLib/Ogg/GroupedComment.cs \
+	TagLib/Ogg/Page.cs \
+	TagLib/Ogg/PageHeader.cs \
+	TagLib/Ogg/Paginator.cs \
+	TagLib/Ogg/XiphComment.cs \
+	TagLib/Picture.cs \
+	TagLib/Properties.cs \
+	TagLib/ReadOnlyByteVector.cs \
 	TagLib/Riff/AviHeaderList.cs \
 	TagLib/Riff/AviStream.cs \
-	TagLib/Riff/WaveFormatEx.cs \
 	TagLib/Riff/BitmapInfoHeader.cs \
 	TagLib/Riff/DivXTag.cs \
 	TagLib/Riff/File.cs \
@@ -164,30 +175,19 @@ SOURCES = \
 	TagLib/Riff/List.cs \
 	TagLib/Riff/ListTag.cs \
 	TagLib/Riff/MovieIdTag.cs \
+	TagLib/Riff/WaveFormatEx.cs \
+	TagLib/StringList.cs \
+	TagLib/SupportedMimeType.cs \
+	TagLib/Tag.cs \
 	TagLib/Tiff/Codec.cs \
 	TagLib/Tiff/File.cs \
+	TagLib/UnsupportedFormatException.cs \
 	TagLib/WavPack/File.cs \
 	TagLib/WavPack/StreamHeader.cs \
 	TagLib/Xmp/XmlNodeExtensions.cs \
-	TagLib/Xmp/XmpTag.cs \
 	TagLib/Xmp/XmpNode.cs \
 	TagLib/Xmp/XmpNodeType.cs \
 	TagLib/Xmp/XmpNodeVisitor.cs \
-	TagLib/ICodec.cs \
-	TagLib/Tag.cs \
-	TagLib/ReadOnlyByteVector.cs \
-	TagLib/ByteVector.cs \
-	TagLib/ByteVectorList.cs \
-	TagLib/CombinedTag.cs \
-	TagLib/Genres.cs \
-	TagLib/Properties.cs \
-	TagLib/File.cs \
-	TagLib/StringList.cs \
-	TagLib/SupportedMimeType.cs \
-	TagLib/UnsupportedFormatException.cs \
-	TagLib/Picture.cs \
-	TagLib/ListBase.cs \
-	TagLib/FileTypes.cs \
-	TagLib/CorruptFileException.cs
+	TagLib/Xmp/XmpTag.cs
 
 include $(top_srcdir)/build/build.mk
