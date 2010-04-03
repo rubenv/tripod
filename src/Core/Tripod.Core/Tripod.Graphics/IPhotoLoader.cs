@@ -1,10 +1,10 @@
 // 
-// PhotoGridView.cs
+// IPhotoLoader.cs
 // 
 // Author:
-//   Mike Gemuende <mike@gemuende.de>
+//   Ruben Vermeersch <ruben@savanne.be>
 // 
-// Copyright (c) 2010 Mike Gemuende
+// Copyright (c) 2010 Ruben Vermeersch
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,43 +23,18 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-
+using System.Threading.Tasks;
+using Gdk;
 using Tripod.Model;
+using Tripod.Tasks;
 
-using Hyena.Data.Gui;
-
-
-namespace Tripod.Model.Gui
+namespace Tripod.Graphics
 {
-
-
-    public class PhotoGridView : ListView<IPhoto>
+    public interface IPhotoLoader
     {
-
-        public PhotoGridView ()
-        {
-            ViewLayout = new PhotoGridViewLayout () {
-                View = this
-            };
-        }
-
-        public void InvalidateThumbnail (IPhoto photo)
-        {
-            PhotoGridViewLayout grid_layout = (ViewLayout as PhotoGridViewLayout);
-
-            if (grid_layout != null)
-                grid_layout.InvalidateThumbnail (photo);
-        }
-
-        public int ThumbnailSize {
-            set {
-                PhotoGridViewLayout grid_layout = (ViewLayout as PhotoGridViewLayout);
-                grid_layout.ThumbnailWidth = value;
-                grid_layout.ThumbnailHeight = (int) ((double) value * 3 / 4);
-                grid_layout.Invalidate ();
-            }
-        }
+        CancellableTask<Pixbuf> FindBestPreview (int width, int height);
+        Task<bool> IsBestPreview (int have_width, int have_height, int desired_width, int desired_height);
     }
 }
+

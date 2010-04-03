@@ -28,7 +28,10 @@ using System;
 
 using Tripod.Base;
 using Tripod.Model;
+using Tripod.Tasks;
+using Tripod.Graphics;
 
+using Hyena;
 using Hyena.Gui;
 using Hyena.Data.Gui;
 using Hyena.Gui.Theming;
@@ -46,29 +49,16 @@ namespace Tripod.Model.Gui
     public class PhotoGridViewChild : DataViewChild
     {
 
-        private static Stage<PhotoGridViewChild> stage;
-
         static PhotoGridViewChild ()
         {
-            stage = new Stage<PhotoGridViewChild> (80);
-            stage.ActorStep += actor => {
-                var scale = actor.Target.mouse_over_scale;
-                scale += actor.Target.mouse_over_scale_up
-                    ? actor.StepDeltaPercent
-                    : -actor.StepDeltaPercent;
-                actor.Target.mouse_over_scale = scale = Math.Max (0.0, Math.Min (1.0, scale));
-                actor.Target.InvalidateThumbnail ();
-                return scale > 0 && scale < 1;
-            };
+
         }
 
 #region Public Layout Properties
 
-        public double ThumbnailWidth { get; set; }
-        public double ThumbnailHeight { get; set; }
+        public int ThumbnailWidth { get { return (ParentLayout as PhotoGridViewLayout).ThumbnailWidth; } }
+        public int ThumbnailHeight { get { return (ParentLayout as PhotoGridViewLayout).ThumbnailHeight; }  }
         public double CaptionSpacing { get; set; }
-        public double SelectedScale { get; set; }
-        public double MouseOverScale { get; set; }
 
 #endregion
 
@@ -79,11 +69,6 @@ namespace Tripod.Model.Gui
         private Rect inner_allocation;
         private Rect thumbnail_allocation;
         private Rect caption_allocation;
-        //private string caption;
-        //private double appear_opacity = 1.0;
-
-        private bool mouse_over_scale_up;
-        private double mouse_over_scale;
 
 #endregion
 
@@ -93,11 +78,7 @@ namespace Tripod.Model.Gui
         public PhotoGridViewChild ()
         {
             Padding = new Thickness (5);
-            ThumbnailWidth = 200;
-            ThumbnailHeight = 150;
             CaptionSpacing = 5;
-            SelectedScale = 6;
-            MouseOverScale = 6;
         }
 
 #endregion
@@ -125,7 +106,7 @@ namespace Tripod.Model.Gui
 
         public static void RenderThumbnail (Cairo.Context cr, ImageSurface image, bool dispose,
             double x, double y, double width, double height, double radius,
-            bool fill, Color fillColor, CairoCorners corners, double scale)
+            bool fill, Cairo.Color fillColor, CairoCorners corners, double scale)
         {
             if (image == null || image.Handle == IntPtr.Zero) {
                 image = null;
@@ -183,6 +164,37 @@ namespace Tripod.Model.Gui
 
 #region DataViewChild Implementation
 
+        CancellableTask<Gdk.Pixbuf> last_loader_task = null;
+        ImageSurface image_surface = null;
+        IPhoto last_photo;
+
+        void Reload (IPhoto photo)
+        {
+            if (last_loader_task != null) {
+                last_loader_task.Cancel ();
+                if (last_loader_task.IsCompleted) {
+                    last_loader_task.Result.Dispose ();
+                }
+            }
+
+            var loader = Core.PhotoLoaderCache.RequestLoader (photo);
+            last_loader_task = loader.FindBestPreview (ThumbnailWidth, ThumbnailHeight);
+            last_loader_task.ContinueWith ((t) => {
+
+                lock (this) {
+                    if (image_surface != null)
+                        image_surface.Dispose ();
+                    image_surface = PixbufImageSurface.Create (last_loader_task.Result);
+                }
+
+
+                ThreadAssist.ProxyToMain (() => {
+                    InvalidateThumbnail ();
+                    ParentLayout.View.QueueDraw ();
+                });
+            });
+        }
+
         public override void Render (CellContext context)
         {
             if (inner_allocation.IsEmpty || ! valid)
@@ -191,34 +203,33 @@ namespace Tripod.Model.Gui
             context.Context.Translate (inner_allocation.X, inner_allocation.Y);
 
             IPhoto photo = BoundObject as IPhoto;
-
             var view_layout = ParentLayout as PhotoGridViewLayout;
-            ImageSurface image_surface = view_layout.ThumbnailCache.LookupCachedThumbnail (photo);
 
-            if (image_surface == null)
-                view_layout.ThumbnailCache.RequestThumbnail (photo);
+            if (photo != last_photo) {
+                last_photo = photo;
 
-            double increase = 0;
+                Reload (photo);
+            }
 
-            if (context.State == (StateType.Active | StateType.Selected))
-                increase = SelectedScale;
-
-            increase = Math.Max (increase, MouseOverScale * mouse_over_scale * mouse_over_scale);
-
-            double max_size = Math.Max (ThumbnailHeight, ThumbnailWidth);
-            double scale = (max_size + increase) / max_size;
-
-            RenderThumbnail (context.Context,
-                             image_surface,
-                             false,
-                             thumbnail_allocation.X,
-                             thumbnail_allocation.Y,
-                             thumbnail_allocation.Width,
-                             thumbnail_allocation.Height,
-                             context.Theme.Context.Radius,
-                             false,
-                             new Color (0.8, 0.8, 0.8),
-                             CairoCorners.All, scale);
+            lock (this) {
+                if (image_surface != null) {
+                    double scalex = Math.Max (1.0, image_surface.Width / thumbnail_allocation.Width);
+                    double scaley = Math.Max (1.0, image_surface.Height / thumbnail_allocation.Height);
+                    double scale = 1 / Math.Max (scalex, scaley);
+    
+                    RenderThumbnail (context.Context,
+                                     image_surface,
+                                     false,
+                                     thumbnail_allocation.X,
+                                     thumbnail_allocation.Y,
+                                     thumbnail_allocation.Width,
+                                     thumbnail_allocation.Height,
+                                     context.Theme.Context.Radius,
+                                     false,
+                                     new Color (0.8, 0.8, 0.8),
+                                     CairoCorners.All, scale);
+                }
+            }
 
             view_layout.CaptionRender.Render (context, caption_allocation, photo);
 
@@ -238,10 +249,8 @@ namespace Tripod.Model.Gui
 
             valid = true;
 
-            //caption = String.Format ("{0} {1}", photo.DateTaken.ToShortDateString (), photo.DateTaken.ToLongTimeString ());
-
-            double width = ThumbnailWidth + SelectedScale;
-            double height = ThumbnailHeight + SelectedScale;
+            double width = ThumbnailWidth;
+            double height = ThumbnailHeight;
 
             inner_allocation = new Rect () {
                 X = Padding.Left,
@@ -266,22 +275,10 @@ namespace Tripod.Model.Gui
             caption_allocation.Height =
                 (ParentLayout as PhotoGridViewLayout).CaptionRender.MeasureHeight (ParentLayout.View);
 
-            double width = ThumbnailWidth + SelectedScale + Padding.X;
-            double height = ThumbnailHeight + SelectedScale + CaptionSpacing + caption_allocation.Height + Padding.Y;
+            double width = ThumbnailWidth + Padding.X;
+            double height = ThumbnailHeight + CaptionSpacing + caption_allocation.Height + Padding.Y;
 
             return new Size (Math.Round (width), Math.Round (height));
-        }
-
-        public override void CursorEnterEvent ()
-        {
-            mouse_over_scale_up = true;
-            stage.AddOrReset (this);
-        }
-
-        public override void CursorLeaveEvent ()
-        {
-            mouse_over_scale_up = false;
-            stage.AddOrReset (this);
         }
 
 #endregion

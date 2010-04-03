@@ -1,10 +1,10 @@
-// 
-// ImportDialog.cs
+//
+// PhotoLoaderCache.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
 // 
-// Copyright (c) 2010 Ruben Vermeersch <ruben@savanne.be>
+// Copyright (c) 2010 Ruben Vermeersch
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,54 +23,34 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
+
 using System;
-using Gtk;
+using System.Collections.Generic;
+using Tripod.Model;
 
-namespace FlashUnit.Gui
+namespace Tripod.Graphics
 {
-    public class ImportDialog : Window
+    public class PhotoLoaderCache
     {
-        bool interface_constructed = false;
+        Dictionary<string, WeakReference> Loaders = new Dictionary<string, WeakReference>();
 
-        public ImportDialog () : base ("Import")
+        public IPhotoLoader RequestLoader (IPhoto photo)
         {
+            var key = photo.Uri.ToString ();
+            WeakReference reference = null;
+            IPhotoLoader loader = null;
 
-        }
-
-        protected override void OnShown ()
-        {
-            if (interface_constructed) {
-                base.OnShown ();
-                return;
+            if (Loaders.TryGetValue (key, out reference)) {
+                loader = reference.Target as IPhotoLoader;
             }
-            interface_constructed = true;
 
-            BuildUI ();
-            base.OnShown ();
+            if (loader == null) {
+                loader = new MipMappedPhotoLoader (photo);
+                Loaders[key] = new WeakReference (loader);
+            }
+
+            return loader;
         }
-
-        #region UI construction
-
-        void BuildUI () {
-            var dialog_vbox = new VBox () {
-                BorderWidth = 6,
-                Spacing = 6
-            };
-            var dialog_table = new Table (2, 2, false) {
-                RowSpacing = 12,
-                ColumnSpacing = 6
-            };
-
-            dialog_table.Attach (new Label() {
-                Text = "Import Source:"
-            }, 0, 1, 0, 1);
-
-            dialog_vbox.Add(dialog_table);
-            Add (dialog_vbox);
-            ShowAll ();
-        }
-
-        #endregion
     }
 }
 

@@ -57,10 +57,13 @@
     <Compile Include="Tripod.Model.Gui\PhotoGridView.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridViewChild.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridViewLayout.cs" />
-    <Compile Include="Tripod.Model.Gui\PhotoGridThumbnailCache.cs" />
     <Compile Include="Tripod.Model.Gui\IPhotoGridCaptionRenderer.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridTextCaptionRenderer.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridDateCaptionRender.cs" />
+    <Compile Include="Tripod.Model\IAcceptImportPhotoSource.cs" />
+    <Compile Include="Tripod.Graphics\IPhotoLoader.cs" />
+    <Compile Include="Tripod.Graphics\PhotoLoaderCache.cs" />
+    <Compile Include="Tripod.Graphics\MipMappedPhotoLoader.cs" />
     <Compile Include="Tripod.Tasks\CancellableTask.cs" />
     <Compile Include="Tripod.Tasks\RefCountCancellableTask.cs" />
     <Compile Include="Tripod.Tasks\ChildCancellableTask.cs" />

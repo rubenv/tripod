@@ -10,14 +10,16 @@ SOURCES =  \
 	Tripod.Base/GIOTagLibFileAbstraction.cs \
 	Tripod.Base/RecursiveDirectoryEnumerator.cs \
 	Tripod.Base/TripodSqliteConnection.cs \
+	Tripod.Graphics/IPhotoLoader.cs \
 	Tripod.Graphics/MipMapFile.cs \
 	Tripod.Graphics/MipMapGenerator.cs \
+	Tripod.Graphics/MipMappedPhotoLoader.cs \
+	Tripod.Graphics/PhotoLoaderCache.cs \
 	Tripod.Graphics/PixbufExtensions.cs \
 	Tripod.Jobs/ThreadPoolJob.cs \
 	Tripod.Model.Gui/IPhotoGridCaptionRenderer.cs \
 	Tripod.Model.Gui/PhotoGridDateCaptionRender.cs \
 	Tripod.Model.Gui/PhotoGridTextCaptionRenderer.cs \
-	Tripod.Model.Gui/PhotoGridThumbnailCache.cs \
 	Tripod.Model.Gui/PhotoGridView.cs \
 	Tripod.Model.Gui/PhotoGridViewChild.cs \
 	Tripod.Model.Gui/PhotoGridViewLayout.cs \

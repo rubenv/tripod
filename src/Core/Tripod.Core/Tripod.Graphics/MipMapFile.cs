@@ -105,6 +105,12 @@ namespace Tripod.Graphics
         /// </para>
         public Pixbuf FindBest (int width, int height)
         {
+            var item = FindBestItem (width, height);
+            return new Gdk.Pixbuf (item.Pixbuf, 0, 0, item.Width, item.Height);
+        }
+
+        MipMapItem FindBestItem (int width, int height)
+        {
             if (Items.Count == 0) {
                 throw new Exception ("Can't retrieve from uninitialized mip-map");
             }
@@ -119,7 +125,14 @@ namespace Tripod.Graphics
                 // Image is larger than requested dimensions.
             }
             
-            return new Gdk.Pixbuf (current.Pixbuf, 0, 0, current.Width, current.Height);
+            return current;
+        }
+
+        public bool IsBestSize (int have_width, int have_height, int desired_width, int desired_height)
+        {
+            var item = FindBestItem (desired_width, desired_height);
+
+            return (item.Width == have_width && item.Height == have_height);
         }
 
         /// <summary>

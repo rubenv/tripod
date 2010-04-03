@@ -42,22 +42,33 @@ namespace Tripod.Model.Gui
 
     public class PhotoGridViewLayout : DataViewLayoutGrid
     {
-        public PhotoGridThumbnailCache ThumbnailCache { get; private set; }
         public IPhotoGridCaptionRenderer CaptionRender { get; private set; }
 
         public PhotoGridViewLayout ()
         {
-            ThumbnailCache = new PhotoGridThumbnailCache (this, 200, 150);
             ChildAllocator = () => new PhotoGridViewChild ();
             CaptionRender = new PhotoGridDateCaptionRender ();
+            ThumbnailWidth = 140;
+            ThumbnailHeight = 105;
         }
 
         public void InvalidateThumbnail (IPhoto photo)
         {
             PhotoGridViewChild child = GetDrawingChild (photo);
 
-            if (child != null)
+            if (child != null) {
                 child.InvalidateThumbnail ();
+                View.QueueDraw ();
+            }
+        }
+
+        public void Invalidate ()
+        {
+            InvalidateChildSize ();
+            InvalidateChildLayout ();
+            InvalidateVirtualSize ();
+            InvalidateChildCollection ();
+            View.QueueDraw ();
         }
 
         protected PhotoGridViewChild GetDrawingChild (IPhoto photo)
@@ -70,5 +81,8 @@ namespace Tripod.Model.Gui
 
             return null;
         }
+
+        public int ThumbnailWidth { get; set; }
+        public int ThumbnailHeight { get; set; }
     }
 }

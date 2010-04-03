@@ -31,6 +31,7 @@ using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
 using Tripod.Model;
+using Tripod.Graphics;
 
 namespace Tripod.Base
 {
@@ -46,23 +47,28 @@ namespace Tripod.Base
             get { return db_connection; }
         }
 
-        static ICachingPhotoSource main_cache_photo_source;
+        static ICachingPhotoSource main_cache_photo_source = new MainCachePhotoSource ();
         public static ICachingPhotoSource MainCachePhotoSource {
             get { return main_cache_photo_source; }
+        }
+
+        static PhotoLoaderCache photo_loader_cache = new PhotoLoaderCache ();
+        public static PhotoLoaderCache PhotoLoaderCache {
+            get { return photo_loader_cache; }
         }
 
         public static void Initialize (string name, ref string[] args)
         {
             Hyena.Log.Debugging = true;
             GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
+            GLib.Log.SetLogHandler ("GdkPixbuf", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
             
             Hyena.Log.Debug ("Initializing Core");
 
             ApplicationContext.TrySetProcessName ("tripod");
             Application.Init (name, ref args);
 
-            main_cache_photo_source = new MainCachePhotoSource ();
-            main_cache_photo_source.Start ();
+            MainCachePhotoSource.Start ();
         }
     }
 }

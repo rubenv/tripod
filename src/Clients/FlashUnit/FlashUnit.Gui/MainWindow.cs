@@ -72,10 +72,6 @@ namespace FlashUnit.Gui
         {
             primary_vbox = new VBox ();
             
-            //var label = new Label ("Super duper test UI!");
-            //label.Show ();
-            //primary_vbox.Add (label);
-
             var photo_view = new PhotoGridView ();
             photo_view.Show ();
 
@@ -89,50 +85,26 @@ namespace FlashUnit.Gui
                 photo_model.Add (photo);
 
             photo_view.SetModel (photo_model);
-            
-            var button_box = new HButtonBox ();
-            button_box.Show ();
-            primary_vbox.PackStart (button_box, false, true, 8);
-            
-            var folder_button = new FileChooserButton ("Select import folder", FileChooserAction.SelectFolder);
-            folder_button.FileSet += delegate {
-                folder = folder_button.Uri;
-                Hyena.Log.Information ("Selected " + folder);
+
+            var hbox = new HBox (false, 5);
+
+            hbox.Add (new Label ("Size"));
+
+            var scale = new HScale (50, 400, 10);
+            scale.Value = 200;
+            scale.ValueChanged += (s, a) => {
+                photo_view.ThumbnailSize = (int) scale.Value;
             };
-            folder_button.Show ();
-            button_box.Add (folder_button);
-            
-            var import_button = new Button { Label = "Start Import" };
-            import_button.Activated += StartImport;
-            import_button.Clicked += StartImport;
-            import_button.Show ();
-            button_box.Add (import_button);
+            hbox.Add (scale);
+            hbox.ShowAll ();
+
+            primary_vbox.PackEnd (hbox, false, true, 0);
 
             primary_vbox.Show ();
             Add (primary_vbox);
         }
 
         #endregion
-
-        /*
-            var t = Hyena.Log.DebugTimerStart ("Creating enumerator");
-            var enumerator = new RecursiveFileEnumerator (new Uri (folder));
-            Hyena.Log.DebugTimerPrint (t);
-
-            var t2 = Hyena.Log.DebugTimerStart ("Running enumerator");
-            foreach (var file in enumerator) {
-                Hyena.Log.Information (file.Uri.ToString());
-            }
-            Hyena.Log.DebugTimerPrint (t2);
-         */
-
-        string folder;
-
-        void StartImport (object sender, EventArgs args)
-        {
-            var import_dialog = new ImportDialog ();
-            import_dialog.Show ();
-        }
     }
 }
 

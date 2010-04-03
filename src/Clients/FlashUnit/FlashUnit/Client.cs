@@ -55,21 +55,6 @@ namespace FlashUnit
             }
 
             Application.Run ();
-
-/*            var t = Log.DebugTimerStart();
-            Log.DebugTimerPrint(t, "starting");
-            var source = new LocalFolderPhotoSource (new Uri("file:///home/ruben/Pictures/"));
-            Log.Information(source.DisplayName);
-            Log.Information(source.Available ? "Available" : "Not Available");
-            Log.DebugTimerPrint(t, "made source");
-            var e = source.Photos;
-            Log.DebugTimerPrint(t, "made enumerator");
-            foreach (var p in e) {
-                cache.RegisterPhoto (p);
-            }
-            Log.DebugTimerPrint(t, "listed photos");
-
-            Log.DebugFormat ("Cache has {0} items", cache.Photos.LongCount());*/
         }
     }
 }
