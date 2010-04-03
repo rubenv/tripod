@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tripod", "Tripod", "{0D1C1F16-F7A7-456A-8C64-A9516B581863}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{BFCD1029-D09E-4728-BAD5-B0A29BC09C0F}"
@@ -82,8 +82,6 @@ Global
 		{C856EFD8-E812-4E61-8B76-E3583D94C233} = {EF589266-D6D1-4836-9AEE-C57AD5F52A4F}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		version = 0.0.1
-		outputpath = .
 		StartupItem = src\Clients\FlashUnit\FlashUnit.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -119,7 +117,9 @@ Global
 		$6.scope = text/x-csharp
 		$0.StandardHeader = $7
 		$7.Text = @\n${FileName}\n\nAuthor:\n  ${AuthorName} <${AuthorEmail}>\n\nCopyright (c) ${Year} ${CopyrightHolder}\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the "Software"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in\nall copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\nTHE SOFTWARE.
-		$7.inheritsSet = MITX11License
+		$7.inheritsSet = Apache2License
+		version = 0.0.1
+		outputpath = .
 		name = Tripod
 	EndGlobalSection
 EndGlobal

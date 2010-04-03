@@ -32,7 +32,10 @@ SOURCES =  \
 	Tripod.Model/LocalFilePhoto.cs \
 	Tripod.Model/LocalFolderNamingPolicy.cs \
 	Tripod.Model/LocalFolderPhotoSource.cs \
-	Tripod.Model/MainCachePhotoSource.cs
+	Tripod.Model/MainCachePhotoSource.cs \
+	Tripod.Tasks/CancellableTask.cs \
+	Tripod.Tasks/ChildCancellableTask.cs \
+	Tripod.Tasks/RefCountCancellableTask.cs
 
 RESOURCES =  \
 	Resources/contributors.xml \
