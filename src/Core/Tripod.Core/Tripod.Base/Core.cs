@@ -26,6 +26,7 @@
 
 using Gtk;
 using System;
+using Hyena;
 using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
@@ -57,6 +58,7 @@ namespace Tripod.Base
             
             Hyena.Log.Debug ("Initializing Core");
 
+            ApplicationContext.TrySetProcessName ("tripod");
             Application.Init (name, ref args);
 
             main_cache_photo_source = new MainCachePhotoSource ();
