@@ -44,26 +44,17 @@ namespace FlashUnit
             Core.Initialize ("FlashUnit", ref args);
             
             Log.Information ("Hello World! Flash!");
-            
-            //var main_window = new MainWindow ();
-            //main_window.Destroyed += (o, e) => Application.Quit ();
-            //main_window.Show ();
-            
-            //Application.Run ();
-
-            //var cache = new MainCachePhotoSource ();
-            //cache.Start ();
-
-            Log.Debug ("Main cache started");
 
             var main_window = new MainWindow ();
             main_window.Destroyed += (o, e) => Application.Quit ();
             main_window.Show ();
 
-            Application.Run ();
+            if (ApplicationContext.CommandLine ["add-foldersrc"] != String.Empty) {
+                var source = new LocalFolderPhotoSource (new Uri (ApplicationContext.CommandLine ["add-foldersrc"]));
+                Core.MainCachePhotoSource.RegisterPhotoSource (source);
+            }
 
-            //var source = new LocalFolderPhotoSource (new Uri("file:///home/mike/Pictures/"));
-            //Core.MainCachePhotoSource.RegisterPhotoSource (source);
+            Application.Run ();
 
 /*            var t = Log.DebugTimerStart();
             Log.DebugTimerPrint(t, "starting");
