@@ -151,6 +151,8 @@ namespace Tripod.Model.Gui
                 lock (sync) {
                     running_count --;
                 }
+
+                OnFinished ();
             }
 
             private ImageSurface LookupScaleThumbnail ()
