@@ -28,7 +28,7 @@ namespace TagLib.Riff {
 	///    This structure provides a representation of a Microsoft
 	///    WaveFormatEx structure.
 	/// </summary>
-	public struct WaveFormatEx : IAudioCodec
+	public struct WaveFormatEx : IAudioCodec, ILosslessAudioCodec
 	{
 #region Private Fields
 		
@@ -179,8 +179,14 @@ namespace TagLib.Riff {
 		}
 		
 #endregion
+
+#region ILosslessAudioCodec
 		
+		int ILosslessAudioCodec.BitsPerSample {
+			get {return bits_per_sample;}
+		}
 		
+#endregion
 		
 #region IAudioCodec
 		
