@@ -53,6 +53,7 @@ namespace Tripod.Base
                         yield return child;
                     }
                 }
+                info.Dispose ();
             }
             enumerator.Close (null);
         }
