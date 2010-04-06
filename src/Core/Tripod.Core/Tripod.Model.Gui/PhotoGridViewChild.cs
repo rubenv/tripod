@@ -78,7 +78,7 @@ namespace Tripod.Model.Gui
         public PhotoGridViewChild ()
         {
             Padding = new Thickness (5);
-            CaptionSpacing = 5;
+            CaptionSpacing = 10;
         }
 
 #endregion
@@ -88,9 +88,7 @@ namespace Tripod.Model.Gui
 
         public void InvalidateThumbnail ()
         {
-            var invalidate_allocation = thumbnail_allocation;
-            invalidate_allocation.Offset (inner_allocation);
-            Invalidate (invalidate_allocation);
+            Invalidate (inner_allocation);
         }
 
         public IPhoto BoundPhoto {
@@ -98,11 +96,6 @@ namespace Tripod.Model.Gui
         }
 
 #endregion
-
-
-        enum AlignThumbnail {
-            Begin, End
-        };
 
         public static void RenderThumbnail (Cairo.Context cr, ImageSurface image, bool dispose,
             double x, double y, double width, double height, double radius,
@@ -119,8 +112,8 @@ namespace Tripod.Model.Gui
                 double scaled_image_width = scale * image.Width;
                 double scaled_image_height = scale * image.Height;
 
-                p_x += (scaled_image_width < width ? (width - scaled_image_width) / 2 : 0);
-                p_y += (scaled_image_height < height ? (height - scaled_image_height) / 2 : 0);
+                p_x += (scaled_image_width < width ? (width - scaled_image_width) / 2 : 0) / scale;
+                p_y += (scaled_image_height < height ? (height - scaled_image_height) / 2 : 0) / scale;
             }
 
             cr.Antialias = Cairo.Antialias.Default;
@@ -148,11 +141,6 @@ namespace Tripod.Model.Gui
                     cr.Fill ();
                     grad.Destroy ();
                 }
-
-                /*Banshee.CairoGlyphs.BansheeLineLogo.Render (cr,
-                    new Rectangle (x + 15, y + 15, width - 30, height - 30),
-                    CairoExtensions.RgbaToColor (0x00000044),
-                    CairoExtensions.RgbaToColor (0x00000055));*/
             }
 
             cr.Stroke ();
@@ -206,6 +194,7 @@ namespace Tripod.Model.Gui
 
             if (photo != last_photo) {
                 last_photo = photo;
+                image_surface = null;
 
                 Reload (photo);
             }
@@ -219,13 +208,13 @@ namespace Tripod.Model.Gui
                     RenderThumbnail (context.Context,
                                      image_surface,
                                      false,
-                                     thumbnail_allocation.X,
-                                     thumbnail_allocation.Y,
+                                     0.0,
+                                     0.0,
                                      thumbnail_allocation.Width,
                                      thumbnail_allocation.Height,
                                      context.Theme.Context.Radius,
                                      false,
-                                     new Color (0.8, 0.8, 0.8),
+                                     new Color (0.8, 0.0, 0.0),
                                      CairoCorners.All, scale);
                 }
             }
@@ -248,9 +237,6 @@ namespace Tripod.Model.Gui
 
             valid = true;
 
-            double width = ThumbnailWidth;
-            double height = ThumbnailHeight;
-
             inner_allocation = new Rect () {
                 X = Padding.Left,
                 Y = Padding.Top,
@@ -259,11 +245,11 @@ namespace Tripod.Model.Gui
             };
 
             thumbnail_allocation = new Rect () {
-                Width = Math.Min (inner_allocation.Width, width),
-                Height = Math.Min (inner_allocation.Height, height)
+                Width = ThumbnailWidth,
+                Height = ThumbnailHeight,
+                X = 0,
+                Y = 0
             };
-
-            thumbnail_allocation.X = Math.Round ((inner_allocation.Width - width) / 2.0);
 
             caption_allocation.Y = thumbnail_allocation.Height + CaptionSpacing;
             caption_allocation.Width = inner_allocation.Width;
@@ -271,8 +257,8 @@ namespace Tripod.Model.Gui
 
         public override Size Measure (Size available)
         {
-            caption_allocation.Height =
-                (ParentLayout as PhotoGridViewLayout).CaptionRender.MeasureHeight (ParentLayout.View);
+            var layout = ParentLayout as PhotoGridViewLayout;
+            caption_allocation.Height = layout.CaptionRender.MeasureHeight (ParentLayout.View);
 
             double width = ThumbnailWidth + Padding.X;
             double height = ThumbnailHeight + CaptionSpacing + caption_allocation.Height + Padding.Y;
