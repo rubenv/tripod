@@ -243,10 +243,13 @@ namespace Tripod.Graphics
                 get {
                     if (data != null)
                         return data;
-                    if (pixbuf != null) {
-                        data = pixbuf.SaveToBuffer (MIPMAP_TYPE, new string[] { "quality" }, new string[] { MIPMAP_QUALITY });
-                    } else {
-                        data = MipMap.LoadData (this);
+                    lock (MipMap) {
+                        // The lock avoids race conditions on the stream, locking here to avoid double loading.
+                        if (pixbuf != null) {
+                            data = pixbuf.SaveToBuffer (MIPMAP_TYPE, new string[] { "quality" }, new string[] { MIPMAP_QUALITY });
+                        } else {
+                            data = MipMap.LoadData (this);
+                        }
                     }
                     return data;
                 }
