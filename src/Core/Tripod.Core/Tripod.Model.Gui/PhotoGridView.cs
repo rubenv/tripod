@@ -33,10 +33,11 @@ using Hyena.Data.Gui;
 
 namespace Tripod.Model.Gui
 {
-
-
     public class PhotoGridView : ListView<IPhoto>
     {
+        protected PhotoGridView (IntPtr ptr) : base (ptr)
+        {
+        }
 
         public PhotoGridView ()
         {
