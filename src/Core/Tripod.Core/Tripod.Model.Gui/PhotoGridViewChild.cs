@@ -175,11 +175,52 @@ namespace Tripod.Model.Gui
                     image_surface = PixbufImageSurface.Create (last_loader_task.Result);
                 }
 
-
                 ThreadAssist.ProxyToMain (() => {
                     (ParentLayout.View as PhotoGridView).InvalidateThumbnail (photo);
                 });
             });
+        }
+
+        bool finding_larger = false;
+
+        void ReloadIfBetterSizeAvailable (IPhoto photo) {
+            if (finding_larger)
+                return;
+            finding_larger = true;
+
+            var loader = Core.PhotoLoaderCache.RequestLoader (photo);
+            var task = loader.IsBestPreview (image_surface.Width, image_surface.Height, ThumbnailWidth, ThumbnailHeight);
+            task.ContinueWith ((t) => {
+                if (!t.Result) {
+                    Reload (photo);
+                }
+                finding_larger = false;
+            });
+        }
+
+        void ReloadIfSuboptimalSize (IPhoto photo) {
+            if (finding_larger)
+                return;
+
+            var surface_w = image_surface.Width;
+            var surface_h = image_surface.Height;
+            var alloc_w = thumbnail_allocation.Width;
+            var alloc_h = thumbnail_allocation.Height;
+
+            // Make sure we have the most optimal surface size.
+            bool too_small = surface_w < alloc_w && surface_h < alloc_h;
+            if (too_small) {
+                // Thumbnail never touches the edges.
+                ReloadIfBetterSizeAvailable (photo);
+            } else {
+                // Downscale if we're twice too large on the longest edge.
+                bool wider_than_high = surface_w > surface_h;
+                bool too_wide = surface_w > 2 * alloc_w;
+                bool too_high = surface_h > 2 * alloc_h;
+                if ((wider_than_high && too_wide) || too_high) {
+                    ReloadIfBetterSizeAvailable (photo);
+                }
+            }
         }
 
         public override void Render (CellContext context)
@@ -199,27 +240,31 @@ namespace Tripod.Model.Gui
                 Reload (photo);
             }
 
-            lock (this) {
-                if (image_surface != null) {
-                    double scalex = Math.Max (1.0, image_surface.Width / thumbnail_allocation.Width);
-                    double scaley = Math.Max (1.0, image_surface.Height / thumbnail_allocation.Height);
-                    double scale = 1 / Math.Max (scalex, scaley);
-    
-                    RenderThumbnail (context.Context,
-                                     image_surface,
-                                     false,
-                                     0.0,
-                                     0.0,
-                                     thumbnail_allocation.Width,
-                                     thumbnail_allocation.Height,
-                                     context.Theme.Context.Radius,
-                                     false,
-                                     new Color (0.8, 0.0, 0.0),
-                                     CairoCorners.All, scale);
-                }
-            }
-
             view_layout.CaptionRender.Render (context, caption_allocation, photo);
+
+            lock (this) {
+                if (image_surface == null) {
+                    return;
+                }
+
+                ReloadIfSuboptimalSize (photo);
+
+                double scalex = Math.Max (1.0, image_surface.Width / thumbnail_allocation.Width);
+                double scaley = Math.Max (1.0, image_surface.Height / thumbnail_allocation.Height);
+                double scale = 1 / Math.Max (scalex, scaley);
+
+                RenderThumbnail (context.Context,
+                                 image_surface,
+                                 false,
+                                 0.0,
+                                 0.0,
+                                 thumbnail_allocation.Width,
+                                 thumbnail_allocation.Height,
+                                 context.Theme.Context.Radius,
+                                 false,
+                                 new Color (0.8, 0.0, 0.0),
+                                 CairoCorners.All, scale);
+            }
 
         }
 
