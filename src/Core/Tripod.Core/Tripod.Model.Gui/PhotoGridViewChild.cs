@@ -189,8 +189,7 @@ namespace Tripod.Model.Gui
 
 
                 ThreadAssist.ProxyToMain (() => {
-                    InvalidateThumbnail ();
-                    ParentLayout.View.QueueDraw ();
+                    (ParentLayout.View as PhotoGridView).InvalidateThumbnail (photo);
                 });
             });
         }
