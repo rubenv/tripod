@@ -90,8 +90,8 @@ namespace FlashUnit.Gui
 
             hbox.Add (new Label ("Size"));
 
-            var scale = new HScale (50, 400, 10);
-            scale.Value = 200;
+            var scale = new HScale (50, 800, 10);
+            scale.Value = 140;
             scale.ValueChanged += (s, a) => {
                 photo_view.ThumbnailSize = (int) scale.Value;
             };
