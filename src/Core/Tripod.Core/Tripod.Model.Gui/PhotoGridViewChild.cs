@@ -230,7 +230,7 @@ namespace Tripod.Model.Gui
 
             context.Context.Translate (inner_allocation.X, inner_allocation.Y);
 
-            IPhoto photo = BoundObject as IPhoto;
+            var photo = BoundPhoto;
             var view_layout = ParentLayout as PhotoGridViewLayout;
 
             if (photo != last_photo) {
