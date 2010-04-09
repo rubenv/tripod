@@ -63,6 +63,8 @@ namespace Tripod.Base
             GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
             GLib.Log.SetLogHandler ("GdkPixbuf", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
             
+            ThreadAssist.InitializeMainThread ();
+            ThreadAssist.ProxyToMainHandler = (h) => GLib.Idle.Add (() => { h(); return false; });
             Hyena.Log.Debug ("Initializing Core");
 
             ApplicationContext.TrySetProcessName ("tripod");
