@@ -57,6 +57,7 @@ namespace Tripod.Graphics
 
                 return MipMapLoader.Result.FindBest (width, height);
             }, source);
+            MipMapLoader.Request ();
             task.Start ();
             return task;
         }
@@ -70,7 +71,10 @@ namespace Tripod.Graphics
             lock (this) {
                 if (MipMapLoader == null) {
                     MipMapLoaderTokenSource = new CancellationTokenSource ();
-                    MipMapLoader = new RefCountCancellableTask<MipMapFile> (() => MipMapGenerator.LoadMipMap (Photo), MipMapLoaderTokenSource);
+                    MipMapLoader = new RefCountCancellableTask<MipMapFile> (() => {
+                            MipMapLoaderTokenSource.Token.ThrowIfCancellationRequested ();
+                            return MipMapGenerator.LoadMipMap (Photo);
+                    }, MipMapLoaderTokenSource);
                     MipMapLoader.Start ();
                 }
             }
