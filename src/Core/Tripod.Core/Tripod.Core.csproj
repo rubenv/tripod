@@ -67,6 +67,7 @@
     <Compile Include="Tripod.Tasks\CancellableTask.cs" />
     <Compile Include="Tripod.Tasks\RefCountCancellableTask.cs" />
     <Compile Include="Tripod.Tasks\ChildCancellableTask.cs" />
+    <Compile Include="Tripod.Graphics\ImageSurfaceCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">

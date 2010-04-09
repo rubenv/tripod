@@ -3,8 +3,10 @@
 // 
 // Author:
 //   Mike Gemuende <mike@gemuende.de>
+//   Ruben Vermeersch <ruben@savanne.be>
 // 
 // Copyright (c) 2010 Mike Gemuende
+// Copyright (c) 2010 Ruben Vermeersch
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -153,13 +155,12 @@ namespace Tripod.Model.Gui
 #region DataViewChild Implementation
 
         CancellableTask<Gdk.Pixbuf> last_loader_task = null;
-        ImageSurface image_surface = null;
         IPhoto last_photo;
 
         void Reload (IPhoto photo)
         {
             if (last_loader_task != null) {
-                last_loader_task.Cancel ();
+                // last_loader_task.Cancel (); // FIXME: Re-enable this!
                 if (last_loader_task.IsCompleted) {
                     last_loader_task.Result.Dispose ();
                 }
@@ -168,14 +169,19 @@ namespace Tripod.Model.Gui
             var loader = Core.PhotoLoaderCache.RequestLoader (photo);
             last_loader_task = loader.FindBestPreview (ThumbnailWidth, ThumbnailHeight);
             last_loader_task.ContinueWith ((t) => {
+                if (t.IsCanceled)
+                    return;
 
-                lock (this) {
-                    if (image_surface != null)
-                        image_surface.Dispose ();
-                    image_surface = PixbufImageSurface.Create (last_loader_task.Result);
-                }
+                var new_surface = PixbufImageSurface.Create (last_loader_task.Result);
+                var cache = (ParentLayout as PhotoGridViewLayout).SurfaceCache;
 
                 ThreadAssist.ProxyToMain (() => {
+                    ImageSurface old_surface = null;
+                    if (cache.TryGetValue (photo, out old_surface)) {
+                        if (old_surface != null)
+                            old_surface.Dispose ();
+                    }
+                    cache[photo] = new_surface;
                     (ParentLayout.View as PhotoGridView).InvalidateThumbnail (photo);
                 });
             });
@@ -183,13 +189,13 @@ namespace Tripod.Model.Gui
 
         bool finding_larger = false;
 
-        void ReloadIfBetterSizeAvailable (IPhoto photo) {
+        void ReloadIfBetterSizeAvailable (IPhoto photo, int have_width, int have_height) {
             if (finding_larger)
                 return;
             finding_larger = true;
 
             var loader = Core.PhotoLoaderCache.RequestLoader (photo);
-            var task = loader.IsBestPreview (image_surface.Width, image_surface.Height, ThumbnailWidth, ThumbnailHeight);
+            var task = loader.IsBestPreview (have_width, have_height, ThumbnailWidth, ThumbnailHeight);
             task.ContinueWith ((t) => {
                 if (!t.Result) {
                     Reload (photo);
@@ -199,7 +205,11 @@ namespace Tripod.Model.Gui
         }
 
         void ReloadIfSuboptimalSize (IPhoto photo) {
-            if (finding_larger)
+            if (photo == null || finding_larger)
+                return;
+
+            ImageSurface image_surface = null;
+            if (!(ParentLayout as PhotoGridViewLayout).SurfaceCache.TryGetValue (photo, out image_surface))
                 return;
 
             var surface_w = image_surface.Width;
@@ -211,14 +221,14 @@ namespace Tripod.Model.Gui
             bool too_small = surface_w < alloc_w && surface_h < alloc_h;
             if (too_small) {
                 // Thumbnail never touches the edges.
-                ReloadIfBetterSizeAvailable (photo);
+                ReloadIfBetterSizeAvailable (photo, surface_w, surface_h);
             } else {
                 // Downscale if we're twice too large on the longest edge.
                 bool wider_than_high = surface_w > surface_h;
                 bool too_wide = surface_w > 2 * alloc_w;
                 bool too_high = surface_h > 2 * alloc_h;
                 if ((wider_than_high && too_wide) || too_high) {
-                    ReloadIfBetterSizeAvailable (photo);
+                    ReloadIfBetterSizeAvailable (photo, surface_w, surface_h);
                 }
             }
         }
@@ -235,37 +245,39 @@ namespace Tripod.Model.Gui
 
             if (photo != last_photo) {
                 last_photo = photo;
-                image_surface = null;
 
                 Reload (photo);
             }
 
             view_layout.CaptionRender.Render (context, caption_allocation, photo);
 
-            lock (this) {
-                if (image_surface == null) {
-                    return;
-                }
-
+            ThreadAssist.BlockingProxyToMain (() => {
+                RenderThumbnail (photo, context);
                 ReloadIfSuboptimalSize (photo);
+            });
+        }
 
-                double scalex = Math.Max (1.0, image_surface.Width / thumbnail_allocation.Width);
-                double scaley = Math.Max (1.0, image_surface.Height / thumbnail_allocation.Height);
-                double scale = 1 / Math.Max (scalex, scaley);
+        void RenderThumbnail (IPhoto photo, CellContext context)
+        {
+            ImageSurface image_surface = null;
+            if (!(ParentLayout as PhotoGridViewLayout).SurfaceCache.TryGetValue (photo, out image_surface))
+                return;
 
-                RenderThumbnail (context.Context,
-                                 image_surface,
-                                 false,
-                                 0.0,
-                                 0.0,
-                                 thumbnail_allocation.Width,
-                                 thumbnail_allocation.Height,
-                                 context.Theme.Context.Radius,
-                                 false,
-                                 new Color (0.8, 0.0, 0.0),
-                                 CairoCorners.All, scale);
-            }
+            double scalex = Math.Max (1.0, image_surface.Width / thumbnail_allocation.Width);
+            double scaley = Math.Max (1.0, image_surface.Height / thumbnail_allocation.Height);
+            double scale = 1 / Math.Max (scalex, scaley);
 
+            RenderThumbnail (context.Context,
+                             image_surface,
+                             false,
+                             0.0,
+                             0.0,
+                             thumbnail_allocation.Width,
+                             thumbnail_allocation.Height,
+                             context.Theme.Context.Radius,
+                             false,
+                             new Color (0.8, 0.0, 0.0),
+                             CairoCorners.All, scale);
         }
 
         public override void Arrange ()

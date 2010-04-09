@@ -43,11 +43,13 @@ namespace Tripod.Model.Gui
     public class PhotoGridViewLayout : DataViewLayoutGrid
     {
         public IPhotoGridCaptionRenderer CaptionRender { get; private set; }
+        public ImageSurfaceCache SurfaceCache { get; private set; }
 
         public PhotoGridViewLayout ()
         {
             ChildAllocator = () => new PhotoGridViewChild ();
             CaptionRender = new PhotoGridDateCaptionRender ();
+            SurfaceCache = new ImageSurfaceCache ();
             ThumbnailWidth = 140;
             ThumbnailHeight = 105;
         }

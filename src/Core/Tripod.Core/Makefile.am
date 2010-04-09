@@ -10,6 +10,7 @@ SOURCES =  \
 	Tripod.Base/GIOTagLibFileAbstraction.cs \
 	Tripod.Base/RecursiveDirectoryEnumerator.cs \
 	Tripod.Base/TripodSqliteConnection.cs \
+	Tripod.Graphics/ImageSurfaceCache.cs \
 	Tripod.Graphics/IPhotoLoader.cs \
 	Tripod.Graphics/MipMapFile.cs \
 	Tripod.Graphics/MipMapGenerator.cs \
