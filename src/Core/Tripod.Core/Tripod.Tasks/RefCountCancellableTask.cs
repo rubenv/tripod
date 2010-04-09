@@ -34,24 +34,31 @@ namespace Tripod.Tasks
     {
         public RefCountCancellableTask (Func<T> function, CancellationTokenSource source) : base(function, source)
         {
-            CancellationEvent = new CountdownEvent (0);
         }
 
-        CountdownEvent CancellationEvent { get; set; }
+        int count = 0;
 
         public override void Cancel ()
         {
             if (IsCompleted || IsCanceled)
                 return;
 
-            if (CancellationEvent.Signal ()) {
-                base.Cancel ();
+            bool should_cancel = false;
+            lock (this) {
+                if (count > 0 && Interlocked.Decrement (ref count) == 0 && !IsCompleted)
+                    should_cancel = true;
+            }
+
+            if (should_cancel) {
+                try {
+                    base.Cancel ();
+                } catch (TaskCanceledException) { }
             }
         }
 
         public void Request ()
         {
-            CancellationEvent.AddCount ();
+            Interlocked.Increment (ref count);
         }
     }
 }
