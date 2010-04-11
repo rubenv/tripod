@@ -268,6 +268,7 @@ namespace Tripod.Graphics
                     if (pixbuf != null)
                         return pixbuf;
                     pixbuf = new Pixbuf (Data, Width, Height);
+                    data = null; // No need to keep it in memory
                     return pixbuf;
                 }
                 set {
