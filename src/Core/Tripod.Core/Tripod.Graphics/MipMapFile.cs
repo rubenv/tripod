@@ -37,7 +37,7 @@ namespace Tripod.Graphics
     public sealed class MipMapFile : IDisposable
     {
         Uri uri;
-        Stream read_stream;
+        GLib.FileInputStream read_stream;
 
         // Only used by MipMapGenerator
         internal MipMapFile ()
@@ -60,12 +60,12 @@ namespace Tripod.Graphics
             if (read_stream != null)
                 return;
 
-            read_stream = new GLib.GioStream (GLib.FileFactory.NewForUri (uri).Read (null));
+            read_stream = GLib.FileFactory.NewForUri (uri).Read (null);
         }
 
         void CloseReadStream ()
         {
-            read_stream.Close ();
+            read_stream.Close (null);
             read_stream = null;
         }
 
@@ -75,19 +75,19 @@ namespace Tripod.Graphics
 
             // Verify header
             byte[] header = new byte[HEADER.Length];
-            read_stream.Read (header, 0, HEADER.Length);
+            read_stream.Read (header, (ulong) HEADER.Length, null);
             if (header[0] != HEADER[0] || header[1] != HEADER[1] || header[2] != HEADER[2] || header[3] != HEADER[3]) {
                 throw new Exception ("Unknown header, wrong file?");
             }
 
             // Extract length field
             byte[] length_buffer = new byte[4];
-            read_stream.Read (length_buffer, 0, 4);
-            int length = BitConverter.ToInt32 (length_buffer, 0);
+            read_stream.Read (length_buffer, 4, null);
+            uint length = (uint) BitConverter.ToInt32 (length_buffer, 0);
 
             // Read record data
             byte[] header_buffer = new byte[length * 16];
-            read_stream.Read (header_buffer, 0, length * 16);
+            read_stream.Read (header_buffer, length * 16, null);
             for (int i = 0; i < length; i++) {
                 Items.Add (new MipMapItem () {
                     MipMap = this,
@@ -160,7 +160,7 @@ namespace Tripod.Graphics
         /// </summary>
         public void WriteToUri (Uri uri)
         {
-            Stream stream = new GLib.GioStream (GLib.FileFactory.NewForUri (uri).Create (GLib.FileCreateFlags.None, null));
+            var stream = GLib.FileFactory.NewForUri (uri).Create (GLib.FileCreateFlags.None, null);
 
             // Data starts after the header which keeps the item data.
             //
@@ -194,22 +194,22 @@ namespace Tripod.Graphics
             }
 
             var header_array = header.ToArray ();
-            stream.Write (header_array, 0, header_array.Length);
+            stream.Write (header_array, (ulong) header_array.Length, null);
             foreach (var item_data in data) {
                 // Append items
-                stream.Write (item_data, 0, item_data.Length);
+                stream.Write (item_data, (ulong) item_data.Length, null);
             }
 
-            stream.Close ();
+            stream.Close (null);
         }
 
         // Load the data from a given item.
         byte[] LoadData (MipMapItem item)
         {
             OpenReadStream ();
-            read_stream.Seek (item.LoadOffset, SeekOrigin.Begin);
+            read_stream.Seek (item.LoadOffset, GLib.SeekType.Set, null);
             byte[] buffer = new byte[item.LoadLength];
-            read_stream.Read (buffer, 0, item.LoadLength);
+            read_stream.Read (buffer, (ulong) item.LoadLength, null);
             CloseReadStream ();
             return buffer;
         }
@@ -225,11 +225,7 @@ namespace Tripod.Graphics
 
         public void Dispose ()
         {
-            if (read_stream != null) {
-                read_stream.Close ();
-                read_stream = null;
-            }
-
+            CloseReadStream ();
             foreach (var item in Items) {
                 item.Dispose ();
             }
