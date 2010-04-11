@@ -198,6 +198,7 @@ namespace Tripod.Graphics
         internal void Add (Pixbuf pixbuf)
         {
             Items.Add (new MipMapItem () {
+                MipMap = this,
                 Pixbuf = pixbuf
             });
         }
