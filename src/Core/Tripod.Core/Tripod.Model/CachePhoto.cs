@@ -82,6 +82,11 @@ namespace Tripod.Model
         [DatabaseColumn]
         public string CameraModel { get; private set; }
 
+        [DatabaseColumn]
+        public int Width { get; private set; }
+
+        [DatabaseColumn]
+        public int Height { get; private set; }
 
         public static CachePhoto CreateFrom (IPhoto source_photo)
         {
@@ -97,8 +102,9 @@ namespace Tripod.Model
                 FocalLength = source_photo.FocalLength,
                 FocalLengthIn35mmFilm = source_photo.FocalLengthIn35mmFilm,
                 CameraMake = source_photo.CameraMake,
-                CameraModel = source_photo.CameraModel
-
+                CameraModel = source_photo.CameraModel,
+                Width = source_photo.Width,
+                Height = source_photo.Height
             };
         }
     }
