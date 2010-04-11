@@ -155,6 +155,21 @@ namespace Tripod.Model
             }
         }
 
+        int width;
+        public int Width {
+            get {
+                EnsureMetadataParsed ();
+                return width;
+            }
+        }
+
+        int height;
+        public int Height {
+            get {
+                EnsureMetadataParsed ();
+                return height;
+            }
+        }
 
 #endregion
 
@@ -185,6 +200,10 @@ namespace Tripod.Model
             focal_length_35mm = image_tag.FocalLengthIn35mmFilm;
             camera_make = image_tag.Make;
             camera_model = image_tag.Model;
+
+            var properties = file.Properties;
+            width = properties.PhotoWidth;
+            height = properties.PhotoHeight;
 
             metadata_parsed = true;
         }

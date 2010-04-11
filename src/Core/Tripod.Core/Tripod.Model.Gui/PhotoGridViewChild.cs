@@ -263,8 +263,17 @@ namespace Tripod.Model.Gui
             if (!(ParentLayout as PhotoGridViewLayout).SurfaceCache.TryGetValue (photo, out image_surface))
                 return;
 
-            double scalex = Math.Max (1.0, image_surface.Width / thumbnail_allocation.Width);
-            double scaley = Math.Max (1.0, image_surface.Height / thumbnail_allocation.Height);
+            // Scale needed to fill the grid slot.
+            double scalex = image_surface.Width / thumbnail_allocation.Width;
+            double scaley = image_surface.Height / thumbnail_allocation.Height;
+
+            // Upscale if the photo is larger than the allocation.
+            bool upscale = photo.Width > thumbnail_allocation.Width || photo.Height > thumbnail_allocation.Height;
+            if (!upscale) {
+                scalex = Math.Max (1.0, scalex);
+                scaley = Math.Max (1.0, scaley);
+            }
+
             double scale = 1 / Math.Max (scalex, scaley);
 
             RenderThumbnail (context.Context,

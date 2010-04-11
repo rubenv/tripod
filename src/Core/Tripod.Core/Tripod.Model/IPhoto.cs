@@ -56,6 +56,9 @@ namespace Tripod.Model
         string CameraMake { get; }
         string CameraModel { get; }
 
+        int Width { get; }
+        int Height { get; }
+
 #endregion
 
 
