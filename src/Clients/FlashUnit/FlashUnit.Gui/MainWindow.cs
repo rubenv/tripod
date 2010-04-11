@@ -42,6 +42,7 @@ namespace FlashUnit.Gui
         #region Layout components
 
         VBox primary_vbox;
+        PhotoGridView photo_view;
 
         #endregion
 
@@ -72,7 +73,7 @@ namespace FlashUnit.Gui
         {
             primary_vbox = new VBox ();
             
-            var photo_view = new PhotoGridView ();
+            photo_view = new PhotoGridView ();
             photo_view.Show ();
 
             var photo_view_scrolled = new ScrolledWindow ();
