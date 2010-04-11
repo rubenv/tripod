@@ -36,6 +36,7 @@ namespace Tripod.Graphics
     /// </summary>
     public sealed class MipMapFile : IDisposable
     {
+        Uri uri;
         Stream read_stream;
 
         // Only used by MipMapGenerator
@@ -48,12 +49,30 @@ namespace Tripod.Graphics
         /// </summary>
         public MipMapFile (Uri uri)
         {
-            read_stream = new GLib.GioStream (GLib.FileFactory.NewForUri (uri).Read (null));
+            this.uri = uri;
             ReadItems ();
+        }
+
+        void OpenReadStream ()
+        {
+            if (uri == null)
+                throw new Exception ("Can't open read stream without uri");
+            if (read_stream != null)
+                return;
+
+            read_stream = new GLib.GioStream (GLib.FileFactory.NewForUri (uri).Read (null));
+        }
+
+        void CloseReadStream ()
+        {
+            read_stream.Close ();
+            read_stream = null;
         }
 
         void ReadItems ()
         {
+            OpenReadStream ();
+
             // Verify header
             byte[] header = new byte[HEADER.Length];
             read_stream.Read (header, 0, HEADER.Length);
@@ -78,6 +97,7 @@ namespace Tripod.Graphics
                     LoadLength = BitConverter.ToInt32 (header_buffer, 16 * i + 12)
                 });
             }
+            CloseReadStream ();
         }
 
         readonly byte [] HEADER = new byte[] { 0x74, 0x72, 0x6d, 0x01 };
@@ -186,12 +206,11 @@ namespace Tripod.Graphics
         // Load the data from a given item.
         byte[] LoadData (MipMapItem item)
         {
-            if (read_stream == null)
-                throw new Exception ("Can't read from streamless mip-map item.");
-
+            OpenReadStream ();
             read_stream.Seek (item.LoadOffset, SeekOrigin.Begin);
             byte[] buffer = new byte[item.LoadLength];
             read_stream.Read (buffer, 0, item.LoadLength);
+            CloseReadStream ();
             return buffer;
         }
 
