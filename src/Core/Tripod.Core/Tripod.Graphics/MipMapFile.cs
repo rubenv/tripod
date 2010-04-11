@@ -26,8 +26,10 @@
 
 using Gdk;
 using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Tripod.Graphics
 {
@@ -126,7 +128,9 @@ namespace Tripod.Graphics
         public Pixbuf FindBest (int width, int height)
         {
             var item = FindBestItem (width, height);
-            return new Gdk.Pixbuf (item.Pixbuf, 0, 0, item.Width, item.Height);
+            lock (item) {
+                return new Gdk.Pixbuf (item.Pixbuf, 0, 0, item.Width, item.Height);
+            }
         }
 
         MipMapItem FindBestItem (int width, int height)
@@ -283,6 +287,7 @@ namespace Tripod.Graphics
                     if (pixbuf != null)
                         return pixbuf;
                     pixbuf = new Pixbuf (Data, Width, Height);
+                    EnqueueDisposal (this);
                     data = null; // No need to keep it in memory
                     return pixbuf;
                 }
@@ -291,8 +296,11 @@ namespace Tripod.Graphics
                         pixbuf.Dispose ();
                     pixbuf = value;
                     data = null;
-                    Width = pixbuf.Width;
-                    Height = pixbuf.Height;
+
+                    if (pixbuf != null) {
+                        Width = pixbuf.Width;
+                        Height = pixbuf.Height;
+                    }
                 }
             }
 
@@ -309,6 +317,42 @@ namespace Tripod.Graphics
                 Dispose ();
             }
         }
+
+        #region Periodic disposal
+
+        static ConcurrentQueue<MipMapFile.MipMapItem> DisposeQueue = new ConcurrentQueue<MipMapFile.MipMapItem> ();
+        static uint dispose_task = 0;
+
+        static void EnqueueDisposal (MipMapFile.MipMapItem item)
+        {
+            DisposeQueue.Enqueue (item);
+            if (dispose_task == 0) {
+                dispose_task = GLib.Timeout.Add (10000, () => {
+                    DoDispose ();
+                    return false;
+                });
+            }
+        }
+
+        static void DoDispose ()
+        {
+            var queue = DisposeQueue;
+            DisposeQueue = new ConcurrentQueue<MipMapItem> ();
+            dispose_task = 0;
+
+            new Task (() => {
+                Hyena.Log.DebugFormat ("Freeing pixbufs from {0} items", queue.Count);
+                foreach (var item in queue) {
+                    lock (item) {
+                        item.Pixbuf.Dispose ();
+                        item.Pixbuf = null;
+                    }
+                }
+                System.GC.Collect ();
+            }).Start ();
+        }
+
+        #endregion
     }
 }
 
