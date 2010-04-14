@@ -1,6 +1,43 @@
-Tripod uses the Banshee hacking guidelines.
+The Tripod hacking guidelines are based on the Banshee hacking guidelines.
 
 http://git.gnome.org/browse/banshee/plain/HACKING
 
 Obey them!
 
+In addition to the banshee guidelines, the following ones are defined for
+Tripod:
+
+
+Code Comment Guidelines
+=======================
+
+Good code and naming are self-explanatory. However, it is hard to find out
+how things work when they are spread around multiple files. Also Threading
+stuff is often hard to figure out.
+
+Therefore, the following rules are introduced for code documentation:
+
+  1. Add a (short) code comment (XML Documentation Comments [1]) to every class
+     which is declared. The comment must describe the behavior of the class. If
+     special attention must be payed for using the class, it must be also
+     covered by the comment. After reading the comment, the users/developers
+     should be aware of do's and dont's related to this class.
+     (e.g. thread-safeness)
+     
+  2. Interfaces must be completely documented. Therefore, code comments [1]
+     are mandatory for every method and property. The same holds for abstract
+     members. We are this strict about interfaces because they are the most
+     important data types in the application: most programming happens against
+     them. Developers should be able to understand how the code works just by
+     looking at the interfaces and not need to consider the code where the
+     interfaces are used. Similarly, if you're not coding against the
+     interfaces, you're probably doing it wrong.
+
+  3. You should try to make sure that whenever somebody unfamiliar with the code
+     reads it, he/she should still be able to understand it and change it (if
+     needed) without breaking it. Add comments where you feel they will be
+     needed for future maintenance and understanding of the code.
+
+
+
+[1] http://msdn.microsoft.com/en-us/library/b2s063f7.aspx
