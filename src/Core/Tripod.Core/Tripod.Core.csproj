@@ -34,17 +34,7 @@
     <Compile Include="Tripod.Base\Core.cs" />
     <Compile Include="Tripod.Jobs\ThreadPoolJob.cs" />
     <Compile Include="Tripod.Base\RecursiveDirectoryEnumerator.cs" />
-    <Compile Include="Tripod.Model\IPhotoSource.cs" />
-    <Compile Include="Tripod.Model\IPhoto.cs" />
-    <Compile Include="Tripod.Model\INamingPolicy.cs" />
-    <Compile Include="Tripod.Model\LocalFolderPhotoSource.cs" />
-    <Compile Include="Tripod.Model\LocalFilePhoto.cs" />
-    <Compile Include="Tripod.Model\CachePhotoSource.cs" />
-    <Compile Include="Tripod.Model\CachePhoto.cs" />
-    <Compile Include="Tripod.Model\MainCachePhotoSource.cs" />
     <Compile Include="Tripod.Base\TripodSqliteConnection.cs" />
-    <Compile Include="Tripod.Model\ICachingPhotoSource.cs" />
-    <Compile Include="Tripod.Model\ICacheablePhotoSource.cs" />
     <Compile Include="Tripod.Actions\IPhotoAction.cs" />
     <Compile Include="Tripod.Actions\ChangeCommentPhotoAction.cs" />
     <Compile Include="Tripod.Base\GIOTagLibFileAbstraction.cs" />
@@ -53,14 +43,12 @@
     <Compile Include="Tripod.Graphics\MipMapGenerator.cs" />
     <Compile Include="Tripod.Graphics\MipMapFile.cs" />
     <Compile Include="Tripod.Graphics\PixbufExtensions.cs" />
-    <Compile Include="Tripod.Model\LocalFolderNamingPolicy.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridView.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridViewChild.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridViewLayout.cs" />
     <Compile Include="Tripod.Model.Gui\IPhotoGridCaptionRenderer.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridTextCaptionRenderer.cs" />
     <Compile Include="Tripod.Model.Gui\PhotoGridDateCaptionRender.cs" />
-    <Compile Include="Tripod.Model\IAcceptImportPhotoSource.cs" />
     <Compile Include="Tripod.Graphics\IPhotoLoader.cs" />
     <Compile Include="Tripod.Graphics\PhotoLoaderCache.cs" />
     <Compile Include="Tripod.Graphics\MipMappedPhotoLoader.cs" />
@@ -68,6 +56,15 @@
     <Compile Include="Tripod.Tasks\RefCountCancellableTask.cs" />
     <Compile Include="Tripod.Tasks\ChildCancellableTask.cs" />
     <Compile Include="Tripod.Graphics\ImageSurfaceCache.cs" />
+    <Compile Include="Tripod.Sources\IPhoto.cs" />
+    <Compile Include="Tripod.Sources\IPhotoSource.cs" />
+    <Compile Include="Tripod.Sources\ICacheablePhotoSource.cs" />
+    <Compile Include="Tripod.Sources\ICachingPhotoSource.cs" />
+    <Compile Include="Tripod.Sources.Cache\CachePhoto.cs" />
+    <Compile Include="Tripod.Sources.Cache\CachePhotoSource.cs" />
+    <Compile Include="Tripod.Sources.Cache\MainCachePhotoSource.cs" />
+    <Compile Include="Tripod.Sources\INamingPolicy.cs" />
+    <Compile Include="Tripod.Sources\IAcceptImportPhotoSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">
@@ -101,6 +98,8 @@
     <Folder Include="Tripod.Graphics\" />
     <Folder Include="Tripod.Services\" />
     <Folder Include="Tripod.Tasks\" />
+    <Folder Include="Tripod.Sources\" />
+    <Folder Include="Tripod.Sources.Cache\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">

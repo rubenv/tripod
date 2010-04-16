@@ -24,18 +24,15 @@ SOURCES =  \
 	Tripod.Model.Gui/PhotoGridView.cs \
 	Tripod.Model.Gui/PhotoGridViewChild.cs \
 	Tripod.Model.Gui/PhotoGridViewLayout.cs \
-	Tripod.Model/CachePhoto.cs \
-	Tripod.Model/CachePhotoSource.cs \
-	Tripod.Model/IAcceptImportPhotoSource.cs \
-	Tripod.Model/ICacheablePhotoSource.cs \
-	Tripod.Model/ICachingPhotoSource.cs \
-	Tripod.Model/INamingPolicy.cs \
-	Tripod.Model/IPhoto.cs \
-	Tripod.Model/IPhotoSource.cs \
-	Tripod.Model/LocalFilePhoto.cs \
-	Tripod.Model/LocalFolderNamingPolicy.cs \
-	Tripod.Model/LocalFolderPhotoSource.cs \
-	Tripod.Model/MainCachePhotoSource.cs \
+	Tripod.Sources.Cache/CachePhoto.cs \
+	Tripod.Sources.Cache/CachePhotoSource.cs \
+	Tripod.Sources.Cache/MainCachePhotoSource.cs \
+	Tripod.Sources/IAcceptImportPhotoSource.cs \
+	Tripod.Sources/ICacheablePhotoSource.cs \
+	Tripod.Sources/ICachingPhotoSource.cs \
+	Tripod.Sources/INamingPolicy.cs \
+	Tripod.Sources/IPhoto.cs \
+	Tripod.Sources/IPhotoSource.cs \
 	Tripod.Tasks/CancellableTask.cs \
 	Tripod.Tasks/ChildCancellableTask.cs \
 	Tripod.Tasks/RefCountCancellableTask.cs
