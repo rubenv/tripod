@@ -169,7 +169,6 @@ src/Libraries/Hyena/Makefile
 src/Libraries/Hyena.Gui/Makefile
 src/Libraries/Makefile
 src/Libraries/Mono.Data.Sqlite/Makefile
-src/Libraries/SQLite/Makefile
 src/Libraries/TagLib/Makefile
 src/Libraries/UniqueSharp/generator/Makefile
 src/Libraries/UniqueSharp/Makefile
