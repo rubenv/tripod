@@ -49,10 +49,10 @@ namespace FlashUnit
             main_window.Destroyed += (o, e) => Application.Quit ();
             main_window.Show ();
 
-            if (ApplicationContext.CommandLine ["add-foldersrc"] != String.Empty) {
+            /*if (ApplicationContext.CommandLine ["add-foldersrc"] != String.Empty) {
                 var source = new LocalFolderPhotoSource (new Uri (ApplicationContext.CommandLine ["add-foldersrc"]));
                 Core.MainCachePhotoSource.RegisterPhotoSource (source);
-            }
+            }*/
 
             Application.Run ();
         }

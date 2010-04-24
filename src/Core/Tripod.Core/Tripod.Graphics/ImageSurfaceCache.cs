@@ -28,7 +28,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-using Tripod.Model;
+using Tripod.Sources;
 
 using Cairo;
 

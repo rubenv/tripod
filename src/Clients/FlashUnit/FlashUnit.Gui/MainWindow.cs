@@ -31,7 +31,7 @@ using Hyena;
 using Hyena.Jobs;
 using Tripod.Base;
 using Tripod.Jobs;
-using Tripod.Model;
+using Tripod.Sources;
 using Tripod.Model.Gui;
 
 namespace FlashUnit.Gui

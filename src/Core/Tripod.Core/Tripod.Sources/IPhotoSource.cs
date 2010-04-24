@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Tripod.Model
+namespace Tripod.Sources
 {
     public interface IPhotoSource
     {

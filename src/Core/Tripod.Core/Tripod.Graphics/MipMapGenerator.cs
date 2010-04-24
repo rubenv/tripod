@@ -26,7 +26,7 @@
 
 using System;
 using System.Collections.Generic;
-using Tripod.Model;
+using Tripod.Sources;
 using Tripod.Base;
 using Hyena;
 using TagLib.Image;

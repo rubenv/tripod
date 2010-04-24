@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using Tripod.Model;
+using Tripod.Sources;
 
 namespace Tripod.Actions
 {
@@ -48,7 +48,7 @@ namespace Tripod.Actions
             photo.Comment = NewComment;
         }
 
-        public void UndoTo (Model.IPhoto photo)
+        public void UndoTo (IPhoto photo)
         {
             photo.Comment = PreviousComment;
         }

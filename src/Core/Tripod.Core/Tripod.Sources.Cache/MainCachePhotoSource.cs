@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using Hyena.Data.Sqlite;
 using Tripod.Base;
 
-namespace Tripod.Model
+namespace Tripod.Sources.Cache
 {
     public class MainCachePhotoSource : ICachingPhotoSource
     {

@@ -27,7 +27,7 @@ using System;
 using System.Linq;
 
 // FIXME: This whole class is a big hack.
-namespace Tripod.Model
+namespace Tripod.Sources.LocalFolder
 {
     public class LocalFolderNamingPolicy : INamingPolicy
     {

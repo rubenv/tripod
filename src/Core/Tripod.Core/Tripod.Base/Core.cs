@@ -30,7 +30,8 @@ using Hyena;
 using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
-using Tripod.Model;
+using Tripod.Sources;
+using Tripod.Sources.Cache;
 using Tripod.Graphics;
 
 namespace Tripod.Base

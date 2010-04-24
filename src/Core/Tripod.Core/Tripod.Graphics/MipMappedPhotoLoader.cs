@@ -28,7 +28,7 @@ using Gdk;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Tripod.Model;
+using Tripod.Sources;
 using Tripod.Tasks;
 
 namespace Tripod.Graphics

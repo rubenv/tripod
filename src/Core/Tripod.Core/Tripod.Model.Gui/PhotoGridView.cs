@@ -26,7 +26,7 @@
 
 using System;
 
-using Tripod.Model;
+using Tripod.Sources;
 
 using Hyena.Data.Gui;
 
@@ -35,10 +35,6 @@ namespace Tripod.Model.Gui
 {
     public class PhotoGridView : ListView<IPhoto>
     {
-        protected PhotoGridView (IntPtr ptr) : base (ptr)
-        {
-        }
-
         public PhotoGridView ()
         {
             ViewLayout = new PhotoGridViewLayout () {

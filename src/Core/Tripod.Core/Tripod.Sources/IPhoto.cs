@@ -28,7 +28,7 @@ using System;
 
 using TagLib.Image;
 
-namespace Tripod.Model
+namespace Tripod.Sources
 {
     public interface IPhoto
     {

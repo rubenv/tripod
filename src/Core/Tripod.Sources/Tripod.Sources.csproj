@@ -10,7 +10,7 @@
     <RootNamespace>Tripod.Sources</RootNamespace>
     <ReleaseVersion>0.0.1</ReleaseVersion>
     <AssemblyName>Tripod.Sources</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,5 +53,11 @@
     <Compile Include="Tripod.Sources.LocalFolder\LocalFilePhoto.cs" />
     <Compile Include="Tripod.Sources.LocalFolder\LocalFolderPhotoSource.cs" />
     <Compile Include="Tripod.Sources.LocalFolder\LocalFolderNamingPolicy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tripod.Core\Tripod.Core.csproj">
+      <Project>{784596DC-6833-4A33-B1F5-1E0FCCB875CE}</Project>
+      <Name>Tripod.Core</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

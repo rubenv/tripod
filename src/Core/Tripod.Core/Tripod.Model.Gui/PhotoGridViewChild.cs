@@ -29,7 +29,7 @@
 using System;
 
 using Tripod.Base;
-using Tripod.Model;
+using Tripod.Sources;
 using Tripod.Tasks;
 using Tripod.Graphics;
 

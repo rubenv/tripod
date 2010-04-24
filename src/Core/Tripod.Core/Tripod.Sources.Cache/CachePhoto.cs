@@ -31,7 +31,7 @@ using Hyena.Data.Sqlite;
 using TagLib.Image;
 
 
-namespace Tripod.Model
+namespace Tripod.Sources.Cache
 {
     public class CachePhoto : IPhoto
     {

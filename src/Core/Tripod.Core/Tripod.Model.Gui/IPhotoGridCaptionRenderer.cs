@@ -30,7 +30,7 @@ using Gtk;
 
 using Hyena.Data.Gui;
 using Hyena.Gui.Canvas;
-
+using Tripod.Sources;
 
 namespace Tripod.Model.Gui
 {
