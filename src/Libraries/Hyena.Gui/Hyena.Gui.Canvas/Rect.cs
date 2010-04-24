@@ -34,7 +34,7 @@ namespace Hyena.Gui.Canvas
     {
         private double x, y, w, h;
 
-        public Rect (double x, double y, double width, double height)
+        public Rect (double x, double y, double width, double height) : this ()
         {
             X = x;
             Y = y;
@@ -42,7 +42,7 @@ namespace Hyena.Gui.Canvas
             Height = height;
         }
 
-        public Rect (Point point1, Point point2)
+        public Rect (Point point1, Point point2) : this ()
         {
             X = Math.Min (point1.X, point2.X);
             Y = Math.Min (point1.Y, point2.Y);
@@ -50,7 +50,7 @@ namespace Hyena.Gui.Canvas
             Height = Math.Abs (point2.Y - point1.Y);
         }
 
-        public Rect (Point location, Size size)
+        public Rect (Point location, Size size) : this ()
         {
             X = location.X;
             Y = location.Y;

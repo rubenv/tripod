@@ -87,6 +87,7 @@
     <Compile Include="Hyena.Query\QueryValue.cs" />
     <Compile Include="Hyena.Query\StringQueryValue.cs" />
     <Compile Include="Hyena\Timer.cs" />
+    <Compile Include="Hyena\Paths.cs" />
     <Compile Include="Hyena\DateTimeUtil.cs" />
     <Compile Include="Hyena.SExpEngine\ArithmeticFunctionSet.cs" />
     <Compile Include="Hyena.SExpEngine\CastFunctionSet.cs" />

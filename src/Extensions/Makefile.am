@@ -1,0 +1,2 @@
+SUBDIRS = \
+	Tripod.Sources.LocalFolder

@@ -1,5 +1,5 @@
 // 
-// ImageSurfaceCache.cs
+// SourceManager.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
@@ -23,32 +23,50 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using Hyena;
+using Mono.Addins;
+using Tripod.Base;
 
-using Tripod.Sources;
-
-using Cairo;
-
-namespace Tripod.Graphics
+namespace Tripod.Sources
 {
-    public class ImageSurfaceCache : Dictionary<IPhoto, ImageSurface>, IDisposable
+    public class PhotoSourceManager
     {
-        ~ImageSurfaceCache () {
-            Dispose ();
+        const string EXTENSION_POINT = "/Tripod/Core/PhotoSource";
+
+        public static PhotoSourceManager Instance;
+
+        public Dictionary<string, Type> PhotoSourceTypes { get; set; }
+
+        public static void Initialize ()
+        {
+            if (Instance != null)
+                throw new InvalidOperationException ("Can't initialize twice!");
+
+            Instance = new PhotoSourceManager ();
         }
 
-        bool disposed = false;
-
-        public void Dispose ()
+        private PhotoSourceManager ()
         {
-            if (!disposed) {
-                disposed = true;
-                foreach (var val in Values)
-                    val.Dispose ();
+            PhotoSourceTypes = new Dictionary<string, Type> ();
+            AddinManager.AddExtensionNodeHandler (EXTENSION_POINT, OnExtensionChanged);
+
+            Core.MainCachePhotoSource.Start ();
+        }
+
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
+        {
+            TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
+
+            Log.DebugFormat ("Extension: {0} {1}", args.Change == ExtensionChange.Add ? "add" : "remove", node.Type.ToString ());
+
+            if (args.Change == ExtensionChange.Add) {
+                PhotoSourceTypes.Add (node.Type.FullName, node.Type);
+            } else {
+                throw new NotImplementedException ();
             }
         }
     }
 }
+

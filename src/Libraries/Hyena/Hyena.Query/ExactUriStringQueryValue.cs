@@ -4,6 +4,8 @@
 // Authors:
 //   Andrés G. Aragoneses <knocte@gmail.com>
 //
+// Copyright (C) 2010 Andrés G. Aragoneses
+//
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
 // "Software"), to deal in the Software without restriction, including
@@ -31,7 +33,7 @@ namespace Hyena.Query
     public class ExactUriStringQueryValue : ExactStringQueryValue
     {
         protected override string StringValue {
-            get { return System.Uri.EscapeUriString (base.StringValue); }
+            get { return Uri.EscapeUriString (base.StringValue); }
         }
     }
 }

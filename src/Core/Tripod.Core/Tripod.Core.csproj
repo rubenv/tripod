@@ -70,14 +70,8 @@
     <Compile Include="Tripod.Model\HyenaLINQModel.cs" />
     <Compile Include="Tripod.Sources\IDbCacheablePhoto.cs" />
     <Compile Include="Tripod.Model\TripodQuery.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\contributors.xml">
-      <LogicalName>contributors.xml</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\COPYING">
-      <LogicalName>COPYING</LogicalName>
-    </EmbeddedResource>
+    <Compile Include="Tripod.Sources\PhotoSourceNotAvailableException.cs" />
+    <Compile Include="Tripod.Sources\PhotoSourceManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -86,7 +80,7 @@
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am" IsAutotoolsProject="true" RelativeConfigureInPath="../../..">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />
-          <ResourcesVar Sync="true" Name="RESOURCES" />
+          <ResourcesVar Name="RESOURCES" />
           <OthersVar />
           <GacRefVar />
           <AsmRefVar />
@@ -98,10 +92,8 @@
   <ItemGroup>
     <Folder Include="Tripod.Base\" />
     <Folder Include="Tripod.Jobs\" />
-    <Folder Include="Tripod.Model\" />
     <Folder Include="Tripod.Actions\" />
     <Folder Include="Tripod.Graphics\" />
-    <Folder Include="Tripod.Services\" />
     <Folder Include="Tripod.Tasks\" />
     <Folder Include="Tripod.Sources\" />
     <Folder Include="Tripod.Sources.Cache\" />
@@ -129,5 +121,8 @@
     <Reference Include="System.Core" />
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Cairo" />
+    <Reference Include="Mono.Addins, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
+      <Package>mono-addins</Package>
+    </Reference>
   </ItemGroup>
 </Project>

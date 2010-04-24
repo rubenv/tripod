@@ -28,9 +28,10 @@ using System;
 using TagLib;
 using TagLib.Image;
 using Tripod.Base;
+using Tripod.Sources;
 using GLib;
 
-namespace Tripod.Model
+namespace Tripod.Sources.LocalFolder
 {
     public class LocalFilePhoto : IPhoto
     {

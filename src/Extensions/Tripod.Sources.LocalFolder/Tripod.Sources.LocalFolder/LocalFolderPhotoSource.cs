@@ -32,7 +32,7 @@ using Hyena.Data.Sqlite;
 using Tripod.Base;
 using Hyena.Jobs;
 
-namespace Tripod.Model
+namespace Tripod.Sources.LocalFolder
 {
     public class LocalFolderPhotoSource : ICacheablePhotoSource, IAcceptImportPhotoSource
     {

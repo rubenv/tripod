@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Tripod.Sources.LocalFolder"
+    version="0.0.1"
+    compatVersion="0.0.1"
+    copyright="© 2010 Ruben Vermeersch. Licensed under the MIT X11 license."
+    name="Photo sources that exposes photos stored on the hard-disk"
+    category="Core"
+    description="Manage and import photos on your hard-disk"
+    author="Ruben Vermeersch"
+    url="http://github.com/rubenv/tripod/"
+    defaultEnabled="true">
+
+  <Dependencies>
+    <Addin id="Tripod.Core" version="0.0.1"/>
+  </Dependencies>
+
+  <Extension path="/Tripod/Core/PhotoSource">
+    <PhotoSource class="Tripod.Sources.LocalFolder.LocalFolderPhotoSource"/>
+  </Extension>
+  
+</Addin>

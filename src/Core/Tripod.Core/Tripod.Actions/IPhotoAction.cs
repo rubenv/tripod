@@ -26,7 +26,7 @@
 
 using System;
 using Hyena;
-using Tripod.Model;
+using Tripod.Sources;
 
 namespace Tripod.Actions
 {

@@ -33,7 +33,7 @@ using Hyena.Gui.Canvas;
 using Hyena.Gui;
 using Hyena.Gui.Theming;
 
-using Tripod.Model;
+using Tripod.Sources;
 
 
 namespace Tripod.Model.Gui

@@ -32,7 +32,6 @@ using TagLib.Image;
 
 using Tripod.Model;
 
-
 namespace Tripod.Sources.Cache
 {
     public class CachePhoto : IPhoto, IDbCacheablePhoto

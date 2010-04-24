@@ -35,6 +35,7 @@ namespace Hyena.Widgets
     public class EntryPopup : Gtk.Window
     {
         private Entry text_entry;
+        private HBox hbox;
         private uint timeout_id = 0;
 
         public event EventHandler<EventArgs> Changed;
@@ -56,12 +57,12 @@ namespace Hyena.Widgets
             frame.Shadow = ShadowType.EtchedIn;
             Add (frame);
 
-            HBox box = new HBox ();
+            hbox = new HBox () { Spacing = 6 };
             text_entry = new Entry();
-            box.PackStart (text_entry, true, true, 0);
-            box.BorderWidth = 3;
+            hbox.PackStart (text_entry, true, true, 0);
+            hbox.BorderWidth = 3;
 
-            frame.Add (box);
+            frame.Add (hbox);
             frame.ShowAll ();
 
             text_entry.Text = String.Empty;
@@ -104,9 +105,8 @@ namespace Hyena.Widgets
             set { text_entry.Text = value; }
         }
 
-        public Entry Entry {
-            get { return text_entry; }
-        }
+        public Entry Entry { get { return text_entry; } }
+        public HBox Box { get { return hbox; } }
 
         private bool hide_after_timeout = true;
         public bool HideAfterTimeout {
@@ -141,6 +141,43 @@ namespace Hyena.Widgets
         public new void GrabFocus ()
         {
             text_entry.GrabFocus ();
+        }
+
+        public void Position (Gdk.Window eventWindow)
+        {
+            int x, y;
+            int widget_x, widget_y;
+            int widget_height, widget_width;
+
+            Realize ();
+
+            Gdk.Window widget_window = eventWindow;
+            Gdk.Screen widget_screen = widget_window.Screen;
+
+            Gtk.Requisition popup_req;
+
+            widget_window.GetOrigin (out widget_x, out widget_y);
+            widget_window.GetSize (out widget_width, out widget_height);
+
+            popup_req = Requisition;
+
+            if (widget_x + widget_width > widget_screen.Width) {
+                x = widget_screen.Width - popup_req.Width;
+            } else if (widget_x + widget_width - popup_req.Width < 0) {
+                x = 0;
+            } else {
+                x = widget_x + widget_width - popup_req.Width;
+            }
+
+            if (widget_y + widget_height + popup_req.Height > widget_screen.Height) {
+                y = widget_screen.Height - popup_req.Height;
+            } else if (widget_y + widget_height < 0) {
+                y = 0;
+            } else {
+                y = widget_y + widget_height;
+            }
+
+            Move (x, y);
         }
 
         private void ResetDelayedHide ()

@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using Tripod.Sources;
 
 namespace Tripod.Model.Gui
 {

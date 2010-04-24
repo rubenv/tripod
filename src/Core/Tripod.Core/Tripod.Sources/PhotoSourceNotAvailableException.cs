@@ -1,10 +1,10 @@
 // 
-// LocalFolderNamingPolicy.cs
+// SourceNotAvailableException.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
 // 
-// Copyright (c) 2010 Ruben Vermeersch <ruben@savanne.be>
+// Copyright (c) 2010 Ruben Vermeersch
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -24,19 +24,13 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
-using System.Linq;
-
-// FIXME: This whole class is a big hack.
-namespace Tripod.Model
+namespace Tripod.Sources
 {
-    public class LocalFolderNamingPolicy : INamingPolicy
+    /// <summary>
+    /// Gets thrown whenever you try to use a source that's not available. Always check through source.Available first.
+    /// </summary>
+    public class PhotoSourceNotAvailableException : Exception
     {
-        public System.Uri PhotoUri (Uri root, IPhoto photo)
-        {
-            var filename = photo.Uri.Segments.Last().Trim(new char [] { '/'} );
-            var datetime = (DateTime)photo.DateTaken;
-            return new Uri (root, String.Format("{0}/{1}/{2}", datetime.Year, datetime.Month, datetime.Day, filename));
-        }
     }
 }
 

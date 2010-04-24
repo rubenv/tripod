@@ -4,6 +4,7 @@ MONO_ADDINS_PATH =
 
 # Install Paths
 DEFAULT_INSTALL_DIR = $(pkglibdir)
+EXTENSIONS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/Extensions
 
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
@@ -39,13 +40,8 @@ REF_TRIPOD_CORE = $(LINK_MONO_POSIX) $(LINK_HYENA) $(LINK_HYENA_GUI) $(LINK_GTK)
 LINK_TRIPOD_CORE = -r:$(DIR_BIN)/Tripod.Core.dll
 LINK_TRIPOD_CORE_DEPS = $(REF_TRIPOD_CORE) $(LINK_TRIPOD_CORE)
 
-# Sources
-REF_TRIPOD_SOURCES = $(LINK_TRIPOD_CORE_DEPS)
-LINK_TRIPOD_SOURCES = -r:$(DIR_BIN)/Tripod.Sources.dll
-LINK_TRIPOD_SOURCES_DEPS = $(REF_TRIPOD_SOURCES) $(LINK_TRIPOD_SOURCES)
-
 # Clients
-REF_FLASHUNIT = $(LINK_TRIPOD_CORE_DEPS) $(LINK_TRIPOD_SOURCES_DEPS)
+REF_FLASHUNIT = $(LINK_TRIPOD_CORE_DEPS)
 
 # Cute hack to replace a space with something
 colon:= :

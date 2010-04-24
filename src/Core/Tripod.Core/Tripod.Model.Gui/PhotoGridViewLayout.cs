@@ -26,7 +26,7 @@
 
 using System;
 
-using Tripod.Model;
+using Tripod.Sources;
 
 using Hyena.Data.Gui;
 

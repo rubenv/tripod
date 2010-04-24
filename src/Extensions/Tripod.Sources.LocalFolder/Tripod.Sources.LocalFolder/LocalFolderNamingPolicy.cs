@@ -1,10 +1,10 @@
-//
-// RefCountCancellableTask.cs
+// 
+// LocalFolderNamingPolicy.cs
 // 
 // Author:
 //   Ruben Vermeersch <ruben@savanne.be>
 // 
-// Copyright (c) 2010 Ruben Vermeersch
+// Copyright (c) 2010 Ruben Vermeersch <ruben@savanne.be>
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -23,36 +23,19 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 using System;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Linq;
 
-namespace Tripod.Tasks
+// FIXME: This whole class is a big hack.
+namespace Tripod.Sources.LocalFolder
 {
-    public class RefCountCancellableTask<T> : CancellableTask<T>
+    public class LocalFolderNamingPolicy : INamingPolicy
     {
-        public RefCountCancellableTask (Func<T> function, CancellationTokenSource source) : base(function, source)
+        public System.Uri PhotoUri (Uri root, IPhoto photo)
         {
-        }
-
-        CountdownEvent count = new CountdownEvent (1);
-
-        public override void Cancel ()
-        {
-            if (IsCompleted || IsCanceled)
-                return;
-
-            if (count.Signal ()) {
-                try {
-                    base.Cancel ();
-                } catch (TaskCanceledException) { }
-            }
-        }
-
-        public void Request ()
-        {
-	        count.TryAddCount ();
+            var filename = photo.Uri.Segments.Last().Trim(new char [] { '/'} );
+            var datetime = (DateTime)photo.DateTaken;
+            return new Uri (root, String.Format("{0}/{1}/{2}", datetime.Year, datetime.Month, datetime.Day, filename));
         }
     }
 }

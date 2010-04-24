@@ -49,10 +49,10 @@ namespace FlashUnit
             main_window.Destroyed += (o, e) => Application.Quit ();
             main_window.Show ();
 
-            if (ApplicationContext.CommandLine["add-foldersrc"] != String.Empty) {
+            /*if (ApplicationContext.CommandLine ["add-foldersrc"] != String.Empty) {
                 var source = new LocalFolderPhotoSource (new Uri (ApplicationContext.CommandLine["add-foldersrc"]));
                 Core.MainCachePhotoSource.RegisterPhotoSource (source);
-            }
+            }*/
 
             /*var enu = (Core.MainCachePhotoSource.Photos as TripodQuery<Tripod.Sources.Cache.CachePhoto>).Where (p => p.Comment != String.Empty);
             foreach (IPhoto photo in enu.Take (25)) {
