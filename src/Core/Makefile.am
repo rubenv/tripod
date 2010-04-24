@@ -1,6 +1,5 @@
 SUBDIRS = \
-	Tripod.Core \
-    Tripod.Sources
+	Tripod.Core
 
 run:
 	@pushd $(top_builddir); \

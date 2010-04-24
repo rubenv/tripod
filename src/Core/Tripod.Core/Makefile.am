@@ -33,14 +33,19 @@ SOURCES =  \
 	Tripod.Sources/INamingPolicy.cs \
 	Tripod.Sources/IPhoto.cs \
 	Tripod.Sources/IPhotoSource.cs \
-	Tripod.Sources/SourceNotAvailableException.cs \
+	Tripod.Sources/PhotoSourceManager.cs \
+	Tripod.Sources/PhotoSourceNotAvailableException.cs \
 	Tripod.Tasks/CancellableTask.cs \
 	Tripod.Tasks/ChildCancellableTask.cs \
 	Tripod.Tasks/RefCountCancellableTask.cs
 
 RESOURCES =  \
 	Resources/contributors.xml \
-	Resources/COPYING
+	Resources/COPYING \
+	Tripod.Core.addin.xml \
+	Tripod.Core.addins
+
+module_DATA = Tripod.Core.addins
 
 include $(top_srcdir)/build/build.mk
 

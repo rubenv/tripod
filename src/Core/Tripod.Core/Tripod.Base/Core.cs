@@ -65,8 +65,7 @@ namespace Tripod.Base
 
             InitializeToolkit (name, ref args);
             InitializeAddins ();
-
-            MainCachePhotoSource.Start ();
+            InitializeSources ();
         }
 
         static void InitializeToolkit (string name, ref string[] args)
@@ -95,6 +94,11 @@ namespace Tripod.Base
             } else {
                 AddinManager.Registry.Update (monitor);
             }
+        }
+
+        static void InitializeSources ()
+        {
+            PhotoSourceManager.Initialize ();
         }
     }
 }

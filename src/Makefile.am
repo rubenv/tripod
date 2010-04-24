@@ -1,7 +1,8 @@
 SUBDIRS = \
     Libraries \
 	Core \
-    Clients
+    Clients \
+	Extensions
 
 EXTRA_DIST = AssemblyInfo.cs.in
 

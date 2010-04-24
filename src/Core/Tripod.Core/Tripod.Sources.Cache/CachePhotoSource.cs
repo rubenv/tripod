@@ -93,8 +93,8 @@ namespace Tripod.Sources.Cache
 
             lock (this) {
                 if (instance == null) {
-                    var type = Type.GetType (SourceType);
-                    if (type == null) {
+                    Type type = null;
+                    if (!SourceManager.Instance.PhotoSourceTypes.TryGetValue (SourceType, out type)) {
                         instance_create_failed = true;
                         UpdateAvailability ();
                         throw new SourceNotAvailableException ();

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Tripod.Core"
+    isroot="true"
+    version="0.0.1"
+    compatVersion="0.0.1"
+    copyright="© 2010 Ruben Vermeersch. Licensed under the MIT X11 license."
+    category="required:Core"
+    description="Provides the application infrastructure."
+    defaultEnabled="true">
+    
+  <ExtensionPoint path="/Tripod/Core/PhotoSource">
+    <ExtensionNode name="PhotoSource"/>
+  </ExtensionPoint>
+</Addin>
