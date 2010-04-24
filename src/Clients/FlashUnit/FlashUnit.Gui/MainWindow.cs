@@ -81,11 +81,10 @@ namespace FlashUnit.Gui
             photo_view_scrolled.Show ();
             primary_vbox.PackStart (photo_view_scrolled, true, true, 8);
 
-            var photo_model = new Hyena.Data.MemoryListModel<IPhoto> ();
-            foreach (IPhoto photo in Core.MainCachePhotoSource.Photos)
-                photo_model.Add (photo);
-
-            photo_view.SetModel (photo_model);
+            var model = PhotoModelFactory.GetModel (Core.MainCachePhotoSource.Photos);
+            model.Reload ();
+            Hyena.Log.DebugFormat ("Model count: {0}", model.Count);
+            photo_view.SetModel (model);
 
             var hbox = new HBox (false, 5);
 

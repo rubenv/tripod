@@ -29,8 +29,9 @@ using System.Linq;
 using System.Collections.Generic;
 using Hyena.Data.Sqlite;
 using Tripod.Base;
+using Tripod.Model;
 
-namespace Tripod.Model
+namespace Tripod.Sources.Cache
 {
     public class MainCachePhotoSource : ICachingPhotoSource
     {
@@ -48,7 +49,7 @@ namespace Tripod.Model
         public event EventHandler AvailabilityChanged;
 
         public IEnumerable<IPhoto> Photos {
-            get { return from p in provider.FetchAll () select p as IPhoto; }
+            get { return new TripodQuery<CachePhoto> (provider); }
         }
 
         IEnumerable<CachePhotoSource> CachedSources {

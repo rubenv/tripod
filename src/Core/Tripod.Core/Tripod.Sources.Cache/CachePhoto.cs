@@ -30,11 +30,16 @@ using Hyena.Data.Sqlite;
 
 using TagLib.Image;
 
+using Tripod.Model;
 
-namespace Tripod.Model
+
+namespace Tripod.Sources.Cache
 {
-    public class CachePhoto : IPhoto
+    public class CachePhoto : IPhoto, IDbCacheablePhoto
     {
+        public object CacheEntryId { get; set; }
+        public long CacheModelId { get; set; }
+
         [DatabaseColumn(Constraints = DatabaseColumnConstraints.PrimaryKey)]
         public int CacheId { get; set; }
 

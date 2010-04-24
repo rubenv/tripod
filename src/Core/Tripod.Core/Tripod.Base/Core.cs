@@ -32,6 +32,7 @@ using Hyena.Data.Sqlite;
 
 using Tripod.Model;
 using Tripod.Graphics;
+using Tripod.Sources.Cache;
 
 namespace Tripod.Base
 {

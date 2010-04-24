@@ -24,12 +24,17 @@ SOURCES =  \
 	Tripod.Model.Gui/PhotoGridView.cs \
 	Tripod.Model.Gui/PhotoGridViewChild.cs \
 	Tripod.Model.Gui/PhotoGridViewLayout.cs \
+	Tripod.Model/EnumerableListModel.cs \
+	Tripod.Model/HyenaLINQModel.cs \
+	Tripod.Model/PhotoModelFactory.cs \
+	Tripod.Model/TripodQuery.cs \
 	Tripod.Sources.Cache/CachePhoto.cs \
 	Tripod.Sources.Cache/CachePhotoSource.cs \
 	Tripod.Sources.Cache/MainCachePhotoSource.cs \
 	Tripod.Sources/IAcceptImportPhotoSource.cs \
 	Tripod.Sources/ICacheablePhotoSource.cs \
 	Tripod.Sources/ICachingPhotoSource.cs \
+	Tripod.Sources/IDbCacheablePhoto.cs \
 	Tripod.Sources/INamingPolicy.cs \
 	Tripod.Sources/IPhoto.cs \
 	Tripod.Sources/IPhotoSource.cs \

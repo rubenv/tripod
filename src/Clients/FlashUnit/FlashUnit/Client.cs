@@ -49,10 +49,20 @@ namespace FlashUnit
             main_window.Destroyed += (o, e) => Application.Quit ();
             main_window.Show ();
 
-            if (ApplicationContext.CommandLine ["add-foldersrc"] != String.Empty) {
-                var source = new LocalFolderPhotoSource (new Uri (ApplicationContext.CommandLine ["add-foldersrc"]));
+            if (ApplicationContext.CommandLine["add-foldersrc"] != String.Empty) {
+                var source = new LocalFolderPhotoSource (new Uri (ApplicationContext.CommandLine["add-foldersrc"]));
                 Core.MainCachePhotoSource.RegisterPhotoSource (source);
             }
+
+            /*var enu = (Core.MainCachePhotoSource.Photos as TripodQuery<Tripod.Sources.Cache.CachePhoto>).Where (p => p.Comment != String.Empty);
+            foreach (IPhoto photo in enu.Take (25)) {
+                Log.Debug (photo.Uri.ToString ());
+            }
+
+            var model = new HyenaLINQModel<Tripod.Sources.Cache.CachePhoto> (enu);
+            model.Reload ();
+            Hyena.Log.Debug (model == null ? "null" : model.ToString ());
+            Hyena.Log.Debug (model.Count.ToString ());*/
 
             Application.Run ();
         }

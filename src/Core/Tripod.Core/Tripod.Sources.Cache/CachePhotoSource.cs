@@ -31,8 +31,9 @@ using Hyena;
 using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 using Tripod.Base;
+using Tripod.Model;
 
-namespace Tripod.Model
+namespace Tripod.Sources.Cache
 {
     public class CachePhotoSource : IPhotoSource
     {

@@ -68,6 +68,7 @@
     <Compile Include="Tripod.Model\PhotoModelFactory.cs" />
     <Compile Include="Tripod.Model\EnumerableListModel.cs" />
     <Compile Include="Tripod.Model\HyenaLINQModel.cs" />
+    <Compile Include="Tripod.Sources\IDbCacheablePhoto.cs" />
     <Compile Include="Tripod.Model\TripodQuery.cs" />
   </ItemGroup>
   <ItemGroup>
