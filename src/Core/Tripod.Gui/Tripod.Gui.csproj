@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D3C02949-F64D-497E-9A85-AB7A63FCC71B}</ProjectGuid>
+    <ProjectGuid>{3F4E057B-9A83-432E-8FCB-949F92EEEE5B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Tripod.Sources.LocalFolder</RootNamespace>
+    <RootNamespace>Tripod.Gui</RootNamespace>
     <ReleaseVersion>0.0.1</ReleaseVersion>
-    <AssemblyName>Tripod.Sources.LocalFolder</AssemblyName>
+    <AssemblyName>Tripod.Gui</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -30,20 +30,6 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\Tripod.Core\Tripod.Core.csproj">
-      <Project>{784596DC-6833-4A33-B1F5-1E0FCCB875CE}</Project>
-      <Name>Tripod.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Tripod.Sources.LocalFolder\LocalFilePhoto.cs" />
-    <Compile Include="Tripod.Sources.LocalFolder\LocalFolderNamingPolicy.cs" />
-    <Compile Include="Tripod.Sources.LocalFolder\LocalFolderPhotoSource.cs" />
-  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
@@ -51,7 +37,7 @@
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am" IsAutotoolsProject="true" RelativeConfigureInPath="../../..">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />
-          <ResourcesVar />
+          <ResourcesVar Name="RESOURCES" />
           <OthersVar />
           <GacRefVar />
           <AsmRefVar />
@@ -60,4 +46,32 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <None Include="Resources\Tripod.Gui.UIActions.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tripod.Gui\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Tripod.Gui\TripodActionManager.cs" />
+    <Compile Include="Tripod.Gui\GlobalActions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Hyena.Gui\Hyena.Gui.csproj">
+      <Project>{C856EFD8-E812-4E61-8B76-E3583D94C233}</Project>
+      <Name>Hyena.Gui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tripod.Core\Tripod.Core.csproj">
+      <Project>{784596DC-6833-4A33-B1F5-1E0FCCB875CE}</Project>
+      <Name>Tripod.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Posix" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,7 @@
+<ui>
+	<menubar name="MainMenu" action="MainMenuAction">
+		<menu name="MediaMenu" action="MediaMenuAction">
+			 <menuitem name="Quit" action="QuitAction"/>
+		</menu>
+	</menubar>
+</ui>

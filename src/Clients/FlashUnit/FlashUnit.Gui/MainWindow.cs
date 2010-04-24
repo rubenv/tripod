@@ -28,9 +28,9 @@ using System;
 using Gtk;
 using GLib;
 using Hyena;
-using Hyena.Jobs;
+using Hyena.Gui;
 using Tripod.Base;
-using Tripod.Jobs;
+using Tripod.Gui;
 using Tripod.Model;
 using Tripod.Model.Gui;
 
@@ -43,6 +43,7 @@ namespace FlashUnit.Gui
 
         VBox primary_vbox;
         PhotoGridView photo_view;
+        ActionManager action_manager;
 
         #endregion
 
@@ -62,16 +63,27 @@ namespace FlashUnit.Gui
             }
             
             interface_constructed = true;
-            
+
+            PrepareActionManager ();
             BuildLayout ();
             base.OnShown ();
         }
 
         #region Interface Construction
 
+        void PrepareActionManager ()
+        {
+            action_manager = new TripodActionManager ();
+            action_manager.Initialize ();
+            AddAccelGroup (action_manager.UIManager.AccelGroup);
+        }
+
         void BuildLayout ()
         {
             primary_vbox = new VBox ();
+
+            var shell = action_manager.UIManager.GetWidget ("/MainMenu");
+            primary_vbox.PackStart (shell, false, false, 0);
             
             photo_view = new PhotoGridView ();
             photo_view.Show ();
