@@ -65,10 +65,13 @@ namespace Tripod.Sources.Cache
         [DatabaseColumn]
         public bool Available {
             get {
+                if (instance_create_failed)
+                    return false;
+
                 EnsureInstance ();
                 return instance.Available;
             }
-            set { /* Nothing to do */ }
+            set { available = value; }
         }
 
 
@@ -81,12 +84,21 @@ namespace Tripod.Sources.Cache
             }
         }
 
+        bool instance_create_failed = false;
         ICacheablePhotoSource instance;
         void EnsureInstance ()
         {
+            if (instance_create_failed)
+                throw new SourceNotAvailableException ();
+
             lock (this) {
                 if (instance == null) {
                     var type = Type.GetType (SourceType);
+                    if (type == null) {
+                        instance_create_failed = true;
+                        UpdateAvailability ();
+                        throw new SourceNotAvailableException ();
+                    }
                     instance = Activator.CreateInstance (type) as ICacheablePhotoSource;
                     instance.CacheId = CacheId;
                     instance.WakeUp ();
@@ -99,7 +111,7 @@ namespace Tripod.Sources.Cache
         bool available = false;
         void UpdateAvailability ()
         {
-            bool new_available = instance.Available;
+            bool new_available = !instance_create_failed && instance.Available;
             
             if (new_available == available)
                 return;

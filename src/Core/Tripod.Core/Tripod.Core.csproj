@@ -65,6 +65,7 @@
     <Compile Include="Tripod.Sources.Cache\MainCachePhotoSource.cs" />
     <Compile Include="Tripod.Sources\INamingPolicy.cs" />
     <Compile Include="Tripod.Sources\IAcceptImportPhotoSource.cs" />
+    <Compile Include="Tripod.Sources\SourceNotAvailableException.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">

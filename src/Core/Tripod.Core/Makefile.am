@@ -33,6 +33,7 @@ SOURCES =  \
 	Tripod.Sources/INamingPolicy.cs \
 	Tripod.Sources/IPhoto.cs \
 	Tripod.Sources/IPhotoSource.cs \
+	Tripod.Sources/SourceNotAvailableException.cs \
 	Tripod.Tasks/CancellableTask.cs \
 	Tripod.Tasks/ChildCancellableTask.cs \
 	Tripod.Tasks/RefCountCancellableTask.cs
