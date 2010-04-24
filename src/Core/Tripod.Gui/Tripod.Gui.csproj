@@ -55,6 +55,12 @@
   <ItemGroup>
     <Compile Include="Tripod.Gui\TripodActionManager.cs" />
     <Compile Include="Tripod.Gui\GlobalActions.cs" />
+    <Compile Include="Tripod.Model.Gui\PhotoGridView.cs" />
+    <Compile Include="Tripod.Model.Gui\PhotoGridViewChild.cs" />
+    <Compile Include="Tripod.Model.Gui\PhotoGridViewLayout.cs" />
+    <Compile Include="Tripod.Model.Gui\IPhotoGridCaptionRenderer.cs" />
+    <Compile Include="Tripod.Model.Gui\PhotoGridTextCaptionRenderer.cs" />
+    <Compile Include="Tripod.Model.Gui\PhotoGridDateCaptionRender.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena.Gui\Hyena.Gui.csproj">

@@ -18,12 +18,6 @@ SOURCES =  \
 	Tripod.Graphics/PhotoLoaderCache.cs \
 	Tripod.Graphics/PixbufExtensions.cs \
 	Tripod.Jobs/ThreadPoolJob.cs \
-	Tripod.Model.Gui/IPhotoGridCaptionRenderer.cs \
-	Tripod.Model.Gui/PhotoGridDateCaptionRender.cs \
-	Tripod.Model.Gui/PhotoGridTextCaptionRenderer.cs \
-	Tripod.Model.Gui/PhotoGridView.cs \
-	Tripod.Model.Gui/PhotoGridViewChild.cs \
-	Tripod.Model.Gui/PhotoGridViewLayout.cs \
 	Tripod.Model/EnumerableListModel.cs \
 	Tripod.Model/HyenaLINQModel.cs \
 	Tripod.Model/PhotoModelFactory.cs \
