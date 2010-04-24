@@ -81,6 +81,9 @@ namespace Hyena.Data
         public override T this[int index] {
             get {
                 lock (list) {
+                    if (list.Count <= index || index < 0)
+                        return default (T);
+
                     return list[index];
                 }
             }
