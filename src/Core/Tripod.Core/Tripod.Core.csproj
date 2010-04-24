@@ -92,7 +92,6 @@
     <Folder Include="Tripod.Tasks\" />
     <Folder Include="Tripod.Sources\" />
     <Folder Include="Tripod.Sources.Cache\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">

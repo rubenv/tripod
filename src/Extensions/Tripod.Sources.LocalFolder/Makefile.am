@@ -3,7 +3,7 @@ TARGET = library
 LINK = $(LINK_TRIPOD_CORE_DEPS)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = \
+SOURCES =  \
 	Tripod.Sources.LocalFolder/LocalFilePhoto.cs \
 	Tripod.Sources.LocalFolder/LocalFolderNamingPolicy.cs \
 	Tripod.Sources.LocalFolder/LocalFolderPhotoSource.cs 
