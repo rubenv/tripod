@@ -89,15 +89,15 @@ namespace Tripod.Sources.Cache
         void EnsureInstance ()
         {
             if (instance_create_failed)
-                throw new SourceNotAvailableException ();
+                throw new PhotoSourceNotAvailableException ();
 
             lock (this) {
                 if (instance == null) {
                     Type type = null;
-                    if (!SourceManager.Instance.PhotoSourceTypes.TryGetValue (SourceType, out type)) {
+                    if (!PhotoSourceManager.Instance.PhotoSourceTypes.TryGetValue (SourceType, out type)) {
                         instance_create_failed = true;
                         UpdateAvailability ();
-                        throw new SourceNotAvailableException ();
+                        throw new PhotoSourceNotAvailableException ();
                     }
                     instance = Activator.CreateInstance (type) as ICacheablePhotoSource;
                     instance.CacheId = CacheId;
@@ -149,7 +149,7 @@ namespace Tripod.Sources.Cache
                     // Make sure we send out the event on start if different from
                     // the database value. The value in the database can be stale.
                     Source.UpdateAvailability ();
-                } catch (SourceNotAvailableException) {
+                } catch (PhotoSourceNotAvailableException) {
                     Hyena.Log.WarningFormat ("Source {0} of type {1} not available, disabling. "
                             + "Are you missing an addin?", Source.CacheId, Source.SourceType);
                 }
