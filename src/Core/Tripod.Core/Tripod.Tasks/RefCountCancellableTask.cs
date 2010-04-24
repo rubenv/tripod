@@ -36,20 +36,14 @@ namespace Tripod.Tasks
         {
         }
 
-        int count = 0;
+        CountdownEvent count = new CountdownEvent (1);
 
         public override void Cancel ()
         {
             if (IsCompleted || IsCanceled)
                 return;
 
-            bool should_cancel = false;
-            lock (this) {
-                if (count > 0 && Interlocked.Decrement (ref count) == 0 && !IsCompleted)
-                    should_cancel = true;
-            }
-
-            if (should_cancel) {
+            if (count.Signal ()) {
                 try {
                     base.Cancel ();
                 } catch (TaskCanceledException) { }
@@ -58,7 +52,7 @@ namespace Tripod.Tasks
 
         public void Request ()
         {
-            Interlocked.Increment (ref count);
+	        count.TryAddCount ();
         }
     }
 }

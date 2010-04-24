@@ -27,6 +27,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Threading.Tasks;
 
 using Tripod.Base;
 using Tripod.Sources;
@@ -169,9 +170,6 @@ namespace Tripod.Model.Gui
             var loader = Core.PhotoLoaderCache.RequestLoader (photo);
             last_loader_task = loader.FindBestPreview (ThumbnailWidth, ThumbnailHeight);
             last_loader_task.ContinueWith ((t) => {
-                if (t.IsCanceled)
-                    return;
-
                 var new_surface = PixbufImageSurface.Create (last_loader_task.Result);
                 var cache = (ParentLayout as PhotoGridViewLayout).SurfaceCache;
 
@@ -184,7 +182,7 @@ namespace Tripod.Model.Gui
                     cache[photo] = new_surface;
                     (ParentLayout.View as PhotoGridView).InvalidateThumbnail (photo);
                 });
-            });
+            }, TaskContinuationOptions.NotOnCanceled);
         }
 
         bool finding_larger = false;
