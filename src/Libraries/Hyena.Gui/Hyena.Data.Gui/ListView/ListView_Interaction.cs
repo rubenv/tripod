@@ -938,6 +938,10 @@ namespace Hyena.Data.Gui
                 if (vadjustment.Value + vadjustment.PageSize > vadjustment.Upper) {
                     vadjustment.Value = vadjustment.Upper - vadjustment.PageSize;
                 }
+            } else if (vadjustment != null) {
+                // model is null
+                vadjustment.Upper = 0;
+                vadjustment.Lower = 0;
             }
 
             if (hadjustment != null) {

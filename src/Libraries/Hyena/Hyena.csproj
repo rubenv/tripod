@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -18,7 +18,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DefineConstants>NET_2_0</DefineConstants>
-    <ReleaseVersion>0.0.1</ReleaseVersion>
+    <ReleaseVersion>1.3</ReleaseVersion>
     <RootNamespace>Hyena</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -87,6 +87,7 @@
     <Compile Include="Hyena.Query\QueryValue.cs" />
     <Compile Include="Hyena.Query\StringQueryValue.cs" />
     <Compile Include="Hyena\Timer.cs" />
+    <Compile Include="Hyena\Paths.cs" />
     <Compile Include="Hyena\DateTimeUtil.cs" />
     <Compile Include="Hyena.SExpEngine\ArithmeticFunctionSet.cs" />
     <Compile Include="Hyena.SExpEngine\CastFunctionSet.cs" />

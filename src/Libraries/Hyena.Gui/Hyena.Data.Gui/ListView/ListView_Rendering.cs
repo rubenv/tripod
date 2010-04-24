@@ -54,6 +54,13 @@ namespace Hyena.Data.Gui
             get { return theme; }
         }
 
+        // Using an auto-property here makes the build fail with mono 1.9.1 (bnc#396633)
+        private bool do_not_render_null_model;
+        public bool DoNotRenderNullModel {
+            get { return do_not_render_null_model; }
+            set { do_not_render_null_model = value; }
+        }
+
         private bool changing_style = false;
 
         protected override void OnStyleSet (Style old_style)
@@ -92,6 +99,10 @@ namespace Hyena.Data.Gui
 
         protected override bool OnExposeEvent (EventExpose evnt)
         {
+            if (DoNotRenderNullModel && Model == null) {
+                return true;
+            }
+
             var damage = new Rectangle ();
             foreach (Rectangle rect in evnt.Region.GetRectangles ()) {
                 damage = damage.Union (rect);
