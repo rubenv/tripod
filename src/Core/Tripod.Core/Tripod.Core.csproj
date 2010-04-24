@@ -65,6 +65,10 @@
     <Compile Include="Tripod.Sources.Cache\MainCachePhotoSource.cs" />
     <Compile Include="Tripod.Sources\INamingPolicy.cs" />
     <Compile Include="Tripod.Sources\IAcceptImportPhotoSource.cs" />
+    <Compile Include="Tripod.Model\PhotoModelFactory.cs" />
+    <Compile Include="Tripod.Model\EnumerableListModel.cs" />
+    <Compile Include="Tripod.Model\HyenaLINQModel.cs" />
+    <Compile Include="Tripod.Model\TripodQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">
