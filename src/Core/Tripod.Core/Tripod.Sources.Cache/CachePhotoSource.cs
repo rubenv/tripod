@@ -142,12 +142,17 @@ namespace Tripod.Sources.Cache
 
             protected override void Run ()
             {
-                Source.EnsureInstance ();
-                Source.instance.Start (Cache);
-                
-                // Make sure we send out the event on start if different from
-                // the database value. The value in the database can be stale.
-                Source.UpdateAvailability ();
+                try {
+                    Source.EnsureInstance ();
+                    Source.instance.Start (Cache);
+                    
+                    // Make sure we send out the event on start if different from
+                    // the database value. The value in the database can be stale.
+                    Source.UpdateAvailability ();
+                } catch (SourceNotAvailableException) {
+                    Hyena.Log.WarningFormat ("Source {0} of type {1} not available, disabling. "
+                            + "Are you missing an addin?", Source.CacheId, Source.SourceType);
+                }
                 
                 OnFinished ();
             }
