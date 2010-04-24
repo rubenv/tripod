@@ -161,7 +161,6 @@ src/AssemblyInfo.cs
 
 src/Core/Makefile
 src/Core/Tripod.Core/Makefile
-src/Core/Tripod.Sources/Makefile
 
 src/Clients/Makefile
 src/Clients/FlashUnit/Makefile
@@ -174,6 +173,9 @@ src/Libraries/TagLib/Makefile
 src/Libraries/UniqueSharp/generator/Makefile
 src/Libraries/UniqueSharp/Makefile
 src/Libraries/UniqueSharp/unique/Makefile
+
+src/Extensions/Makefile
+src/Extensions/Tripod.Sources.LocalFolder/Makefile
 
 extras/Makefile
 ])

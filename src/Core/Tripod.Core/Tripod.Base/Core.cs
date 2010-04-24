@@ -29,6 +29,7 @@ using System;
 using Hyena;
 using Hyena.Jobs;
 using Hyena.Data.Sqlite;
+using Mono.Addins;
 
 using Tripod.Sources;
 using Tripod.Sources.Cache;
@@ -61,17 +62,43 @@ namespace Tripod.Base
         public static void Initialize (string name, ref string[] args)
         {
             Hyena.Log.Debugging = true;
+
+            InitializeToolkit (name, ref args);
+            InitializeAddins ();
+            InitializeSources ();
+        }
+
+        static void InitializeToolkit (string name, ref string[] args)
+        {
             GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
             GLib.Log.SetLogHandler ("GdkPixbuf", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
-            
+
             ThreadAssist.InitializeMainThread ();
             ThreadAssist.ProxyToMainHandler = (h) => GLib.Idle.Add (() => { h(); return false; });
-            Hyena.Log.Debug ("Initializing Core");
 
             ApplicationContext.TrySetProcessName ("tripod");
             Application.Init (name, ref args);
+        }
 
-            MainCachePhotoSource.Start ();
+        static void InitializeAddins ()
+        {
+            AddinManager.Initialize (ApplicationContext.CommandLine.Contains ("uninstalled")
+                ? "." : Paths.ApplicationData);
+
+            IProgressStatus monitor = ApplicationContext.CommandLine.Contains ("debug-addins")
+                ? new ConsoleProgressStatus (true)
+                : null;
+
+            if (ApplicationContext.Debugging) {
+                AddinManager.Registry.Rebuild (monitor);
+            } else {
+                AddinManager.Registry.Update (monitor);
+            }
+        }
+
+        static void InitializeSources ()
+        {
+            PhotoSourceManager.Initialize ();
         }
     }
 }
