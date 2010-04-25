@@ -36,8 +36,8 @@ namespace Tripod.Gui
         {
             Add (new ActionEntry [] {
                 // Media Menu
-                new ActionEntry ("MediaMenuAction", null,
-                    Catalog.GetString ("_Media"), null, null, null),
+                new ActionEntry ("PhotosMenuAction", null,
+                    Catalog.GetString ("_Photos"), null, null, null),
 
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",

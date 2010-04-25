@@ -1,6 +1,6 @@
 <ui>
 	<menubar name="MainMenu" action="MainMenuAction">
-		<menu name="MediaMenu" action="MediaMenuAction">
+		<menu name="PhotosMenu" action="PhotosMenuAction">
 			 <menuitem name="Quit" action="QuitAction"/>
 		</menu>
 	</menubar>
