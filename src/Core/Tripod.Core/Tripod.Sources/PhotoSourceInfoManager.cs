@@ -31,11 +31,14 @@ using Tripod.Base;
 
 namespace Tripod.Sources
 {
-    public class PhotoSourceManager
+    /// <summary>
+    /// This class tracks the available types of photo sources, as registered by the addins.
+    /// </summary>
+    public class PhotoSourceInfoManager
     {
         const string EXTENSION_POINT = "/Tripod/Core/PhotoSource";
 
-        public static PhotoSourceManager Instance;
+        public static PhotoSourceInfoManager Instance;
 
         public List<IPhotoSourceInfo> PhotoSources { get; private set; }
 
@@ -50,10 +53,10 @@ namespace Tripod.Sources
             if (Instance != null)
                 throw new InvalidOperationException ("Can't initialize twice!");
 
-            Instance = new PhotoSourceManager ();
+            Instance = new PhotoSourceInfoManager ();
         }
 
-        private PhotoSourceManager ()
+        private PhotoSourceInfoManager ()
         {
             PhotoSources = new List<IPhotoSourceInfo> ();
             PhotoSourceTypes = new Dictionary<string, Type> ();
@@ -64,7 +67,6 @@ namespace Tripod.Sources
 
         private void RegisterPhotoSource (IPhotoSourceInfo source_info)
         {
-            Hyena.Log.DebugFormat ("Registering photo source type for {0}", source_info.Name);
             PhotoSources.Add (source_info);
             PhotoSourceTypes.Add (source_info.Type.FullName, source_info.Type);
         }
@@ -73,12 +75,10 @@ namespace Tripod.Sources
         {
             InstanceExtensionNode node = (InstanceExtensionNode)args.ExtensionNode;
 
-            Log.DebugFormat ("Extension: {0} {1}", args.Change == ExtensionChange.Add ? "add" : "remove", node.ToString ());
-
             if (args.Change == ExtensionChange.Add) {
                 RegisterPhotoSource (node.CreateInstance () as IPhotoSourceInfo);
             } else {
-                throw new NotImplementedException ();
+                throw new NotImplementedException (); // TODO: Handle this
             }
         }
     }

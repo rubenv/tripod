@@ -35,7 +35,7 @@ SOURCES =  \
 	Tripod.Sources/IPhoto.cs \
 	Tripod.Sources/IPhotoSource.cs \
 	Tripod.Sources/IPhotoSourceInfo.cs \
-	Tripod.Sources/PhotoSourceManager.cs \
+	Tripod.Sources/PhotoSourceInfoManager.cs \
 	Tripod.Sources/PhotoSourceNotAvailableException.cs \
 	Tripod.Tasks/CancellableTask.cs \
 	Tripod.Tasks/ChildCancellableTask.cs \

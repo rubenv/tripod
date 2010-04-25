@@ -98,7 +98,7 @@ namespace Tripod.Base
 
         static void InitializeSources ()
         {
-            PhotoSourceManager.Initialize ();
+            PhotoSourceInfoManager.Initialize ();
         }
     }
 }
