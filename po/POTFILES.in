@@ -2,3 +2,5 @@
 # Please keep this file in alphabetical order; run ./sort-potfiles
 # after adding files here.
 [encoding: UTF-8]
+src/Core/Tripod.Gui/Tripod.Gui/GlobalActions.cs
+src/Extensions/Tripod.Sources.LocalFolder/Tripod.Sources.LocalFolder/LocalFolderPhotoSourceInfo.cs
