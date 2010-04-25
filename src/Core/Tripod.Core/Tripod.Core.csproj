@@ -66,6 +66,9 @@
     <Compile Include="Tripod.Model\TripodQuery.cs" />
     <Compile Include="Tripod.Sources\PhotoSourceNotAvailableException.cs" />
     <Compile Include="Tripod.Sources\PhotoSourceManager.cs" />
+    <Compile Include="Tripod.Sources\IPhotoSourceInfo.cs" />
+    <Compile Include="Tripod.Sources\BasePhotoSourceInfo.cs" />
+    <Compile Include="Tripod.Sources\IImportablePhotoSource.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

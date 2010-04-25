@@ -25,13 +25,16 @@ SOURCES =  \
 	Tripod.Sources.Cache/CachePhoto.cs \
 	Tripod.Sources.Cache/CachePhotoSource.cs \
 	Tripod.Sources.Cache/MainCachePhotoSource.cs \
+	Tripod.Sources/BasePhotoSourceInfo.cs \
 	Tripod.Sources/IAcceptImportPhotoSource.cs \
 	Tripod.Sources/ICacheablePhotoSource.cs \
 	Tripod.Sources/ICachingPhotoSource.cs \
 	Tripod.Sources/IDbCacheablePhoto.cs \
+	Tripod.Sources/IImportablePhotoSource.cs \
 	Tripod.Sources/INamingPolicy.cs \
 	Tripod.Sources/IPhoto.cs \
 	Tripod.Sources/IPhotoSource.cs \
+	Tripod.Sources/IPhotoSourceInfo.cs \
 	Tripod.Sources/PhotoSourceManager.cs \
 	Tripod.Sources/PhotoSourceNotAvailableException.cs \
 	Tripod.Tasks/CancellableTask.cs \

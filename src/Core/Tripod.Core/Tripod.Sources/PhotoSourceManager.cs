@@ -37,7 +37,13 @@ namespace Tripod.Sources
 
         public static PhotoSourceManager Instance;
 
-        public Dictionary<string, Type> PhotoSourceTypes { get; set; }
+        public List<IPhotoSourceInfo> PhotoSources { get; private set; }
+
+        /// <summary>
+        /// This dictionary is a quick lookup table that is used for source instantiation.
+        /// </summary>
+        /// <seealso cref="Tripod.Sources.Cache.MainCachePhotoSource"/>
+        public Dictionary<string, Type> PhotoSourceTypes { get; private set; }
 
         public static void Initialize ()
         {
@@ -49,20 +55,28 @@ namespace Tripod.Sources
 
         private PhotoSourceManager ()
         {
+            PhotoSources = new List<IPhotoSourceInfo> ();
             PhotoSourceTypes = new Dictionary<string, Type> ();
             AddinManager.AddExtensionNodeHandler (EXTENSION_POINT, OnExtensionChanged);
 
             Core.MainCachePhotoSource.Start ();
         }
 
+        private void RegisterPhotoSource (IPhotoSourceInfo source_info)
+        {
+            Hyena.Log.DebugFormat ("Registering photo source type for {0}", source_info.Name);
+            PhotoSources.Add (source_info);
+            PhotoSourceTypes.Add (source_info.Type.FullName, source_info.Type);
+        }
+
         private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
         {
-            TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
+            InstanceExtensionNode node = (InstanceExtensionNode)args.ExtensionNode;
 
-            Log.DebugFormat ("Extension: {0} {1}", args.Change == ExtensionChange.Add ? "add" : "remove", node.Type.ToString ());
+            Log.DebugFormat ("Extension: {0} {1}", args.Change == ExtensionChange.Add ? "add" : "remove", node.ToString ());
 
             if (args.Change == ExtensionChange.Add) {
-                PhotoSourceTypes.Add (node.Type.FullName, node.Type);
+                RegisterPhotoSource (node.CreateInstance () as IPhotoSourceInfo);
             } else {
                 throw new NotImplementedException ();
             }

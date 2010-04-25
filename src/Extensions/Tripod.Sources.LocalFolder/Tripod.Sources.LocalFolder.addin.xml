@@ -16,7 +16,7 @@
   </Dependencies>
 
   <Extension path="/Tripod/Core/PhotoSource">
-    <PhotoSource class="Tripod.Sources.LocalFolder.LocalFolderPhotoSource"/>
+    <PhotoSource class="Tripod.Sources.LocalFolder.LocalFolderPhotoSourceInfo"/>
   </Extension>
   
 </Addin>

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Tripod.Core\Tripod.Core.csproj">
@@ -43,6 +44,7 @@
     <Compile Include="Tripod.Sources.LocalFolder\LocalFilePhoto.cs" />
     <Compile Include="Tripod.Sources.LocalFolder\LocalFolderNamingPolicy.cs" />
     <Compile Include="Tripod.Sources.LocalFolder\LocalFolderPhotoSource.cs" />
+    <Compile Include="Tripod.Sources.LocalFolder\LocalFolderPhotoSourceInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -60,4 +62,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <None Include="Tripod.Sources.LocalFolder.addin.xml" />
+  </ItemGroup>
 </Project>
