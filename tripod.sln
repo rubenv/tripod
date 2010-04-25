@@ -98,7 +98,7 @@ Global
 		{D3C02949-F64D-497E-9A85-AB7A63FCC71B} = {A112313A-2F3B-4DC5-B549-B553BBB1B9A7}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = src\Core\Tripod.Core\Tripod.Core.csproj
+		StartupItem = src\Clients\FlashUnit\FlashUnit.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.FileWidth = 120
