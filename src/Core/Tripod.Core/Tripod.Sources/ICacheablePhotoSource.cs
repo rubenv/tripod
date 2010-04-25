@@ -27,24 +27,60 @@ using System;
 
 namespace Tripod.Sources
 {
+    /// <summary>
+    /// A photo source which can be persisted between multiple runs of the application and which should be cached in
+    /// the main cache.
+    /// </summary>
     public interface ICacheablePhotoSource : IPhotoSource
     {
-        // The id by which this source is stored in the cache.
+        /// <summary>
+        /// The id by which this source is stored in the cache. Should not be managed manually.
+        /// </summary>
         int CacheId { get; set; }
 
-        // Called when the source is woken up by the main cache.
+        /// <summary>
+        /// Called when the source is woken up by the main cache. This usually happens when starting the program.
+        /// Retrieve source parameters with this method and restore state that's used to operate the source.
+        /// </summary>
         void WakeUp ();
 
-        // Called when the source is added to the main cache.
+        /// <summary>
+        /// Called when the source is added to the main cache. When this is called, you should make sure that the
+        /// source can still be used (and updated) when the application is restarted.
+        /// </summary>
         void Persist ();
 
-        // Start this source (which means that it should sync with the main cache).
+        /// <summary>
+        /// Start this source (which means that it should sync with the main cache).
+        /// </summary>
+        /// <param name="cache">
+        /// An <see cref="ICachingPhotoSource"/>, with which the source should sync. For example, it could mean removing
+        /// cached photos that are no longer available in the source.
+        /// </param>
         void Start (ICachingPhotoSource cache);
 
-        // Callback from the main cache, to indicate that the given photo is cached with the given id.
+        /// <summary>
+        /// Callback from the main cache, to indicate that the given photo is cached with the given id.
+        /// </summary>
+        /// <param name="photo">
+        /// An <see cref="IPhoto"/>, which has just been imported into the cache.
+        /// </param>
+        /// <param name="cache_id">
+        /// A <see cref="System.Int32"/>, used to identify the photo. Based on this number, the source should later on
+        /// (which could be after restarting the application) be able to retrieve the photo that belongs to it.
+        /// </param>
         void RegisterCachedPhoto (IPhoto photo, int cache_id);
 
-        // Request the real instance of a previously cached photo. Used for writing back changes.
+        /// <summary>
+        /// Request the real instance of a previously cached photo. Used for writing back changes.
+        /// </summary>
+        /// <param name="cache_id">
+        /// A <see cref="System.Int32"/>, this identifier was previously signalled to the source using
+        /// <see cref="ICacheablePhotoSource#RegisterCachedPhoto (IPhoto, int)"/>.
+        /// </param>
+        /// <returns>
+        /// An <see cref="IPhoto"/>.
+        /// </returns>
         IPhoto LookupCachedPhoto (int cache_id);
     }
 }
