@@ -32,9 +32,12 @@ using TagLib.Image;
 
 using Tripod.Model;
 
-namespace Tripod.Sources.Cache
+namespace Tripod.Sources.SqliteCache
 {
-    public class CachePhoto : IPhoto, IDbCacheablePhoto
+    /// <summary>
+    /// Proxy for a <see cref="IPhoto"/> that's cached in an sqlite database.
+    /// </summary>
+    public class SqliteCachedPhoto : IPhoto, IDbCacheablePhoto
     {
         public object CacheEntryId { get; set; }
         public long CacheModelId { get; set; }
@@ -92,9 +95,9 @@ namespace Tripod.Sources.Cache
         [DatabaseColumn]
         public int Height { get; private set; }
 
-        public static CachePhoto CreateFrom (IPhoto source_photo)
+        public static SqliteCachedPhoto CreateFrom (IPhoto source_photo)
         {
-            return new CachePhoto () {
+            return new SqliteCachedPhoto () {
                 Uri = source_photo.Uri,
                 ImageDataStamp = source_photo.ImageDataStamp,
                 Comment = source_photo.Comment,

@@ -27,7 +27,7 @@ using System;
 using System.Collections.Generic;
 using Hyena.Data;
 using Tripod.Sources;
-using Tripod.Sources.Cache;
+using Tripod.Sources.SqliteCache;
 
 namespace Tripod.Model
 {
@@ -35,8 +35,8 @@ namespace Tripod.Model
     {
         public static IListModel<IPhoto> GetModel (IEnumerable<IPhoto> enumerator)
         {
-            if (enumerator is TripodQuery<CachePhoto>) {
-                return new HyenaLINQModel<CachePhoto, IPhoto> (enumerator as TripodQuery<CachePhoto>);
+            if (enumerator is TripodQuery<SqliteCachedPhoto>) {
+                return new HyenaLINQModel<SqliteCachedPhoto, IPhoto> (enumerator as TripodQuery<SqliteCachedPhoto>);
             } else {
                 return new EnumerableListModel<IPhoto> (enumerator);
             }

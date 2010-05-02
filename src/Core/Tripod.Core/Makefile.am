@@ -22,18 +22,18 @@ SOURCES =  \
 	Tripod.Model/HyenaLINQModel.cs \
 	Tripod.Model/PhotoModelFactory.cs \
 	Tripod.Model/TripodQuery.cs \
-	Tripod.Sources.Cache/CachePhoto.cs \
-	Tripod.Sources.Cache/CachePhotoSource.cs \
-	Tripod.Sources.Cache/MainCachePhotoSource.cs \
+	Tripod.Sources.SqliteCache/SqliteCachedPhoto.cs \
+	Tripod.Sources.SqliteCache/SqliteCachedPhotoSource.cs \
+	Tripod.Sources.SqliteCache/SqlitePhotoSourceCache.cs \
 	Tripod.Sources/BasePhotoSourceInfo.cs \
 	Tripod.Sources/IAcceptImportPhotoSource.cs \
 	Tripod.Sources/ICacheablePhotoSource.cs \
-	Tripod.Sources/ICachingPhotoSource.cs \
 	Tripod.Sources/IDbCacheablePhoto.cs \
 	Tripod.Sources/IImportablePhotoSource.cs \
 	Tripod.Sources/INamingPolicy.cs \
 	Tripod.Sources/IPhoto.cs \
 	Tripod.Sources/IPhotoSource.cs \
+	Tripod.Sources/IPhotoSourceCache.cs \
 	Tripod.Sources/IPhotoSourceInfo.cs \
 	Tripod.Sources/PhotoSourceInfoManager.cs \
 	Tripod.Sources/PhotoSourceNotAvailableException.cs \

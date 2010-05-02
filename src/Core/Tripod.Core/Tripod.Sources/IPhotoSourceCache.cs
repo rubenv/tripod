@@ -24,14 +24,22 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 using System;
+using System.Collections.Generic;
 
 namespace Tripod.Sources
 {
-    public interface ICachingPhotoSource : IPhotoSource
+    /// <summary>
+    /// A photo source cache manages a set of photo sources and provides fast access to them. The registered photo
+    /// sources register their photos into this cache.
+    /// </summary>
+    public interface IPhotoSourceCache
     {
         void RegisterPhotoSource (ICacheablePhotoSource source);
         void RegisterPhoto (ICacheablePhotoSource source, IPhoto photo);
         void Start ();
+
+        IEnumerable<IPhoto> AllPhotos { get; }
+        IEnumerable<IPhotoSource> PhotoSources { get; }
     }
 }
 

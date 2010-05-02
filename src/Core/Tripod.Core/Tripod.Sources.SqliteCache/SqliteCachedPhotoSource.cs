@@ -33,15 +33,18 @@ using Hyena.Data.Sqlite;
 using Tripod.Base;
 using Tripod.Model;
 
-namespace Tripod.Sources.Cache
+namespace Tripod.Sources.SqliteCache
 {
-    public class CachePhotoSource : IPhotoSource
+    /// <summary>
+    /// Proxy for a <see cref="IPhotoSource"/> that's been cached in the sqlite database.
+    /// </summary>
+    public class SqliteCachedPhotoSource : IPhotoSource
     {
-        public CachePhotoSource ()
+        public SqliteCachedPhotoSource ()
         {
         }
 
-        public CachePhotoSource (ICacheablePhotoSource source)
+        public SqliteCachedPhotoSource (ICacheablePhotoSource source)
         {
             instance = source;
             instance.AvailabilityChanged += (s, a) => UpdateAvailability ();
@@ -123,7 +126,7 @@ namespace Tripod.Sources.Cache
             
         }
 
-        public void Start (ICachingPhotoSource cache)
+        public void Start (IPhotoSourceCache cache)
         {
             Core.Scheduler.Add (new StartPhotoSourceJob (this, cache));
         }
@@ -131,15 +134,15 @@ namespace Tripod.Sources.Cache
 
         private sealed class StartPhotoSourceJob : SimpleAsyncJob
         {
-            internal StartPhotoSourceJob (CachePhotoSource source, ICachingPhotoSource cache)
+            internal StartPhotoSourceJob (SqliteCachedPhotoSource source, IPhotoSourceCache cache)
             {
                 Source = source;
                 Cache = cache;
                 Title = String.Format ("Starting cached source: {0}/{1}", Source.SourceType, Source.CacheId);
             }
 
-            CachePhotoSource Source { get; set; }
-            ICachingPhotoSource Cache { get; set; }
+            SqliteCachedPhotoSource Source { get; set; }
+            IPhotoSourceCache Cache { get; set; }
 
             protected override void Run ()
             {

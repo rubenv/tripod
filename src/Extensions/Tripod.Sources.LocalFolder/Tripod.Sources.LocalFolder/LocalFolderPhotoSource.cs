@@ -100,7 +100,7 @@ namespace Tripod.Sources.LocalFolder
             parameter_provider.Save (parameters, true);
         }
 
-        public void Start (ICachingPhotoSource cache)
+        public void Start (IPhotoSourceCache cache)
         {
             Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
 
@@ -162,14 +162,14 @@ namespace Tripod.Sources.LocalFolder
         }
 
         private class RescanLocalFolderJob : SimpleAsyncJob {
-            public RescanLocalFolderJob (LocalFolderPhotoSource source, ICachingPhotoSource cache) {
+            public RescanLocalFolderJob (LocalFolderPhotoSource source, IPhotoSourceCache cache) {
                 Source = source;
                 Cache =  cache;
                 Title = String.Format ("Library rescan for {0}", Source.root.ToString ());
             }
 
             public LocalFolderPhotoSource Source { get; set; }
-            public ICachingPhotoSource Cache { get; set; }
+            public IPhotoSourceCache Cache { get; set; }
 
             protected override void Run ()
             {

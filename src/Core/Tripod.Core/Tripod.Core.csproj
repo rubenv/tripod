@@ -53,10 +53,6 @@
     <Compile Include="Tripod.Sources\IPhoto.cs" />
     <Compile Include="Tripod.Sources\IPhotoSource.cs" />
     <Compile Include="Tripod.Sources\ICacheablePhotoSource.cs" />
-    <Compile Include="Tripod.Sources\ICachingPhotoSource.cs" />
-    <Compile Include="Tripod.Sources.Cache\CachePhoto.cs" />
-    <Compile Include="Tripod.Sources.Cache\CachePhotoSource.cs" />
-    <Compile Include="Tripod.Sources.Cache\MainCachePhotoSource.cs" />
     <Compile Include="Tripod.Sources\INamingPolicy.cs" />
     <Compile Include="Tripod.Sources\IAcceptImportPhotoSource.cs" />
     <Compile Include="Tripod.Model\PhotoModelFactory.cs" />
@@ -69,6 +65,10 @@
     <Compile Include="Tripod.Sources\IPhotoSourceInfo.cs" />
     <Compile Include="Tripod.Sources\BasePhotoSourceInfo.cs" />
     <Compile Include="Tripod.Sources\IImportablePhotoSource.cs" />
+    <Compile Include="Tripod.Sources\IPhotoSourceCache.cs" />
+    <Compile Include="Tripod.Sources.SqliteCache\SqliteCachedPhoto.cs" />
+    <Compile Include="Tripod.Sources.SqliteCache\SqliteCachedPhotoSource.cs" />
+    <Compile Include="Tripod.Sources.SqliteCache\SqlitePhotoSourceCache.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -93,7 +93,7 @@
     <Folder Include="Tripod.Graphics\" />
     <Folder Include="Tripod.Tasks\" />
     <Folder Include="Tripod.Sources\" />
-    <Folder Include="Tripod.Sources.Cache\" />
+    <Folder Include="Tripod.Sources.SqliteCache\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">

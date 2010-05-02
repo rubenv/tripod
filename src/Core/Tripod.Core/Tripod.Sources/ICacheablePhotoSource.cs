@@ -57,7 +57,7 @@ namespace Tripod.Sources
         /// An <see cref="ICachingPhotoSource"/>, with which the source should sync. For example, it could mean removing
         /// cached photos that are no longer available in the source.
         /// </param>
-        void Start (ICachingPhotoSource cache);
+        void Start (IPhotoSourceCache cache);
 
         /// <summary>
         /// Callback from the main cache, to indicate that the given photo is cached with the given id.

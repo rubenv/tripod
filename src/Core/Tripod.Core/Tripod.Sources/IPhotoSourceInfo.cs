@@ -49,4 +49,3 @@ namespace Tripod.Sources
         bool Importable { get; }
     }
 }
-

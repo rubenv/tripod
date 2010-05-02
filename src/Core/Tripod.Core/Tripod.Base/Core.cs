@@ -32,7 +32,7 @@ using Hyena.Data.Sqlite;
 using Mono.Addins;
 
 using Tripod.Sources;
-using Tripod.Sources.Cache;
+using Tripod.Sources.SqliteCache;
 using Tripod.Graphics;
 
 namespace Tripod.Base
@@ -49,8 +49,8 @@ namespace Tripod.Base
             get { return db_connection; }
         }
 
-        static ICachingPhotoSource main_cache_photo_source = new MainCachePhotoSource ();
-        public static ICachingPhotoSource MainCachePhotoSource {
+        static IPhotoSourceCache main_cache_photo_source = new SqlitePhotoSourceCache ();
+        public static IPhotoSourceCache MainCachePhotoSource {
             get { return main_cache_photo_source; }
         }
 

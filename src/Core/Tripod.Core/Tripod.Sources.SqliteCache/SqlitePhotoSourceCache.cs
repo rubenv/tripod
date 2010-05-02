@@ -30,28 +30,18 @@ using Hyena.Data.Sqlite;
 using Tripod.Base;
 using Tripod.Model;
 
-namespace Tripod.Sources.Cache
+namespace Tripod.Sources.SqliteCache
 {
-    public class MainCachePhotoSource : ICachingPhotoSource
+    public class SqlitePhotoSourceCache : IPhotoSourceCache
     {
-        SqliteModelProvider<CachePhoto> provider = new SqliteModelProvider<CachePhoto> (Core.DbConnection, "CachedPhotos");
-        SqliteModelProvider<CachePhotoSource> source_provider = new SqliteModelProvider<CachePhotoSource> (Core.DbConnection, "CachedPhotoSources");
+        SqliteModelProvider<SqliteCachedPhoto> provider = new SqliteModelProvider<SqliteCachedPhoto> (Core.DbConnection, "CachedPhotos");
+        SqliteModelProvider<SqliteCachedPhotoSource> source_provider = new SqliteModelProvider<SqliteCachedPhotoSource> (Core.DbConnection, "CachedPhotoSources");
 
-        public string DisplayName {
-            get { return "Main Cache"; }
+        public IEnumerable<IPhoto> AllPhotos {
+            get { return new TripodQuery<SqliteCachedPhoto> (provider); }
         }
 
-        public bool Available {
-            get { return true; }
-        }
-
-        public event EventHandler AvailabilityChanged;
-
-        public IEnumerable<IPhoto> Photos {
-            get { return new TripodQuery<CachePhoto> (provider); }
-        }
-
-        IEnumerable<CachePhotoSource> CachedSources {
+        public IEnumerable<IPhotoSource> PhotoSources {
             get { return source_provider.FetchAll (); }
         }
 
@@ -61,7 +51,7 @@ namespace Tripod.Sources.Cache
                 throw new Exception ("Can't register an already registered source!");
             }
             
-            var cache = new CachePhotoSource (source);
+            var cache = new SqliteCachedPhotoSource (source);
             cache.AvailabilityChanged += OnCachedSourceAvailabilityChanged;
             source_provider.Save (cache);
             
@@ -76,7 +66,7 @@ namespace Tripod.Sources.Cache
                 throw new Exception ("The source needs to be registered first using RegisterPhotoSource ()");
             }
 
-            var cache_photo = CachePhoto.CreateFrom (photo);
+            var cache_photo = SqliteCachedPhoto.CreateFrom (photo);
             cache_photo.SourceId = source.CacheId;
 
             provider.Save (cache_photo);
@@ -86,15 +76,15 @@ namespace Tripod.Sources.Cache
 
         public void Start ()
         {
-            foreach (var source in CachedSources) {
+            foreach (var source in PhotoSources) {
                 source.AvailabilityChanged += OnCachedSourceAvailabilityChanged;
-                source.Start (this);
+                (source as SqliteCachedPhotoSource).Start (this);
             }
         }
 
         void OnCachedSourceAvailabilityChanged (object sender, EventArgs args)
         {
-            source_provider.Save (sender as CachePhotoSource);
+            source_provider.Save (sender as SqliteCachedPhotoSource);
         }
     }
 }
