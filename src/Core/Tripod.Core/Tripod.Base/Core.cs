@@ -26,6 +26,7 @@
 
 using Gtk;
 using System;
+using System.Linq;
 using Hyena;
 using Hyena.Jobs;
 using Hyena.Data.Sqlite;
@@ -66,6 +67,7 @@ namespace Tripod.Base
             InitializeToolkit (name, ref args);
             InitializeAddins ();
             InitializeSources ();
+            InitializeDefaultSource ();
         }
 
         static void InitializeToolkit (string name, ref string[] args)
@@ -99,6 +101,23 @@ namespace Tripod.Base
         static void InitializeSources ()
         {
             PhotoSourceInfoManager.Initialize ();
+        }
+
+        /// <summary>
+        /// Adds a default photo source if no sources are available (a local folder, ~/Pictures).
+        /// </summary>
+        static void InitializeDefaultSource ()
+        {
+            // TODO: We need something smarter than the default hardcoded type.
+            if (!MainPhotoSourceCache.PhotoSources.Any ()) {
+                var type_name = "Tripod.Sources.LocalFolder.LocalFolderPhotoSource";
+
+                var type = PhotoSourceInfoManager.Instance.PhotoSourceTypes[type_name];
+                var instance = Activator.CreateInstance (type) as IPhotoSource;
+                instance.SetOption("Root", new Uri ("file://" + Environment.GetFolderPath (Environment.SpecialFolder.MyPictures)));
+                instance.SetOption("WatchFileSystem", false);
+                MainPhotoSourceCache.RegisterPhotoSource (instance as ICacheablePhotoSource);
+            }
         }
     }
 }
