@@ -35,6 +35,9 @@ namespace Tripod.Sources
 
         bool Available { get; }
         event EventHandler AvailabilityChanged;
+
+        void SetOption (string key, object value);
+        object GetOption (string key);
     }
 }
 

@@ -93,7 +93,7 @@ namespace FlashUnit.Gui
             photo_view_scrolled.Show ();
             primary_vbox.PackStart (photo_view_scrolled, true, true, 8);
 
-            var model = PhotoModelFactory.GetModel (Core.MainCachePhotoSource.AllPhotos);
+            var model = PhotoModelFactory.GetModel (Core.MainPhotoSourceCache.AllPhotos);
             model.Reload ();
             Hyena.Log.DebugFormat ("Model count: {0}", model.Count);
             photo_view.SetModel (model);

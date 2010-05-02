@@ -78,7 +78,6 @@ namespace Tripod.Sources.SqliteCache
             set { available = value; }
         }
 
-
         public event EventHandler AvailabilityChanged;
 
         public IEnumerable<IPhoto> Photos {
@@ -86,6 +85,18 @@ namespace Tripod.Sources.SqliteCache
                 EnsureInstance ();
                 return instance.Photos;
             }
+        }
+
+        public void SetOption (string key, object value)
+        {
+            EnsureInstance ();
+            instance.SetOption (key, value);
+        }
+
+        public object GetOption (string key)
+        {
+            EnsureInstance ();
+            return instance.GetOption (key);
         }
 
         bool instance_create_failed = false;

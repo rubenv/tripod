@@ -36,28 +36,56 @@ namespace Tripod.Sources.LocalFolder
 {
     public class LocalFolderPhotoSource : ICacheablePhotoSource, IAcceptImportPhotoSource
     {
+        const string ROOT_OPTION = "Root";
+        const string WATCHFS_OPTION = "WatchFileSystem";
+
         static SqliteModelProvider<LocalFolderPhotoSourceParameters> parameter_provider = new SqliteModelProvider<LocalFolderPhotoSourceParameters> (Core.DbConnection, "LocalFolderSourceParameters");
         static SqliteModelProvider<LocalFolderPhotoSourceUris> uri_provider = new SqliteModelProvider<LocalFolderPhotoSourceUris> (Core.DbConnection, "LocalFolderSourceUris");
 
-        // Needed for instantiation by the cache.
         public LocalFolderPhotoSource ()
         {
         }
 
-        public LocalFolderPhotoSource (Uri root)
-        {
-            this.root = root;
-        }
-
         public int CacheId { get; set; }
 
-        Uri root;
+        public void SetOption (string key, object value)
+        {
+            switch (key) {
+            case ROOT_OPTION:
+                Root = value as Uri;
+                break;
+
+            case WATCHFS_OPTION:
+                WatchFileSystem = (bool) value;
+                break;
+
+            default:
+                throw new NotSupportedException ();
+            }
+        }
+
+        public object GetOption (string key)
+        {
+            switch (key) {
+            case ROOT_OPTION:
+                return Root;
+
+            case WATCHFS_OPTION:
+                return WatchFileSystem;
+
+            default:
+                throw new NotSupportedException ();
+            }
+        }
+
+        Uri Root { get; set; }
+        bool WatchFileSystem { get; set; }
 
         string display_name = String.Empty;
         public string DisplayName {
             get {
                 if (display_name == String.Empty) {
-                    var segments = root.Segments;
+                    var segments = Root.Segments;
                     display_name = segments[segments.Length - 1].Trim (new char[] { '/' });
                 }
                 return display_name;
@@ -65,7 +93,7 @@ namespace Tripod.Sources.LocalFolder
         }
 
         public bool Available {
-            get { return FileFactory.NewForUri (root).Exists; }
+            get { return FileFactory.NewForUri (Root).Exists; }
         }
 
         public event EventHandler AvailabilityChanged;
@@ -75,7 +103,7 @@ namespace Tripod.Sources.LocalFolder
                 if (!Available)
                     throw new Exception ("Not available!");
                 
-                return from f in new RecursiveFileEnumerator (root)
+                return from f in new RecursiveFileEnumerator (Root)
                     where IsPhoto (f)
                     select new LocalFilePhoto (f.Uri) as IPhoto;
             }
@@ -90,22 +118,23 @@ namespace Tripod.Sources.LocalFolder
         public void WakeUp ()
         {
             var parameters = parameter_provider.FetchFirstMatching ("CacheId = ?", CacheId);
-            root = new Uri (parameters.RootUri);
+            Root = new Uri (parameters.RootUri);
+            WatchFileSystem = parameters.WatchFileSystem;
         }
 
         public void Persist ()
         {
             Hyena.Log.Debug ("Storing folder source");
-            var parameters = new LocalFolderPhotoSourceParameters { CacheId = CacheId, RootUri = root.ToString () };
+            var parameters = new LocalFolderPhotoSourceParameters { CacheId = CacheId, RootUri = Root.ToString (), WatchFileSystem = WatchFileSystem };
             parameter_provider.Save (parameters, true);
         }
 
         public void Start (IPhotoSourceCache cache)
         {
-            Hyena.Log.DebugFormat ("Starting folder source: {0}", root.ToString ());
+            Hyena.Log.DebugFormat ("Starting folder source: {0}", Root.ToString ());
 
-            Core.Scheduler.Add (new RescanLocalFolderJob (this, cache));
-            // TODO: Find files that need to be added (the ones that aren't in there already)
+            if (WatchFileSystem)
+                Core.Scheduler.Add (new RescanLocalFolderJob (this, cache));
             // TODO: Do active monitoring
         }
 
@@ -136,7 +165,7 @@ namespace Tripod.Sources.LocalFolder
         {
             var policy = new LocalFolderNamingPolicy ();
             // FIXME: Make the naming policy configurable.
-            var new_name = policy.PhotoUri (root, photo);
+            var new_name = policy.PhotoUri (Root, photo);
             var file = FileFactory.NewForUri (photo.Uri);
             var new_file = FileFactory.NewForUri (new_name);
 
@@ -150,6 +179,9 @@ namespace Tripod.Sources.LocalFolder
 
             [DatabaseColumn]
             public string RootUri { get; set; }
+
+            [DatabaseColumn]
+            public bool WatchFileSystem { get; set; }
         }
 
         private class LocalFolderPhotoSourceUris
@@ -164,8 +196,8 @@ namespace Tripod.Sources.LocalFolder
         private class RescanLocalFolderJob : SimpleAsyncJob {
             public RescanLocalFolderJob (LocalFolderPhotoSource source, IPhotoSourceCache cache) {
                 Source = source;
-                Cache =  cache;
-                Title = String.Format ("Library rescan for {0}", Source.root.ToString ());
+                Cache = cache;
+                Title = String.Format ("Library rescan for {0}", Source.Root.ToString ());
             }
 
             public LocalFolderPhotoSource Source { get; set; }

@@ -62,7 +62,7 @@ namespace Tripod.Sources
             PhotoSourceTypes = new Dictionary<string, Type> ();
             AddinManager.AddExtensionNodeHandler (EXTENSION_POINT, OnExtensionChanged);
 
-            Core.MainCachePhotoSource.Start ();
+            Core.MainPhotoSourceCache.Start ();
         }
 
         private void RegisterPhotoSource (IPhotoSourceInfo source_info)

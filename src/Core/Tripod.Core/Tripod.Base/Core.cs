@@ -50,7 +50,7 @@ namespace Tripod.Base
         }
 
         static IPhotoSourceCache main_cache_photo_source = new SqlitePhotoSourceCache ();
-        public static IPhotoSourceCache MainCachePhotoSource {
+        public static IPhotoSourceCache MainPhotoSourceCache {
             get { return main_cache_photo_source; }
         }
 
