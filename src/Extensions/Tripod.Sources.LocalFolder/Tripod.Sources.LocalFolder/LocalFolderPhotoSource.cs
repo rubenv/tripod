@@ -34,7 +34,7 @@ using Hyena.Jobs;
 
 namespace Tripod.Sources.LocalFolder
 {
-    public class LocalFolderPhotoSource : ICacheablePhotoSource, IAcceptImportPhotoSource
+    public class LocalFolderPhotoSource : ICacheablePhotoSource, IAcceptImportPhotoSource, IImportablePhotoSource
     {
         const string ROOT_OPTION = "Root";
         const string WATCHFS_OPTION = "WatchFileSystem";

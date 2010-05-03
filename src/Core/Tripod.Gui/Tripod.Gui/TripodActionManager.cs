@@ -30,9 +30,13 @@ namespace Tripod.Gui
 {
     public class TripodActionManager : ActionManager
     {
+        public GlobalActions GlobalActions { get; private set; }
+
         public override void Initialize ()
         {
-            AddActionGroup (new GlobalActions (this));
+            GlobalActions = new GlobalActions (this);
+
+            AddActionGroup (GlobalActions);
 
             UIManager.AddUiFromResource ("Tripod.Gui.UIActions.xml");
         }

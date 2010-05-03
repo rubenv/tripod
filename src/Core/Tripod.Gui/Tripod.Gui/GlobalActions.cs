@@ -39,10 +39,23 @@ namespace Tripod.Gui
                 new ActionEntry ("PhotosMenuAction", null,
                     Catalog.GetString ("_Photos"), null, null, null),
 
+                new ActionEntry ("ImportAction", Stock.Add,
+                    Catalog.GetString ("_Import"), "<control>I",
+                    Catalog.GetString ("Import Photos"), OnImport),
+
                 new ActionEntry ("QuitAction", Stock.Quit,
                     Catalog.GetString ("_Quit"), "<control>Q",
                     Catalog.GetString ("Quit Tripod"), OnQuit),
             });
+        }
+
+        public event EventHandler Import;
+
+        private void OnImport (object o, EventArgs args)
+        {
+            var h = Import;
+            if (h != null)
+                h (o, args);
         }
 
         private void OnQuit (object o, EventArgs args)

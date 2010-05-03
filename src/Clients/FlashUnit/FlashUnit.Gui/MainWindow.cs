@@ -43,7 +43,7 @@ namespace FlashUnit.Gui
 
         VBox primary_vbox;
         PhotoGridView photo_view;
-        ActionManager action_manager;
+        TripodActionManager action_manager;
 
         #endregion
 
@@ -66,6 +66,7 @@ namespace FlashUnit.Gui
 
             PrepareActionManager ();
             BuildLayout ();
+            ConnectEvents ();
             base.OnShown ();
         }
 
@@ -114,6 +115,14 @@ namespace FlashUnit.Gui
 
             primary_vbox.Show ();
             Add (primary_vbox);
+        }
+
+        void ConnectEvents ()
+        {
+            action_manager.GlobalActions.Import += (sender, args) => {
+                var import_window = new ImportWindow ();
+                import_window.Show ();
+            };
         }
 
         #endregion
